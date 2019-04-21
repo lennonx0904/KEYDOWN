@@ -1,6 +1,6 @@
 .banner {
   width: 100%;
-  min-height:  calc(100vh - 50px);
+  min-height: calc(100vh - 50px);
   background-image: url("../../img/dj.jpg");
   background-position: center;
   background-size: cover;
@@ -25,10 +25,16 @@
   border-radius: 49.5px;
   cursor: pointer;
   transform: scale(1);
-  transition: 0.1s transform; 
+  transition: 0.1s transform;
+  text-decoration: none;
 }
 .enter-btn:hover {
   color: rgba(0, 0, 0, 1);
   background: rgba(255, 255, 255, 1);
   transform: scale(1.03);
+}
+
+.enter-btn > a {
+  text-decoration: none;
+  color: #000000;
 }

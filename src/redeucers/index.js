@@ -1,8 +1,10 @@
 import { combineReducers } from "redux";
 import showLoginFormReducer from "./showLoginFormReducer";
 import showSignUpFormReducer from "./showSignUpFormReducer";
+import fetchSongListReducer from './fetchSongListReducer';
 
 export default combineReducers({
-  showLoginForm: showLoginFormReducer,
-  showSignUpForm: showSignUpFormReducer
+  loginForm: showLoginFormReducer,
+  signUpForm: showSignUpFormReducer,
+  songList: fetchSongListReducer
 });

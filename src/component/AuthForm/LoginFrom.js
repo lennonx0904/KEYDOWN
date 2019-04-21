@@ -28,7 +28,7 @@ class LoginForm extends React.Component {
   }
 }
 const mapStateToProps = state => {
-  return { showLoginForm: state.showLoginForm };
+  return { loginForm: state.loginForm };
 };
 export default connect(
   mapStateToProps,

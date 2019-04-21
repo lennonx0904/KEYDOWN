@@ -17,3 +17,7 @@ body {
 .visible {
   visibility: visible;
 }
+
+a:link {
+  text-decoration: none !important;
+}

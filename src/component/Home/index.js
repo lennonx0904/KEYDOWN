@@ -1,12 +1,13 @@
 import React from "react";
-import "./Home.css";
+import {Link} from 'react-router-dom';
+import "./index.css";
 
 class Home extends React.Component {
   render() {
     return (
       <div className="banner">
         <div className='enter-wrap'>
-          <div className="enter-btn">Enter Game</div>
+          <div className="enter-btn"><Link to='/select'>Enter Game</Link></div>
         </div>
       </div>
     );

@@ -1,16 +1,26 @@
 import React from "react";
 import { connect } from "react-redux";
-import { showLoginForm,showSignUpForm } from "../../actions";
+import { showLoginForm, showSignUpForm } from "../../actions";
 
 class NavButtons extends React.Component {
   render() {
-    //   console.log(this.props)
-    return (          
+    return (
       <div className="buttons">
-        <div className="log-in nav-button" onClick={this.props.showLoginForm}>
+        <button
+          className="log-in nav-button"
+          onClick={this.props.showLoginForm}
+          disabled={this.props.signUpForm}
+        >
           Log In
-        </div>
-        <div className="sigh-in nav-button" onClick={this.props.showSignUpForm}>Sign Up</div>
+        </button>
+        <button
+          className="sigh-in nav-button"
+          onClick={this.props.showSignUpForm}
+          disabled={this.props.loginForm}
+        >
+          Sign Up
+        </button>
+
         <div className="log-out nav-button none">Log Out</div>
       </div>
     );
@@ -18,12 +28,15 @@ class NavButtons extends React.Component {
 }
 
 const mapStatetoProps = state => {
-    // console.log(state);
-    
-  return { showLoginForm: state.showLoginForm };
+  // console.log(state);
+
+  return {
+    loginForm: state.loginForm,
+    signUpForm: state.signUpForm
+  };
 };
 
 export default connect(
   mapStatetoProps,
-  { showLoginForm,showSignUpForm }
+  { showLoginForm, showSignUpForm }
 )(NavButtons);

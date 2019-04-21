@@ -9,8 +9,8 @@ class AuthForm extends React.Component {
   render() {
     return (
       <div className="auth-view">
-        {this.props.showSignUpForm && <SignUpForm />}
-        {this.props.showLoginForm && <LoginForm />}
+        {this.props.signUpForm && <SignUpForm />}
+        {this.props.loginForm && <LoginForm />}
       </div>
     );
   }
@@ -18,8 +18,8 @@ class AuthForm extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    showLoginForm: state.showLoginForm,
-    showSignUpForm: state.showSignUpForm
+    loginForm: state.loginForm,
+    signUpForm: state.signUpForm
   };
 };
 

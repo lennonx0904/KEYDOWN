@@ -10,21 +10,27 @@
   margin-left: 50px;
   font-size: 36px;
 }
-
+.logo > a {
+  text-decoration: none;
+  color: #3a3a3a;
+}
 .buttons {
   display: flex;
   margin-right: 50px;
 }
 .nav-button {
   border: 1px solid #000000;
-  border-radius: 17px;
+  font-size: 18px;
+  border-radius: 19px;
   margin: 0 10px;
-  padding: 5px 10px;
+  padding: 10px 20px;
   cursor: pointer;
-  transition:  0.3s;
+  transition: 0.3s;
+  outline: none;
+  border: none;
 }
 .nav-button:focus,
 .nav-button:hover {
-    background-color: rgba(255, 255, 255, 0.8);
-    border-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(255, 255, 255, 0.8);
+  border-color: rgba(255, 255, 255, 0.8);
 }
