@@ -2,9 +2,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
+import firebase from '../../actions/firebase'
 import { fetchSongList } from "../../actions";
 import "./index.css";
 // import SongList from "./SongList";
+const storage = firebase.app().storage("gs://keyboard-game-64e45.appspot.com");
 
 class SelectSong extends React.Component {
   componentDidMount() {

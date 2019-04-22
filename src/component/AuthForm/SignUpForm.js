@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { hideSignUpForm } from "../../actions";
-import firebase from "../../actions/firebase";
+// import firebase from "../../actions/firebase";
 
 const initState = {
   userName: "",
@@ -20,28 +20,7 @@ class SignUpForm extends React.Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  signUpHandler = () => {
-    const { userName, email, password, comfirmPassword } = this.state;
-    if (userName === "") {
-      alert("Please enter your name.");
-      return;
-    }
-    if (password !== comfirmPassword) {
-      alert("Please comfirm your password.");
-      return;
-    }
-
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(email, password)
-      .catch(error => {
-        alert(error.message);
-      })
-      .then(
-        alert("ye")
-        // this.setState({ ...initState })
-      );
-  };
+  
 
   render() {
     // console.log(this.state);

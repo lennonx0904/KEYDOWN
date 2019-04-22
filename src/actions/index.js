@@ -1,5 +1,6 @@
 // import { getsongList } from "./fireStore";
 import firebase from "./firebase";
+import "firebase/auth";
 
 const db = firebase.firestore();
 
@@ -29,14 +30,47 @@ export const hideSignUpForm = () => {
   };
 };
 
+export const signUpHandler = () => {
+  const { userName, email, password, comfirmPassword } = this.state;
+  if (userName === "") {
+    alert("Please enter your name.");
+    return;
+  }
+  if (password !== comfirmPassword) {
+    alert("Please comfirm your password.");
+    return;
+  }
+  firebase
+    .auth()
+    .createUserWithEmailAndPassword(email, password)
+    .then(
+      db
+        .collection("user")
+        .doc()
+        .set({
+          userName: userName,
+          email: email
+        })
+        .then(() => {
+          console.log("Document successfully written!");
+        })
+        .catch(error => {
+          console.error("Error writing document: ", error);
+        })
+    )
+    .catch(error => {
+      alert(error.message);
+    });
+};
+
 export const fetchSongList = () => dispatch => {
   let arr = [];
   db.collection("songList")
+    .orderBy("id")
     .get()
     .then(querySnapshot =>
       querySnapshot.forEach(doc => {
         arr = [...arr, doc.data()];
-        // arr.push(doc.data());
         dispatch({ type: "FETCH_SONG_LIST", payload: arr });
       })
     );
