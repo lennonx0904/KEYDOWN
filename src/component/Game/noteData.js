@@ -32,6 +32,6 @@ export const noteData_1 = {
   };
   
   let a = 60 / 100;
-  const noteData_2 = [
+  export const noteData = [
     [0, a, a * 2, a * 4, a * 5, a * 7, a * 10, a * 11, a * 12, a * 13]
   ];

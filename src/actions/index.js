@@ -75,3 +75,17 @@ export const fetchSongList = () => dispatch => {
       })
     );
 };
+
+export const selectSongToPlay = songToPlay => {
+  return {
+    type: "SELECT_SONG_TO_PLAY",
+    payload: songToPlay
+  };
+};
+
+export const checkInGame = boolean => {
+  return {
+    type: "CHECK_IN_GAME",
+    payload: boolean
+  };
+};

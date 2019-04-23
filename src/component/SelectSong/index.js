@@ -2,33 +2,94 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
-import firebase from '../../actions/firebase'
-import { fetchSongList } from "../../actions";
+import { fetchSongList, selectSongToPlay } from "../../actions";
 import "./index.css";
-// import SongList from "./SongList";
-const storage = firebase.app().storage("gs://keyboard-game-64e45.appspot.com");
 
 class SelectSong extends React.Component {
+  state = {
+    playing: false
+  };
+
   componentDidMount() {
     this.props.fetchSongList();
   }
+
+  playSong = e => {
+    console.log(e.target.id);
+    console.log(e.target.className);
+
+    const audio = new Audio(e.currentTarget.id);
+    audio.play();
+
+    // window.addEventListener("click", () => {
+    //   audio.pause();
+    //   audio.currentTime = 0;
+    //   this.pauseSong(audio)
+    // });
+    setTimeout(() => {
+      this.pauseSong(audio);
+    }, 3000);
+
+    // ========= 待解決：停止播放！！！！！！ ============
+  };
+
+  pauseSong = audio => {
+    audio.pause();
+    audio.currentTime = 0;
+  };
+
+  selectSong = e => {
+    let song = e.currentTarget.name;
+    let url = e.currentTarget.url;
+    this.props.selectSongToPlay({ songName: song, songURL: url });
+  };
+
   renderSongList() {
     return this.props.songList.map(song => {
       return (
         <div key={song.id} className="song">
           <div className="song-details">
-            <div className="song-title">{song.title}</div>
+            <div className="song-title">
+              {song.title}
+              <i
+                className="far fa-play-circle play-song"
+                id={song.url}
+                onClick={this.playSong}
+              />
+            </div>
+
             <div className="song-auth">{song.auth}</div>
           </div>
           <div className="difficulty-wrap">
             <Link to="/game">
-              <div className="difficulty easy">EASY</div>
+              <button
+                className="difficulty easy"
+                name={song.name}
+                url={song.url}
+                onClick={this.selectSong}
+              >
+                EASY
+              </button>
             </Link>
             <Link to="/game">
-              <div className="difficulty easy">NORMAL</div>
+              <button
+                className="difficulty easy"
+                name={song.name}
+                url={song.url}
+                onClick={this.selectSong}
+              >
+                NORMAL
+              </button>
             </Link>
             <Link to="/game">
-              <div className="difficulty easy">HARD</div>
+              <button
+                className="difficulty easy"
+                name={song.name}
+                url={song.url}
+                onClick={this.selectSong}
+              >
+                HARD
+              </button>
             </Link>
           </div>
         </div>
@@ -37,8 +98,7 @@ class SelectSong extends React.Component {
   }
 
   render() {
-    console.log("props in song list", this.props);
-    console.log(this.props.songList);
+    console.log(this.props);
 
     return (
       <div className="song-list-wrap">
@@ -49,12 +109,10 @@ class SelectSong extends React.Component {
 }
 
 const mapStateToProps = state => {
-  console.log("state in song list", state);
-
-  return { songList: state.songList };
+  return { songList: state.songList, songToPlay: state.songToPlay };
 };
 
 export default connect(
   mapStateToProps,
-  { fetchSongList }
+  { fetchSongList: fetchSongList, selectSongToPlay: selectSongToPlay }
 )(SelectSong);

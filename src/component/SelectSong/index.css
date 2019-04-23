@@ -43,10 +43,17 @@
 .song-title {
   font-size: 24px;
 }
+.play-song{
+  margin-left: 12px; 
+}
+
 .song-auth {
   font-size: 18px;
   margin-top: 10px;
 }
+
+
+
 .difficulty-wrap {
   display: flex;
   justify-content: space-between;
@@ -63,6 +70,7 @@
   margin: 10px;
   font-size: 14px;
   color: #fffaf8;
+  border: none;
   background-color: rgba(255, 0, 79, 0.5);
   border-radius: 50%;
   transform: scale(1);

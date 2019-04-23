@@ -3,7 +3,7 @@ import { noteData_1 } from "./noteData";
 // 全域變數
 let updateFPS = 100;
 let time = 0;
-let score = 0;
+// let score = 0;
 let round = 0;
 
 //控制
@@ -27,8 +27,6 @@ ctx.line = function(p1, p2, color, shadowColor, height) {
   ctx.moveTo(p1.x, p1.y);
   ctx.lineTo(p2.x, p2.y);
   ctx.strokeStyle = color;
-  //   ctx.shadowOffsetX = 1;
-  //   ctx.shadowOffsetY = 1;
   ctx.shadowBlur = 60;
   ctx.shadowColor = shadowColor;
   ctx.lineWidth = height;
@@ -159,23 +157,6 @@ function update() {
   render();
 }
 
-// function drawGrid() {
-//   ctx.beginPath();
-//   for (let i = 0; i < 18; i++) {
-//     let pos = i * 50;
-//     ctx.moveTo(pos, 0);
-//     ctx.lineTo(pos, 13 * 50);
-//     ctx.fillStyle = "#878787";
-//     ctx.fillText(i, pos, 10); //fillText('text', pos, 10)
-//     ctx.moveTo(0, pos);
-//     ctx.lineTo(18 * 50, pos);
-//     ctx.fillText(i, 0, pos);
-//   }
-//   ctx.strokeStyle = "rgba(0, 0, 0, .1)";
-//   ctx.lineWidth = 1;
-//   ctx.stroke();
-// }
-
 function drawBackground() {
   for (let i = 0; i < 5; i++) {
     ctx.line(
@@ -218,5 +199,4 @@ function render() {
   requestAnimationFrame(render);
 }
 requestAnimationFrame(render);
-
 setInterval(update, 1000 / updateFPS);

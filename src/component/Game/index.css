@@ -1,0 +1,15 @@
+.view {
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+}
+.game {
+  margin: 0;
+  position: relative;
+  margin-top: 20px;
+}
+
+#myCanvas {
+  margin: 0;
+  border: 2px solid #000;
+}
