@@ -11,9 +11,9 @@ class PureCanvas extends React.Component {
         id="myCanvas"
         width={this.props.width}
         height={this.props.height}
-        ref={node =>
-          node ? this.props.contextRef(node.getContext("2d")) : null
-        }
+        // ref={node =>
+        //   node ? this.props.contextRef(node.getContext("2d")) : null
+        // }
       />
     );
   }

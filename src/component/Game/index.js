@@ -4,7 +4,9 @@ import { connect } from "react-redux";
 import PureCanvas from "./PureCanvas";
 import "./index.css";
 import Note from "./Note";
-import { noteData } from "./noteData";
+import { noteData, noteData_1 } from "./noteData";
+
+// import './mainGame';
 
 class Game extends React.Component {
   constructor(props) {
@@ -38,14 +40,9 @@ class Game extends React.Component {
     this.height = this.ctx.canvas.height;
   };
   componentDidMount() {
-    // const canvas = document.querySelector("#myCanvas");
-    // const ctx = canvas.getContext("2d");
-    // this.setState({ ctx: ctx });
-
+    console.log('didmount======');
     
-    requestAnimationFrame(() => {
-      this.update();
-    });
+    
   }
 
   generateNote = (noteType, args) => {
@@ -70,10 +67,10 @@ class Game extends React.Component {
   };
 
   render() {
-    console.log(this.props);
-    console.log(this.state);
+    // console.log(this.props);
+    // console.log(this.state);
 
-    return <PureCanvas contextRef={this.saveContext} />;
+    return <canvas id="myCanvas" />;
   }
 }
 

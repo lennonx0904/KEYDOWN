@@ -4,9 +4,18 @@ import showSignUpFormReducer from "./showSignUpFormReducer";
 import fetchSongListReducer from "./fetchSongListReducer";
 import checkInGameReducer from "./checkInGameReducer";
 
-const selectSongToPlayReducer = (state = {}, action) => {
+const selectDifficultyReducer = (state = "", action) => {
   switch (action.type) {
     case "SELECT_SONG_TO_PLAY":
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
+const fetchPlayingSongDataReducer = (state = {}, action) => {
+  switch (action.type) {
+    case "FETCH_PLAYING_SONG_DATA":
       return Object.assign(action.payload);
     default:
       return state;
@@ -17,6 +26,7 @@ export default combineReducers({
   loginForm: showLoginFormReducer,
   signUpForm: showSignUpFormReducer,
   songList: fetchSongListReducer,
-  songToPlay: selectSongToPlayReducer,
-  inGame: checkInGameReducer
+  difficulty: selectDifficultyReducer,
+  inGame: checkInGameReducer,
+  playingSongData: fetchPlayingSongDataReducer
 });

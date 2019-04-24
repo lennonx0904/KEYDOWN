@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { hideLoginForm } from "../../actions";
+import { showLoginForm } from "../../actions";
 
 class LoginForm extends React.Component {
   render() {
@@ -9,7 +9,9 @@ class LoginForm extends React.Component {
         <div className="login-form">
           <i
             className="fas fa-times exit-btn"
-            onClick={this.props.hideLoginForm}
+            onClick={() => {
+              this.props.showLoginForm(false);
+            }}
           />
           <div>
             <label>E-mail</label>
@@ -32,5 +34,5 @@ const mapStateToProps = state => {
 };
 export default connect(
   mapStateToProps,
-  { hideLoginForm }
+  { showLoginForm }
 )(LoginForm);

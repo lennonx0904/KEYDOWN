@@ -4,29 +4,17 @@ import "firebase/auth";
 
 const db = firebase.firestore();
 
-export const showLoginForm = () => {
+export const showLoginForm = boolean => {
   return {
     type: "SHOW_LOGIN_FORM",
-    payload: true
-  };
-};
-export const hideLoginForm = () => {
-  return {
-    type: "SHOW_LOGIN_FORM",
-    payload: false
+    payload: boolean
   };
 };
 
-export const showSignUpForm = () => {
+export const showSignUpForm = boolean => {
   return {
     type: "SHOW_SIGNUP_FORM",
-    payload: true
-  };
-};
-export const hideSignUpForm = () => {
-  return {
-    type: "SHOW_SIGNUP_FORM",
-    payload: false
+    payload: boolean
   };
 };
 
@@ -70,16 +58,16 @@ export const fetchSongList = () => dispatch => {
     .get()
     .then(querySnapshot =>
       querySnapshot.forEach(doc => {
-        arr = [...arr, doc.data()];
+        arr = [...arr, { id: doc.id, data: doc.data() }];
         dispatch({ type: "FETCH_SONG_LIST", payload: arr });
       })
     );
 };
 
-export const selectSongToPlay = songToPlay => {
+export const selectDifficulty = difficulty => {
   return {
     type: "SELECT_SONG_TO_PLAY",
-    payload: songToPlay
+    payload: difficulty
   };
 };
 
@@ -88,4 +76,22 @@ export const checkInGame = boolean => {
     type: "CHECK_IN_GAME",
     payload: boolean
   };
+};
+
+export const fetchPlayingSongData = (songId, difficulty) => dispatch => {
+  let obj = {};
+  db.collection("songList")
+    .doc(songId)
+    .collection("gameData")
+    .get()
+    .then(function(querySnapshot) {
+      querySnapshot.forEach(doc => {        
+        console.log("fetchSongData", doc.data().url);
+        obj = Object.assign({ songURL: doc.data().url, beatData: doc.data()[difficulty] });
+        dispatch({ type: "FETCH_PLAYING_SONG_DATA", payload: obj });
+      });
+    })
+    .catch(function(error) {
+      console.log("Error getting documents: ", error);
+    });
 };

@@ -5,8 +5,9 @@ import Nav from "./Nav";
 import AuthForm from "./AuthForm";
 import Home from "./Home";
 import SelectSong from "./SelectSong";
-import GameAnimation from "./Game/GameAnimation";
+import Game from "./Game/Game";
 import Animation from './Animation/Animation';
+// import Game from './Game'
 
 class App extends Component {
   render() {
@@ -17,7 +18,7 @@ class App extends Component {
         <div>
           <Route path="/" exact component={Home} />
           <Route path="/select" component={SelectSong} />
-          <Route path="/game" component={GameAnimation} />
+          <Route path="/game/:id" component={Game} />
         </div>
       </BrowserRouter>
     );

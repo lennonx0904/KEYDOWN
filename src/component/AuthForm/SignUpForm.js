@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { hideSignUpForm } from "../../actions";
+import { showSignUpForm } from "../../actions";
 // import firebase from "../../actions/firebase";
 
 const initState = {
@@ -20,17 +20,15 @@ class SignUpForm extends React.Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  
 
   render() {
-    // console.log(this.state);
 
     return (
       <div className="auth-wrap">
         <div className="signup-form ">
           <i
             className="fas fa-times exit-btn"
-            onClick={this.props.hideSignUpForm}
+            onClick={()=>{this.props.showSignUpForm(false)}}
           />
           <div>
             <label>Name</label>
@@ -91,5 +89,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { hideSignUpForm }
+  { showSignUpForm }
 )(SignUpForm);

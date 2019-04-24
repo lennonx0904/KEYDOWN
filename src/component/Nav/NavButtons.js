@@ -8,14 +8,18 @@ class NavButtons extends React.Component {
       <div className="buttons">
         <button
           className="log-in nav-button"
-          onClick={this.props.showLoginForm}
+          onClick={() => {
+            this.props.showLoginForm(true);
+          }}
           disabled={this.props.signUpForm}
         >
           Log In
         </button>
         <button
           className="sigh-in nav-button"
-          onClick={this.props.showSignUpForm}
+          onClick={() => {
+            this.props.showSignUpForm(true);
+          }}
           disabled={this.props.loginForm}
         >
           Sign Up
