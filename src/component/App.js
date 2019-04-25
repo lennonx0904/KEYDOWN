@@ -6,7 +6,6 @@ import AuthForm from "./AuthForm";
 import Home from "./Home";
 import SelectSong from "./SelectSong";
 import Game from "./Game/Game";
-import Animation from './Animation/Animation';
 // import Game from './Game'
 
 class App extends Component {

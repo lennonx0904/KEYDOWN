@@ -85,9 +85,13 @@ export const fetchPlayingSongData = (songId, difficulty) => dispatch => {
     .collection("gameData")
     .get()
     .then(function(querySnapshot) {
-      querySnapshot.forEach(doc => {        
-        console.log("fetchSongData", doc.data().url);
-        obj = Object.assign({ songURL: doc.data().url, beatData: doc.data()[difficulty] });
+      querySnapshot.forEach(doc => {
+        // obj = Object.assign({songURL: doc.data().url, beatData: doc.data()[difficulty] });
+        obj = Object.assign({
+          audio: new Audio(doc.data().url),
+          beatData: doc.data()[difficulty]
+        });
+
         dispatch({ type: "FETCH_PLAYING_SONG_DATA", payload: obj });
       });
     })

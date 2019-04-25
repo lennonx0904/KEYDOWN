@@ -11,6 +11,14 @@ class SelectSong extends React.Component {
   };
 
   componentDidMount() {
+    console.log("選取歌曲頁面", this.props);
+    const { playingSongData, match } = this.props;
+    if (playingSongData.audio && match.path !== "/game/:id") {
+      console.log("有audio, changepage");
+      playingSongData.audio.pause();
+      playingSongData.audio.currentTime = 0;
+    }
+
     this.props.fetchSongList();
   }
 
@@ -96,7 +104,6 @@ class SelectSong extends React.Component {
   }
 
   render() {
-
     return (
       <div className="song-list-wrap">
         <div className="song-list">{this.renderSongList()}</div>
@@ -106,7 +113,10 @@ class SelectSong extends React.Component {
 }
 
 const mapStateToProps = state => {
-  return { songList: state.songList, songToPlay: state.songToPlay };
+  return {
+    songList: state.songList,
+    playingSongData: state.playingSongData
+  };
 };
 
 export default connect(

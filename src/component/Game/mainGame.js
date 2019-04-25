@@ -90,7 +90,7 @@ export const mainGame = unit => {
   function update() {
     time++;
 
-    if (time % ((updateFPS * 60) / controls.bpm) === 0) {
+    if (time % ((updateFPS * 30) / controls.bpm) === 0) {
       round++;
       console.log(round);
       noteData_1[round].forEach((e, index) => {
