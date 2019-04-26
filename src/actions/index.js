@@ -89,7 +89,7 @@ export const fetchPlayingSongData = (songId, difficulty) => dispatch => {
         // obj = Object.assign({songURL: doc.data().url, beatData: doc.data()[difficulty] });
         obj = Object.assign({
           audio: new Audio(doc.data().url),
-          beatData: doc.data()[difficulty]
+          beatData: JSON.parse(doc.data()[difficulty])
         });
 
         dispatch({ type: "FETCH_PLAYING_SONG_DATA", payload: obj });
@@ -97,5 +97,24 @@ export const fetchPlayingSongData = (songId, difficulty) => dispatch => {
     })
     .catch(function(error) {
       console.log("Error getting documents: ", error);
+    });
+};
+
+export const writeData = data => {
+  db.collection("songList")
+    .doc("x7mYBzozC4wSDvqXkrN2")
+    .collection("gameData")
+    .doc("eHYSGoQS5KeY5JwonBoI")
+    .set(
+      {
+        normal: data
+      },
+      { merge: true }
+    )
+    .then(function() {
+      console.log("Document successfully written!");
+    })
+    .catch(function(error) {
+      console.error("Error writing document: ", error);
     });
 };

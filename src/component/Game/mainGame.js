@@ -1,6 +1,8 @@
-import { noteData_1 } from "./noteData";
+import { player } from "./player";
 
-export const mainGame = unit => {
+export const mainGame = (unit, beatData, audioSource) => {
+  const audio = audioSource;
+  audio.play();
   // 全域變數
   let updateFPS = 100;
   let time = 0;
@@ -12,7 +14,6 @@ export const mainGame = unit => {
     speed: 10,
     bpm: 100
   };
-  // let unit = stateUnit;
   const canvas = document.querySelector("#myCanvas");
   const ctx = canvas.getContext("2d");
   let cw = 18 * unit;
@@ -35,7 +36,7 @@ export const mainGame = unit => {
     ctx.stroke();
   };
   drawBackground();
-  
+
   class Pos {
     constructor(x, y) {
       this.x = x || 0;
@@ -87,17 +88,16 @@ export const mainGame = unit => {
   let noteC = [];
   let noteD = [];
 
-  function update() {
+  const update = () => {
     time++;
 
-    if (time % ((updateFPS * 30) / controls.bpm) === 0) {
+    if (time % ((updateFPS * 60) / controls.bpm) === 0) {
       round++;
-      console.log(round);
-      noteData_1[round].forEach((e, index) => {
-        if (noteData_1[round][0] === 1) {
+      beatData[round].forEach((e, index) => {
+        if (beatData[round][0] === 1) {
           noteA.push(new Note());
         }
-        if (noteData_1[round][1] === 1) {
+        if (beatData[round][1] === 1) {
           noteB.push(
             new Note({
               pos1: new Pos(-unit, 0),
@@ -107,7 +107,7 @@ export const mainGame = unit => {
             })
           );
         }
-        if (noteData_1[round][2] === 1) {
+        if (beatData[round][2] === 1) {
           noteC.push(
             new Note({
               pos1: new Pos(unit, 0),
@@ -117,7 +117,7 @@ export const mainGame = unit => {
             })
           );
         }
-        if (noteData_1[round][3] === 1) {
+        if (beatData[round][3] === 1) {
           noteD.push(
             new Note({
               pos1: new Pos(unit, 0),
@@ -156,7 +156,7 @@ export const mainGame = unit => {
     });
 
     render();
-  }
+  };
 
   function drawBackground() {
     for (let i = 0; i < 5; i++) {
@@ -199,11 +199,13 @@ export const mainGame = unit => {
 
   const startTimer = setInterval(() => {
     update();
-    window.addEventListener("click", () => {
-      // audio.pause();
-      // audio.currentTime = 0;
-      time = 0;
-      clearInterval(startTimer);
-    });
   }, 1000 / updateFPS);
+
+  player(noteA, noteB, noteC, noteD, unit);
+
+  return () => {
+    clearInterval(startTimer);
+    audio.pause();
+    audio.currentTime = 0;
+  };
 };

@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
-import { fetchSongList, selectDifficulty } from "../../actions";
+import { fetchSongList, selectDifficulty, checkInGame } from "../../actions";
 import "./index.css";
 
 class SelectSong extends React.Component {
@@ -11,15 +11,15 @@ class SelectSong extends React.Component {
   };
 
   componentDidMount() {
-    console.log("選取歌曲頁面", this.props);
-    const { playingSongData, match } = this.props;
-    if (playingSongData.audio && match.path !== "/game/:id") {
-      console.log("有audio, changepage");
-      playingSongData.audio.pause();
-      playingSongData.audio.currentTime = 0;
-    }
-
-    this.props.fetchSongList();
+    // console.log("選取歌曲頁面", this.props);
+    const { playingSongData, match, checkInGame, fetchSongList } = this.props;
+    // if (playingSongData.audio && match.path !== "/game/:id") {
+    //   console.log("有audio, changepage");
+    //   playingSongData.audio.pause();
+    //   playingSongData.audio.currentTime = 0;
+    // }
+    checkInGame(false);
+    fetchSongList();
   }
 
   playSong = e => {
@@ -121,5 +121,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { fetchSongList, selectDifficulty }
+  { fetchSongList, selectDifficulty, checkInGame }
 )(SelectSong);
