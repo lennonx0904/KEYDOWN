@@ -1,7 +1,8 @@
 import { player } from "./player";
+import { updateLocalStorage } from "./updateLocalStorage";
 
-export const mainGame = (unit, beatData, audioSource) => {
-  const audio = audioSource;
+export const mainGame = (unit, beatData, audio, difficulty) => {
+  // const audio = audioSource;
   audio.play();
   // 全域變數
   let updateFPS = 100;
@@ -9,17 +10,17 @@ export const mainGame = (unit, beatData, audioSource) => {
   // let score = 0;
   let round = 0;
   let spead = 10;
+
   //控制
   var controls = {
     speed: 10,
     bpm: 100
   };
+
   const canvas = document.querySelector("#myCanvas");
   const ctx = canvas.getContext("2d");
-  let cw = 18 * unit;
-  let ch = 13 * unit;
-  console.log("cw", cw, "ch", ch);
-
+  const cw = 18 * unit;
+  const ch = 13 * unit;
   const degA = Math.atan2(ch, cw / 2 - 2 * unit);
   const degB = Math.atan2((cw / 2) * Math.tan(degA), cw / 2 / 2);
   const overHeight = unit * 2 * Math.tan(degA);
@@ -87,15 +88,17 @@ export const mainGame = (unit, beatData, audioSource) => {
   let noteB = [];
   let noteC = [];
   let noteD = [];
+  let totalNotes = 0;
 
   const update = () => {
     time++;
-
     if (time % ((updateFPS * 60) / controls.bpm) === 0) {
       round++;
       beatData[round].forEach((e, index) => {
         if (beatData[round][0] === 1) {
           noteA.push(new Note());
+          totalNotes++;
+          updateLocalStorage('totalNotes', totalNotes);
         }
         if (beatData[round][1] === 1) {
           noteB.push(
@@ -106,6 +109,8 @@ export const mainGame = (unit, beatData, audioSource) => {
               shadowColor: "#5ad0fa"
             })
           );
+          totalNotes++;
+          updateLocalStorage("totalNotes", totalNotes);
         }
         if (beatData[round][2] === 1) {
           noteC.push(
@@ -116,6 +121,8 @@ export const mainGame = (unit, beatData, audioSource) => {
               shadowColor: "#ff5a5a"
             })
           );
+          totalNotes++;
+          updateLocalStorage("totalNotes", totalNotes);
         }
         if (beatData[round][3] === 1) {
           noteD.push(
@@ -126,9 +133,13 @@ export const mainGame = (unit, beatData, audioSource) => {
               shadowColor: "#aa27ff"
             })
           );
+          totalNotes++;
+          updateLocalStorage("totalNotes", totalNotes);
         }
       });
     }
+
+
     noteA.forEach(e => e.update());
     noteB.forEach(e => e.update());
     noteC.forEach(e => e.update());

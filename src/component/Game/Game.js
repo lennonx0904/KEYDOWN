@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Route, Redirect } from "react-router";
+import { Redirect } from "react-router";
+import { Link } from "react-router-dom";
 
 import PureCanvas from "./PureCanvas";
 import "./index.css";
@@ -8,7 +9,6 @@ import { checkInGame, fetchPlayingSongData, writeData } from "../../actions";
 import { mainGame } from "./mainGame";
 import { drawReadyState } from "./drawReadyState";
 
-// remember to remove state:startGame
 class Game extends React.Component {
   state = { unit: Math.round(window.innerWidth * 0.045) };
 
@@ -16,7 +16,6 @@ class Game extends React.Component {
     const { fetchPlayingSongData, inGame, match, difficulty } = this.props;
     if (difficulty !== "") {
       fetchPlayingSongData(match.params.id, difficulty);
-
       if (!inGame) {
         drawReadyState(this.state.unit);
         const canvas = document.querySelector("#myCanvas");
@@ -31,24 +30,36 @@ class Game extends React.Component {
     console.log("didupdate props", this.props);
     console.log("didupdate state", this.state);
 
-    const { inGame, playingSongData } = this.props;
+    const { inGame, playingSongData, difficulty } = this.props;
     if (inGame && playingSongData.beatData) {
       console.log("props.inGame----過去啦", inGame);
-      playingSongData.audio.addEventListener('ended', ()=>{
-        console.log('我在componentDidUpdate裡的監聽結束了');
-        
-      })
+      let rankingData = {
+        totalNotes: 0,
+        hitNotesA: 0,
+        hitNotesB: 0,
+        hitNotesC: 0,
+        hitNotesD: 0
+      };
+      localStorage.setItem("rankingData", JSON.stringify(rankingData));
+      playingSongData.audio.addEventListener("ended", () => {
+        console.log("我在componentDidUpdate裡的監聽結束了");
+      });
       this.stop = mainGame(
         this.state.unit,
         playingSongData.beatData,
-        playingSongData.audio
+        playingSongData.audio,
+        difficulty
       );
     }
   }
+
   componentWillUnmount() {
     console.log("componentWillUnmount");
     const { checkInGame, difficulty, inGame } = this.props;
     checkInGame(false);
+    // make sure this.stop won't be undefined
+    // 1. 使用者未開始遊戲 2.未選取歌曲的 Redirect 會讓 this.stop == undefined
+
     if (inGame && difficulty !== "") {
       this.stop();
     }
@@ -121,6 +132,9 @@ class Game extends React.Component {
         />
         <button onClick={this.write}>write</button>
         <button onClick={this.checkAudioandGame}>start</button>
+        <div>
+          <Link to="/ranking">ranking</Link>
+        </div>
       </div>
     );
   }

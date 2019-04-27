@@ -1,4 +1,3 @@
-// import { getsongList } from "./fireStore";
 import firebase from "./firebase";
 import "firebase/auth";
 
@@ -100,6 +99,14 @@ export const fetchPlayingSongData = (songId, difficulty) => dispatch => {
     });
 };
 
+export const renderRankingData = rankingData => {
+  return {
+    type: "RENDER_RANKING_DATA",
+    payload: rankingData
+  };
+};
+
+// 這只是用來寫假的 beatData
 export const writeData = data => {
   db.collection("songList")
     .doc("x7mYBzozC4wSDvqXkrN2")

@@ -22,11 +22,21 @@ const fetchPlayingSongDataReducer = (state = {}, action) => {
   }
 };
 
+const renderRankingDataReducer = (state = {}, action) => {
+  switch (action.type) {
+    case "RENDER_RANKING_DATA":
+      return Object.assign(action.payload);
+    default:
+      return state;
+  }
+};
+
 export default combineReducers({
   loginForm: showLoginFormReducer,
   signUpForm: showSignUpFormReducer,
   songList: fetchSongListReducer,
   difficulty: selectDifficultyReducer,
   inGame: checkInGameReducer,
-  playingSongData: fetchPlayingSongDataReducer
+  playingSongData: fetchPlayingSongDataReducer,
+  rankingData: renderRankingDataReducer
 });
