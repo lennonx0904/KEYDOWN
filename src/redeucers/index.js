@@ -3,6 +3,7 @@ import showLoginFormReducer from "./showLoginFormReducer";
 import showSignUpFormReducer from "./showSignUpFormReducer";
 import fetchSongListReducer from "./fetchSongListReducer";
 import checkInGameReducer from "./checkInGameReducer";
+import authReducer from "./authReducer";
 
 const selectDifficultyReducer = (state = "", action) => {
   switch (action.type) {
@@ -32,6 +33,7 @@ const renderRankingDataReducer = (state = {}, action) => {
 };
 
 export default combineReducers({
+  auth: authReducer,
   loginForm: showLoginFormReducer,
   signUpForm: showSignUpFormReducer,
   songList: fetchSongListReducer,

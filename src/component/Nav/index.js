@@ -1,10 +1,14 @@
 import React from "react";
+import { connect } from "react-redux";
 import Logo from "./Logo";
 import NavButtons from "./NavButtons";
-
 import "./index.css";
+import { checkAuthState } from "../../actions/authActions";
 
 class Nav extends React.Component {
+  componentDidMount() {
+    this.props.checkAuthState();
+  }
   render() {
     return (
       <div className="nav-bar">
@@ -15,4 +19,13 @@ class Nav extends React.Component {
   }
 }
 
-export default Nav;
+const mapStateToProps = state => {
+  return {
+    auth: state.auth
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  { checkAuthState }
+)(Nav);

@@ -5,9 +5,9 @@ import Nav from "./Nav";
 import AuthForm from "./AuthForm";
 import Home from "./Home";
 import SelectSong from "./SelectSong";
-import Game from "./Game/Game";
-import Ranking from './Ranking'
-// import Game from './Game'
+// import Game from "./Game/Game";
+import Game from "./Game";
+import Ranking from "./Ranking";
 
 class App extends Component {
   render() {

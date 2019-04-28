@@ -1,81 +1,154 @@
-// import React from "react";
-// import { connect } from "react-redux";
+import React from "react";
+import { connect } from "react-redux";
+import { Redirect } from "react-router";
+import { Link } from "react-router-dom";
 
-// // import PureCanvas from "./PureCanvas";
-// import "./index.css";
-// import Note from "./Note";
-// import { beatData } from "./beatData";
+import PureCanvas from "./PureCanvas";
+import "./index.css";
+import { checkInGame, fetchPlayingSongData, writeData } from "../../actions";
+import { mainGame } from "./mainGame";
+import { drawReadyState } from "./drawReadyState";
 
-// import './mainGame';
+class Game extends React.Component {
+  state = { unit: Math.round(window.innerWidth * 0.045) };
 
-// class Game extends React.Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = {
-//       ctx: null,
-//       screen: window.innerWidth,
-//       canvas: {
-//         width: 18 * 50,
-//         height: 13 * 50,
-//         degA: Math.atan2(13 * 50, (18 * 50) / 2 - 2 * 50),
-//         degB: Math.atan2(
-//           ((18 * 50) / 2) *
-//             Math.tan(Math.atan2(13 * 50, (18 * 50) / 2 - 2 * 50)),
-//           (18 * 50) / 4
-//         ),
-//         overHeight:
-//           50 * 2 * Math.tan(Math.atan2(13 * 50, (18 * 50) / 2 - 2 * 50))
-//       },
-//       score: 0
-//     };
-//     this.noteA = [];
-//     this.noteB = [];
-//     this.noteC = [];
-//     this.noteD = [];
-//     this.currentTime = 0;
-//   }
-//   saveContext = ctx => {
-//     this.ctx = ctx;
-//     this.width = this.ctx.canvas.width;
-//     this.height = this.ctx.canvas.height;
-//   };
-//   componentDidMount() {
-//     console.log('didmount======');
-    
-    
-//   }
+  componentDidMount() {
+    const { fetchPlayingSongData, inGame, match, difficulty } = this.props;
+    if (difficulty !== "") {
+      fetchPlayingSongData(match.params.id, difficulty);
+      if (!inGame) {
+        drawReadyState(this.state.unit);
+        const canvas = document.querySelector("#myCanvas");
+        canvas.addEventListener("click", () => {
+          this.props.checkInGame(true);
+        });
+      }
+    }
+  }
 
-//   generateNote = (noteType, args) => {
-//     noteType.push(new Note(args));
-//   };
+  componentDidUpdate() {
+    console.log("didupdate props", this.props);
+    console.log("didupdate state", this.state);
 
-//   update = i => {
-//     // 抓音樂開始時間，計算songPosition
-//     if (noteData[0][i] === this.currentTime) {
-//       this.generateNote(this.noteA, null);
-//     }
+    const { inGame, playingSongData, difficulty } = this.props;
+    if (inGame && playingSongData.beatData) {
+      console.log("props.inGame----過去啦", inGame);
+      let rankingData = {
+        totalNotes: 0,
+        hitNotesA: 0,
+        hitNotesB: 0,
+        hitNotesC: 0,
+        hitNotesD: 0
+      };
+      localStorage.setItem("rankingData", JSON.stringify(rankingData));
+      playingSongData.audio.addEventListener("ended", () => {
+        console.log("我在componentDidUpdate裡的監聽結束了");
+      });
+      this.stop = mainGame(
+        this.state.unit,
+        playingSongData.beatData,
+        playingSongData.audio,
+        difficulty
+      );
+    }
+  }
 
-//     // Next frame
-//     requestAnimationFrame(() => {
-//       this.update();
-//     });
-//   };
+  componentWillUnmount() {
+    console.log("componentWillUnmount");
+    const { checkInGame, difficulty, inGame } = this.props;
+    checkInGame(false);
+    // make sure this.stop won't be undefined
+    // 1. 使用者未開始遊戲 2.未選取歌曲的 Redirect 會讓 this.stop == undefined
 
-//   startGame = () => {
-//     const audio = new Audio(this.props.songToPlay.songURL);
-//     audio.play();
-//   };
+    if (inGame && difficulty !== "") {
+      this.stop();
+    }
+  }
 
-//   render() {
-//     // console.log(this.props);
-//     // console.log(this.state);
+  checkAudioandGame = () => {
+    const audio = this.props.playingSongData.audio;
+    audio.play();
 
-//     return <canvas id="myCanvas" />;
-//   }
-// }
+    console.log("第一次 audio", audio.currentTime);
 
-// const mapStateToProps = state => {
-//   return { songToPlay: state.songToPlay };
-// };
+    // setTimeout(() => {
+    //   // console.log("readyState", audio.readyState);
+    //   console.log("duration", audio.duration);
+    //   console.log("currentTime", audio.currentTime);
+    //   console.log("audioCtx", audioCtx.currentTime);
+    // }, 4000);
 
-// export default connect(mapStateToProps)(Game);
+    let timer = setInterval(() => {
+      console.log("currentTime", audio.currentTime);
+    }, 1000 / 100);
+
+    audio.addEventListener("ended", () => {
+      console.log("end-currentTime----", audio.currentTime);
+      console.log("結束了");
+      clearInterval(timer);
+    });
+
+    audio.addEventListener("pause", () => {
+      clearInterval(timer);
+    });
+
+    audio.addEventListener("timeupdate", () => {
+      if (audio.currentTime.toFixed(2) === "3.23") {
+        console.log("timeupdate裡的----", audio.currentTime);
+      }
+    });
+  };
+
+  write = () => {
+    let data = [];
+    const makeRandom = () => {
+      let num = Math.random();
+      if (num < 0.65) {
+        return 0;
+      } else {
+        return 1;
+      }
+    };
+    for (let i = 0; i < 400; i++) {
+      let newArr = [makeRandom(), makeRandom(), makeRandom(), makeRandom()];
+      data.push(newArr);
+    }
+    this.props.writeData(JSON.stringify(data));
+  };
+
+  render() {
+    console.log("Game props----", this.props);
+    console.log("Game state----", this.state);
+    if (this.props.difficulty === "") {
+      console.log("Redirect");
+      return <Redirect to="/select" />;
+    }
+
+    return (
+      <div>
+        <PureCanvas
+          width={this.state.unit * 18}
+          height={this.state.unit * 13}
+        />
+        <button onClick={this.write}>write</button>
+        <button onClick={this.checkAudioandGame}>start</button>
+        <div>
+          <Link to="/ranking">ranking</Link>
+        </div>
+      </div>
+    );
+  }
+}
+
+const mapStateToProps = state => {
+  return {
+    difficulty: state.difficulty,
+    inGame: state.inGame,
+    playingSongData: state.playingSongData
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  { checkInGame, fetchPlayingSongData, writeData }
+)(Game);

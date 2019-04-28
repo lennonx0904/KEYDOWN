@@ -19,9 +19,8 @@
   margin-right: 50px;
 }
 .nav-button {
-  border: 1px solid #000000;
   font-size: 18px;
-  border-radius: 19px;
+  border-radius: 22.5px;
   margin: 0 10px;
   padding: 10px 20px;
   cursor: pointer;

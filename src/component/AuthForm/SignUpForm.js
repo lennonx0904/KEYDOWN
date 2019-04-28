@@ -1,34 +1,34 @@
 import React from "react";
 import { connect } from "react-redux";
 import { showSignUpForm } from "../../actions";
-// import firebase from "../../actions/firebase";
-
-const initState = {
-  userName: "",
-  email: "",
-  password: "",
-  comfirmPassword: ""
-};
+import { signUp } from "../../actions/authActions";
 
 class SignUpForm extends React.Component {
-  state = { ...initState };
+  state = {
+    userName: "",
+    email: "",
+    password: "",
+    comfirmPassword: ""
+  };
 
   changeInputState = e => {
-    console.log(e.target.name);
-    console.log(e.currentTarget.value);
-
     this.setState({ [e.target.name]: e.target.value });
   };
 
+  submitHandler = e => {
+    e.preventDefault();
+    this.props.signUp(this.state);
+  };
 
-  render() {
-
+  rendersSignupForm = () => {
     return (
       <div className="auth-wrap">
-        <div className="signup-form ">
+        <form className="signup-form" onSubmit={this.submitHandler}>
           <i
             className="fas fa-times exit-btn"
-            onClick={()=>{this.props.showSignUpForm(false)}}
+            onClick={() => {
+              this.props.showSignUpForm(false);
+            }}
           />
           <div>
             <label>Name</label>
@@ -70,24 +70,22 @@ class SignUpForm extends React.Component {
               onChange={this.changeInputState}
             />
           </div>
-          <button className="submit-btn" onClick={this.signUpHandler}>
-            Sigh Up
-          </button>
-        </div>
+          <button className="submit-btn">Sigh Up</button>
+        </form>
       </div>
     );
+  };
+
+  render() {
+    return <>{this.props.auth.uid ? null : this.rendersSignupForm()}</>;
   }
 }
 
 const mapStateToProps = state => {
-  console.log("this", this);
-
-  console.log(state);
-
-  return { signUpForm: state.signUpForm };
+  return { signUpForm: state.signUpForm, auth: state.auth };
 };
 
 export default connect(
   mapStateToProps,
-  { showSignUpForm }
+  { showSignUpForm, signUp }
 )(SignUpForm);

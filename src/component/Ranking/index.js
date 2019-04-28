@@ -6,11 +6,7 @@ import "./index.css";
 
 class Ranking extends React.Component {
   componentDidMount() {
-    let data = JSON.parse(localStorage.rankingData);
-    const totalNotes = data.totalNotes;
-    const hitNotes =
-      data.hitNotesA + data.hitNotesB + data.hitNotesC + data.hitNotesD;
-    this.props.renderRankingData({ totalNotes, hitNotes });
+    this.passRankingDataToStore();
   }
 
   passRankingDataToStore = () => {
@@ -31,7 +27,6 @@ class Ranking extends React.Component {
         <div>MISS: {rankingData.totalNotes - rankingData.hitNotes}</div>
         <div>SCORE: {rankingData.hitNotes * 100}</div>
         <div>RANGE: A</div>
-        <button onClick={this.passRankingDataToStore}>test</button>
       </div>
     );
   }

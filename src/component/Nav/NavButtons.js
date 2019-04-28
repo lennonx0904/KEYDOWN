@@ -1,40 +1,61 @@
 import React from "react";
 import { connect } from "react-redux";
 import { showLoginForm, showSignUpForm } from "../../actions";
+import { logOut } from "../../actions/authActions";
 
 class NavButtons extends React.Component {
-  render() {
+  renderLogInAndSignUpBtn = () => {
+    const { loginForm, signUpForm, showLoginForm, showSignUpForm } = this.props;
     return (
-      <div className="buttons">
+      <>
         <button
           className="log-in nav-button"
           onClick={() => {
-            this.props.showLoginForm(true);
+            showLoginForm(true);
           }}
-          disabled={this.props.signUpForm}
+          disabled={signUpForm}
         >
           Log In
         </button>
         <button
           className="sigh-in nav-button"
           onClick={() => {
-            this.props.showSignUpForm(true);
+            showSignUpForm(true);
           }}
-          disabled={this.props.loginForm}
+          disabled={loginForm}
         >
           Sign Up
         </button>
+      </>
+    );
+  };
 
-        <div className="log-out nav-button none">Log Out</div>
+  renderLogOutBtn = () => {
+    return (
+      <>
+        <button className="log-out nav-button" onClick={this.props.logOut}>
+          Log Out
+        </button>
+      </>
+    );
+  };
+
+  render() {
+    return (
+      <div className="buttons">
+        {this.props.auth.uid
+          ? this.renderLogOutBtn()
+          : this.renderLogInAndSignUpBtn()}
+        {/* {this.renderLogInAndSignUpBtn()}
+        {this.renderLogOutBtn()} */}
       </div>
     );
   }
 }
 
 const mapStatetoProps = state => {
-  // console.log(state);
-
   return {
+    auth: state.auth,
     loginForm: state.loginForm,
     signUpForm: state.signUpForm
   };
@@ -42,5 +63,5 @@ const mapStatetoProps = state => {
 
 export default connect(
   mapStatetoProps,
-  { showLoginForm, showSignUpForm }
+  { showLoginForm, showSignUpForm, logOut }
 )(NavButtons);

@@ -1,12 +1,28 @@
 import React from "react";
 import { connect } from "react-redux";
 import { showLoginForm } from "../../actions";
+import { logIn } from "../../actions/authActions";
 
 class LoginForm extends React.Component {
-  render() {
+  state = {
+    email: "",
+    password: ""
+  };
+
+  changeInputState = e => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
+
+  submitHandler = e => {
+    e.preventDefault();
+    console.log(this.state);
+    this.props.logIn(this.state);
+  };
+
+  renderForm = () => {
     return (
       <div className="auth-wrap">
-        <div className="login-form">
+        <form className="login-form" onSubmit={this.submitHandler}>
           <i
             className="fas fa-times exit-btn"
             onClick={() => {
@@ -16,23 +32,33 @@ class LoginForm extends React.Component {
           <div>
             <label>E-mail</label>
             <br />
-            <input type="text" />
+            <input type="text" name="email" onChange={this.changeInputState} />
           </div>
           <div>
             <label>Password</label>
             <br />
-            <input type="password" />
+            <input
+              type="password"
+              name="password"
+              onChange={this.changeInputState}
+            />
           </div>
           <button className="submit-btn">Login</button>
-        </div>
+          <div>{this.props.auth.authError ? <p>{this.props.auth.authError}</p> : null}</div>
+        </form>
       </div>
     );
+  };
+
+  render() {
+    console.log("sigh in form props---", this.props);
+    return <>{this.props.auth.uid ? null : this.renderForm()}</>;
   }
 }
 const mapStateToProps = state => {
-  return { loginForm: state.loginForm };
+  return { loginForm: state.loginForm, auth: state.auth };
 };
 export default connect(
   mapStateToProps,
-  { showLoginForm }
+  { showLoginForm, logIn }
 )(LoginForm);
