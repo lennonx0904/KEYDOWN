@@ -26,23 +26,8 @@ export const logOut = () => dispatch => {
     });
 };
 
-export const checkAuthState = () => dispatch => {
-  firebase.auth().onAuthStateChanged(user => {
-    console.log("每次的checkAuthState-------");
-    if (user) {
-      console.log("checkAuthState 裡面的", user.uid);
-      dispatch({ type: "STORE_USER_UID", payload: user.uid });
-    } else {
-      dispatch({ type: "STORE_USER_UID", payload: null });
-    }
-  });
-};
-
 export const signUp = data => dispatch => {
-  console.log("signUp--state--", data);
-
   const { userName, email, password, comfirmPassword } = data;
-
   if (userName === "") {
     alert("Please enter your name.");
     return;
@@ -68,4 +53,22 @@ export const signUp = data => dispatch => {
     .catch(error => {
       dispatch({ type: "SIGH_UP_ERROR", payload: error.message });
     });
+};
+
+export const checkAuthState = () => dispatch => {
+  firebase.auth().onAuthStateChanged(user => {
+    if (user) {
+      dispatch({ type: "GET_USER_UID", payload: user.uid });
+      db.collection("users")
+        .doc(user.uid)
+        .get()
+        .then(doc => {
+          if (doc) {
+            dispatch({ type: "GET_USER_NAME", payload: doc.data().userName });
+          }
+        });
+    } else {
+      dispatch({ type: "GET_USER_UID", payload: null });
+    }
+  });
 };

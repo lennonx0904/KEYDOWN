@@ -5,7 +5,6 @@ import Nav from "./Nav";
 import AuthForm from "./AuthForm";
 import Home from "./Home";
 import SelectSong from "./SelectSong";
-// import Game from "./Game/Game";
 import Game from "./Game";
 import Ranking from "./Ranking";
 
@@ -19,7 +18,7 @@ class App extends Component {
           <Route path="/" exact component={Home} />
           <Route path="/select" component={SelectSong} />
           <Route path="/game/:id" component={Game} />
-          <Route path="/ranking" component={Ranking} />
+          <Route path="/ranking/:id" component={Ranking} />
         </div>
       </BrowserRouter>
     );

@@ -4,6 +4,7 @@ import showSignUpFormReducer from "./showSignUpFormReducer";
 import fetchSongListReducer from "./fetchSongListReducer";
 import checkInGameReducer from "./checkInGameReducer";
 import authReducer from "./authReducer";
+import rankingReducer from "./rankingReducer";
 
 const selectDifficultyReducer = (state = "", action) => {
   switch (action.type) {
@@ -40,5 +41,6 @@ export default combineReducers({
   difficulty: selectDifficultyReducer,
   inGame: checkInGameReducer,
   playingSongData: fetchPlayingSongDataReducer,
-  rankingData: renderRankingDataReducer
+  rankingData: renderRankingDataReducer,
+  rankingRecord: rankingReducer
 });

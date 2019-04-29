@@ -1,6 +1,7 @@
 const initState = {
   authError: null,
-  uid: null
+  uid: null,
+  name: null
 };
 
 const authReducer = (state = initState, action) => {
@@ -8,7 +9,7 @@ const authReducer = (state = initState, action) => {
     case "LOGIN_ERROR":
       console.log("Loning error !");
       return { ...state, authError: "Login Failed" };
-    case "STORE_USER_UID":
+    case "GET_USER_UID":
       return { ...state, uid: action.payload };
     // "LOGIN_SUCCESS" 要刪掉
     case "LOGIN_SUCCESS":
@@ -24,6 +25,8 @@ const authReducer = (state = initState, action) => {
     case "SIGH_UP_ERROR":
       console.log("signup error ");
       return { ...state, authError: action.payload };
+    case "GET_USER_NAME":
+      return { ...state, name: action.payload };
     default:
       return state;
   }

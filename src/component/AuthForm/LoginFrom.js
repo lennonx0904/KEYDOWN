@@ -21,6 +21,7 @@ class LoginForm extends React.Component {
 
   renderForm = () => {
     return (
+      <div className="auth-view">
       <div className="auth-wrap">
         <form className="login-form" onSubmit={this.submitHandler}>
           <i
@@ -46,6 +47,7 @@ class LoginForm extends React.Component {
           <button className="submit-btn">Login</button>
           <div>{this.props.auth.authError ? <p>{this.props.auth.authError}</p> : null}</div>
         </form>
+      </div>
       </div>
     );
   };

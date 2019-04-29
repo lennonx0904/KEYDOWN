@@ -1,15 +1,100 @@
 .view {
+  width: 100%;
   display: flex;
   justify-content: center;
   height: 100vh;
+  background-color: rgba(0, 0, 0, 0.9);
 }
-.game {
+.game-wrap {
+  width: 60%;
   margin: 0;
+  /* display: flex; */
+  /* margin-top: 20px; */
+  /* background-color: #ade0e9; */
+}
+.canvas-wrap {
   position: relative;
-  margin-top: 20px;
+  /* display: flex; */
 }
 
-#myCanvas {
+#game-canvas {
   margin: 0;
-  border: 2px solid #000;
+  border: 1px solid #000;
+  background-color: #ffffff;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.player-canvas {
+  margin: 0;
+  border: 1px solid #000;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.game-buttons {
+  width: 100%;
+  display: flex;
+}
+.game-btn {
+  width: 25%;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: -5px;
+  font-size: 24px;
+  font-weight: bold;
+  border-radius: 15px;
+  /* border: 1px solid black; */
+}
+
+.btn-d {
+  background-color: #ffff00;
+  border-bottom: 5px solid #c4c400;
+  /* box-shadow:
+  inset 0 30px 50px #eded00; */
+}
+.btn-f {
+  background-color: #75d0f5;
+  border-bottom: 5px solid #5fa9c6;
+}
+.btn-k {
+  background-color: #ff0000;
+  border-bottom: 5px solid #c40000;
+}
+
+.btn-l {
+  background-color: #9100f1;
+  border-bottom: 5px solid #7400c1;
+}
+
+.btn-d-active {
+  border-bottom: 2px solid #c4c400;
+}
+
+.btn-f-active {
+  border-bottom: 2px solid #5fa9c6;
+}
+.btn-k-active {
+  border-bottom: 2px solid #c40000;
+}
+
+.btn-l-active {
+  border-bottom: 2px solid #7400c1;
+}
+
+.btn-d:active {
+  border-bottom: 2px solid #c4c400;
+}
+
+.btn-f:active {
+  border-bottom: 2px solid #5fa9c6;
+}
+.btn-k:active {
+  border-bottom: 2px solid #c40000;
+}
+.btn-l:active {
+  border-bottom: 2px solid #7400c1;
 }

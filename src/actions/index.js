@@ -17,8 +17,6 @@ export const showSignUpForm = boolean => {
   };
 };
 
-
-
 export const fetchSongList = () => dispatch => {
   let arr = [];
   db.collection("songList")
@@ -63,16 +61,9 @@ export const fetchPlayingSongData = (songId, difficulty) => dispatch => {
         dispatch({ type: "FETCH_PLAYING_SONG_DATA", payload: obj });
       });
     })
-    .catch(function(error) {
+    .catch(error => {
       console.log("Error getting documents: ", error);
     });
-};
-
-export const renderRankingData = rankingData => {
-  return {
-    type: "RENDER_RANKING_DATA",
-    payload: rankingData
-  };
 };
 
 // 這只是用來寫假的 beatData

@@ -7,10 +7,10 @@ import PureCanvas from "./PureCanvas";
 import "./index.css";
 import { checkInGame, fetchPlayingSongData, writeData } from "../../actions";
 import { mainGame } from "./mainGame";
-import { drawReadyState } from "./drawReadyState";
+import { drawReadyState } from "./helpers";
 
 class Game extends React.Component {
-  state = { unit: Math.round(window.innerWidth * 0.045) };
+  state = { unit: Math.round(window.innerWidth * 0.033) };
 
   componentDidMount() {
     const { fetchPlayingSongData, inGame, match, difficulty } = this.props;
@@ -18,7 +18,7 @@ class Game extends React.Component {
       fetchPlayingSongData(match.params.id, difficulty);
       if (!inGame) {
         drawReadyState(this.state.unit);
-        const canvas = document.querySelector("#myCanvas");
+        const canvas = document.querySelector(".player-canvas");
         canvas.addEventListener("click", () => {
           this.props.checkInGame(true);
         });
@@ -59,7 +59,6 @@ class Game extends React.Component {
     checkInGame(false);
     // make sure this.stop won't be undefined
     // 1. 使用者未開始遊戲 2.未選取歌曲的 Redirect 會讓 this.stop == undefined
-
     if (inGame && difficulty !== "") {
       this.stop();
     }
@@ -117,23 +116,44 @@ class Game extends React.Component {
   };
 
   render() {
-    console.log("Game props----", this.props);
-    console.log("Game state----", this.state);
+    // console.log("Game props----", this.props);
+    // console.log("Game state----", this.state);
     if (this.props.difficulty === "") {
       console.log("Redirect");
       return <Redirect to="/select" />;
     }
+    const style = {
+      margin: `${this.state.unit * 13 + 7}px 0 0 0`,
+      width: `${this.state.unit * 18 + 1}px`
+    };
 
     return (
-      <div>
-        <PureCanvas
-          width={this.state.unit * 18}
-          height={this.state.unit * 13}
-        />
+      <div className="view">
+        <div className="game-wrap">
+          <div className="canvas-wrap">
+          
+            <PureCanvas
+              width={this.state.unit * 18}
+              height={this.state.unit * 13}
+            />
+            <canvas
+              className="player-canvas"
+              width={this.state.unit * 18}
+              height={this.state.unit * 13}
+            />
+          </div>
+  
+          <div className="game-buttons" style={style}>
+            <div className="game-btn btn-d">D</div>
+            <div className="game-btn btn-f">F</div>
+            <div className="game-btn btn-k">K</div>
+            <div className="game-btn btn-l">L</div>
+          </div>
+        </div>
+        <div>
         <button onClick={this.write}>write</button>
         <button onClick={this.checkAudioandGame}>start</button>
-        <div>
-          <Link to="/ranking">ranking</Link>
+          <Link to={`/ranking/${this.props.match.params.id}`}>ranking</Link>
         </div>
       </div>
     );

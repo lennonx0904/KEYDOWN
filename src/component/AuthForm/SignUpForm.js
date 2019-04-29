@@ -22,56 +22,58 @@ class SignUpForm extends React.Component {
 
   rendersSignupForm = () => {
     return (
-      <div className="auth-wrap">
-        <form className="signup-form" onSubmit={this.submitHandler}>
-          <i
-            className="fas fa-times exit-btn"
-            onClick={() => {
-              this.props.showSignUpForm(false);
-            }}
-          />
-          <div>
-            <label>Name</label>
-            <br />
-            <input
-              type="text"
-              name="userName"
-              value={this.state.userName}
-              onChange={this.changeInputState}
+      <div className="auth-view">
+        <div className="auth-wrap">
+          <form className="signup-form" onSubmit={this.submitHandler}>
+            <i
+              className="fas fa-times exit-btn"
+              onClick={() => {
+                this.props.showSignUpForm(false);
+              }}
             />
-          </div>
-          <div>
-            <label>E-mail</label>
-            <br />
-            <input
-              type="text"
-              name="email"
-              value={this.state.email}
-              onChange={this.changeInputState}
-            />
-          </div>
-          <div>
-            <label>Password</label>
-            <br />
-            <input
-              type="password"
-              name="password"
-              value={this.state.password}
-              onChange={this.changeInputState}
-            />
-          </div>
-          <div>
-            <label>Comfirm Your Password</label>
-            <br />
-            <input
-              type="password"
-              name="comfirmPassword"
-              value={this.state.comfirmPassword}
-              onChange={this.changeInputState}
-            />
-          </div>
-          <button className="submit-btn">Sigh Up</button>
-        </form>
+            <div>
+              <label>Name</label>
+              <br />
+              <input
+                type="text"
+                name="userName"
+                value={this.state.userName}
+                onChange={this.changeInputState}
+              />
+            </div>
+            <div>
+              <label>E-mail</label>
+              <br />
+              <input
+                type="text"
+                name="email"
+                value={this.state.email}
+                onChange={this.changeInputState}
+              />
+            </div>
+            <div>
+              <label>Password</label>
+              <br />
+              <input
+                type="password"
+                name="password"
+                value={this.state.password}
+                onChange={this.changeInputState}
+              />
+            </div>
+            <div>
+              <label>Comfirm Your Password</label>
+              <br />
+              <input
+                type="password"
+                name="comfirmPassword"
+                value={this.state.comfirmPassword}
+                onChange={this.changeInputState}
+              />
+            </div>
+            <button className="submit-btn">Sigh Up</button>
+          </form>
+        </div>
       </div>
     );
   };
