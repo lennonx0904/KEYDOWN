@@ -4,10 +4,7 @@ import { updateLocalStorage } from "./helpers";
 export const mainGame = (unit, beatData, audio, difficulty, match) => {
   // const audio = audioSource;
   audio.play();
-  audio.addEventListener("ended", () => {
-    console.log("我在maingame裡的監聽結束了");
-    window.location.hash = `/ranking/${match.params.id}`;
-  });
+
   // 全域變數
   let updateFPS = 100;
   let time = 0;
@@ -91,11 +88,9 @@ export const mainGame = (unit, beatData, audio, difficulty, match) => {
 
   const update = () => {
     time++;
-
     if (time > 115) {
       if (time % ((updateFPS * 60) / bpm) === 0) {
         round++;
-
         beatData[round].forEach((e, index) => {
           if (beatData[round][0] === 1) {
             noteA.push(new Note());
@@ -137,6 +132,7 @@ export const mainGame = (unit, beatData, audio, difficulty, match) => {
         });
       }
     }
+
     noteA.forEach(e => e.update());
     noteB.forEach(e => e.update());
     noteC.forEach(e => e.update());
@@ -162,9 +158,7 @@ export const mainGame = (unit, beatData, audio, difficulty, match) => {
         noteD.splice(index, 1);
       }
     });
-    console.log("totalNotes", totalNotes/4);
-
-    updateLocalStorage("totalNotes", totalNotes/4);
+    updateLocalStorage("totalNotes", totalNotes / 4);
     render();
   };
 
@@ -211,7 +205,7 @@ export const mainGame = (unit, beatData, audio, difficulty, match) => {
     update();
   }, 1000 / updateFPS);
 
-  player(noteA, noteB, noteC, noteD, unit);
+  player(noteA, noteB, noteC, noteD, unit, audio);
 
   return () => {
     clearInterval(startTimer);

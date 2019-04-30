@@ -6,14 +6,14 @@ import checkInGameReducer from "./checkInGameReducer";
 import authReducer from "./authReducer";
 import rankingReducer from "./rankingReducer";
 
-const selectDifficultyReducer = (state = "", action) => {
-  switch (action.type) {
-    case "SELECT_SONG_TO_PLAY":
-      return action.payload;
-    default:
-      return state;
-  }
-};
+// const selectDifficultyReducer = (state = "", action) => {
+//   switch (action.type) {
+//     case "SELECT_SONG_TO_PLAY":
+//       return action.payload;
+//     default:
+//       return state;
+//   }
+// };
 
 const fetchPlayingSongDataReducer = (state = {}, action) => {
   switch (action.type) {
@@ -38,7 +38,7 @@ export default combineReducers({
   loginForm: showLoginFormReducer,
   signUpForm: showSignUpFormReducer,
   songList: fetchSongListReducer,
-  difficulty: selectDifficultyReducer,
+  // difficulty: selectDifficultyReducer,
   inGame: checkInGameReducer,
   playingSongData: fetchPlayingSongDataReducer,
   rankingData: renderRankingDataReducer,

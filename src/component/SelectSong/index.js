@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { fetchSongList, selectDifficulty } from "../../actions";
+import { fetchSongList } from "../../actions";
 import "./index.css";
 
 class SelectSong extends React.Component {
@@ -36,10 +36,10 @@ class SelectSong extends React.Component {
     audio.currentTime = 0;
   };
 
-  selectSong = e => {
-    let difficulty = e.currentTarget.textContent.toLowerCase();
-    this.props.selectDifficulty(difficulty);
-  };
+  // selectSong = e => {
+  //   let difficulty = e.currentTarget.textContent.toLowerCase();
+  //   this.props.selectDifficulty(difficulty);
+  // };
 
   renderSongList() {
     return this.props.songList.map(song => {
@@ -58,32 +58,32 @@ class SelectSong extends React.Component {
             <div className="song-auth">{song.data.auth}</div>
           </div>
           <div className="difficulty-wrap">
-            <Link to={`/game/${song.id}`}>
+            <Link to={`/game/${song.id}?easy`}>
               <button
                 className="difficulty easy"
                 name={song.data.name}
                 // url={song.url}
-                onClick={this.selectSong}
+                // onClick={this.selectSong}
               >
                 EASY
               </button>
             </Link>
-            <Link to={`/game/${song.id}`}>
+            <Link to={`/game/${song.id}?normal`}>
               <button
-                className="difficulty easy"
+                className="difficulty normal"
                 name={song.data.name}
                 // url={song.url}
-                onClick={this.selectSong}
+                // onClick={this.selectSong}
               >
                 NORMAL
               </button>
             </Link>
-            <Link to={`/game/${song.id}`}>
+            <Link to={`/game/${song.id}?hard`}>
               <button
-                className="difficulty easy"
+                className="difficulty hard"
                 name={song.data.name}
                 // url={song.url}
-                onClick={this.selectSong}
+                // onClick={this.selectSong}
               >
                 HARD
               </button>
@@ -112,5 +112,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { fetchSongList, selectDifficulty }
+  { fetchSongList }
 )(SelectSong);

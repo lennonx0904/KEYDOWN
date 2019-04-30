@@ -27,6 +27,11 @@ const authReducer = (state = initState, action) => {
       return { ...state, authError: action.payload };
     case "GET_USER_NAME":
       return { ...state, name: action.payload };
+    case "SHOW_LOGIN_FORM":
+      return { ...state, authError: null };
+    case "SHOW_SIGNUP_FORM":
+      return { ...state, authError: null };
+
     default:
       return state;
   }

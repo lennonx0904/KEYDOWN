@@ -72,6 +72,7 @@ class SignUpForm extends React.Component {
               />
             </div>
             <button className="submit-btn">Sigh Up</button>
+            <div>{this.props.auth.authError ? <p>{this.props.auth.authError}</p> : null}</div>
           </form>
         </div>
       </div>

@@ -4,7 +4,7 @@ const initState = {
 
 const rankingReducer = (state = initState, action) => {
   switch (action.type) {
-    case "FETCH_RANKING_DATA_FROM_SONG":
+    case "FETCH_RANKING_RECORD_FROM_SONG":
       console.log(action.payload);
       return { ...state, dataFromSong: action.payload };
 

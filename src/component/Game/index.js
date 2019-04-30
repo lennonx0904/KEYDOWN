@@ -13,7 +13,10 @@ class Game extends React.Component {
   state = { unit: Math.round(window.innerWidth * 0.033) };
 
   componentDidMount() {
-    const { fetchPlayingSongData, inGame, match, difficulty } = this.props;
+    const { fetchPlayingSongData, inGame, match, location } = this.props;
+    const difficulty = location.search.slice(1);
+    console.log("location.search", difficulty);
+
     if (difficulty !== "") {
       fetchPlayingSongData(match.params.id, difficulty);
       if (!inGame) {
@@ -29,10 +32,10 @@ class Game extends React.Component {
   componentDidUpdate() {
     console.log("didupdate props", this.props);
     console.log("didupdate state", this.state);
+    const { inGame, playingSongData, match, location } = this.props;
+    const difficulty = location.search.slice(1);
 
-    const { inGame, playingSongData, difficulty, match } = this.props;
     if (inGame && playingSongData.beatData) {
-      console.log("props.inGame----過去啦", inGame);
       let rankingData = {
         totalNotes: 0,
         hitNotesA: 0,
@@ -41,12 +44,6 @@ class Game extends React.Component {
         hitNotesD: 0
       };
       localStorage.setItem("rankingData", JSON.stringify(rankingData));
-
-      playingSongData.audio.addEventListener("ended", () => {
-        console.log("我在componentDidUpdate裡的監聽結束了");
-        window.location.hash = `#/ranking/${match.params.id}`;
-      });
-
       this.stop = mainGame(
         this.state.unit,
         playingSongData.beatData,
@@ -54,6 +51,14 @@ class Game extends React.Component {
         difficulty,
         match
       );
+      let audio = playingSongData.audio;
+      audio.addEventListener("ended", () => {
+      
+          window.location.hash = `#/ranking/${match.params.id}${
+            location.search
+          }`;
+        
+      });
     }
   }
 
@@ -73,13 +78,6 @@ class Game extends React.Component {
     audio.play();
 
     console.log("第一次 audio", audio.currentTime);
-
-    // setTimeout(() => {
-    //   // console.log("readyState", audio.readyState);
-    //   console.log("duration", audio.duration);
-    //   console.log("currentTime", audio.currentTime);
-    //   console.log("audioCtx", audioCtx.currentTime);
-    // }, 4000);
 
     let timer = setInterval(() => {
       console.log("currentTime", audio.currentTime);
@@ -156,7 +154,13 @@ class Game extends React.Component {
         <div>
           {/* <button onClick={this.write}>write</button>
           <button onClick={this.checkAudioandGame}>start</button> */}
-          <Link to={`/ranking/${this.props.match.params.id}`}>ranking</Link>
+          <Link
+            to={`/ranking/${this.props.match.params.id}${
+              this.props.location.search
+            }`}
+          >
+            ranking
+          </Link>
         </div>
       </div>
     );
@@ -165,7 +169,7 @@ class Game extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    difficulty: state.difficulty,
+    // difficulty: state.difficulty,
     inGame: state.inGame,
     playingSongData: state.playingSongData
   };

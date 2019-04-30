@@ -30,12 +30,14 @@ export const fetchSongList = () => dispatch => {
     );
 };
 
-export const selectDifficulty = difficulty => {
-  return {
-    type: "SELECT_SONG_TO_PLAY",
-    payload: difficulty
-  };
-};
+// 這隻要刪掉
+
+// export const selectDifficulty = difficulty => {
+//   return {
+//     type: "SELECT_SONG_TO_PLAY",
+//     payload: difficulty
+//   };
+// };
 
 export const checkInGame = boolean => {
   return {

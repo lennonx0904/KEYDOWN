@@ -4,50 +4,96 @@ import { connect } from "react-redux";
 import {
   renderRankingData,
   storeRecordToDB,
-  fetchRankingDataFromSong
+  fetchRankingRecordFromSong
 } from "../../actions/rankingActions";
 import "./index.css";
 
 class Ranking extends React.Component {
+  state = {
+    hasStored: false
+  };
+
   componentDidMount() {
-    const { difficulty, match, fetchRankingDataFromSong } = this.props;
-    if (this.props.difficulty !== "") {
-      this.storeRecord();
-      fetchRankingDataFromSong(match.params.id, difficulty);
+    if (localStorage.rankingData) {
+      this.passRankingDataToStore();
+    } else {
+      window.location.hash = "#/";
     }
-    this.passRankingDataToStore();
-    // hard code 記得改回來
-    // fetchRankingDataFromSong(match.params.id, "easy");
+    if (!this.state.hasStored) {
+      this.storeRecord();
+    }
+    const { match, location, fetchRankingRecordFromSong } = this.props;
+    const difficulty = location.search.slice(1);
+    if (difficulty !== "") {
+      fetchRankingRecordFromSong(match.params.id, difficulty);
+    }
+  }
+
+  componentWillUnmount() {
+    localStorage.removeItem("rankingData");
   }
 
   passRankingDataToStore = () => {
-    let data = JSON.parse(localStorage.rankingData);
-    const totalNotes = data.totalNotes;
+    let rankingData = JSON.parse(localStorage.rankingData);
+    const totalNotes = rankingData.totalNotes;
     const hitNotes =
-      data.hitNotesA + data.hitNotesB + data.hitNotesC + data.hitNotesD;
+      rankingData.hitNotesA +
+      rankingData.hitNotesB +
+      rankingData.hitNotesC +
+      rankingData.hitNotesD;
     this.props.renderRankingData({ totalNotes, hitNotes });
   };
 
+  rankingRule = () => {
+    let rankingData = JSON.parse(localStorage.rankingData);
+    const total = rankingData.totalNotes;
+    const hit =
+      rankingData.hitNotesA +
+      rankingData.hitNotesB +
+      rankingData.hitNotesC +
+      rankingData.hitNotesD;
+    let accurate = Math.round((hit / total) * 100);
+    if (accurate >= 90) {
+      return "A";
+    } else if (accurate >= 80) {
+      return "B";
+    } else if (accurate >= 70) {
+      return "C";
+    } else if (accurate >= 60) {
+      return "D";
+    } else {
+      return "E";
+    }
+  };
 
   storeRecord = () => {
-    // console.log('storeRecord==props', this.props);
-    const { difficulty, match, storeRecordToDB, rankingData, auth } = this.props;
-    console.log("why nan rankingData.hitNotes---", rankingData.hitNotes);
-
-    console.log(difficulty, match.params.id, rankingData, auth.name);
+    if (!localStorage.rankingData) {
+      return;
+    }
+    const { match, location, storeRecordToDB, auth } = this.props;
+    const difficulty = location.search.slice(1);
+    console.log(difficulty, match.params.id, auth.name);
+    const rankingData = JSON.parse(localStorage.rankingData);
+    const hit =
+      rankingData.hitNotesA +
+      rankingData.hitNotesB +
+      rankingData.hitNotesC +
+      rankingData.hitNotesD;
     const date = new Date();
     const time = `${date.getFullYear()}/${date.getMonth() +
       1}/${date.getDate()} ${date.getHours()}:${date.getMinutes()}`;
-    console.log(time);
     const data = {
       name: auth.name,
-      rank: "B",
-      score: rankingData.hitNotes * 100,
+      rank: this.rankingRule(),
+      score: hit * 100,
       time: time
     };
     console.log("data==Why NaN====", data);
-
-    // storeRecordToDB(match.params.id, difficulty, data);
+    if (!data.name) {
+      return;
+    }
+    storeRecordToDB(match.params.id, difficulty, data);
+    this.setState({ hasStored: true });
   };
 
   renderRecordfromSong = () => {
@@ -65,8 +111,6 @@ class Ranking extends React.Component {
 
   render() {
     console.log("ranking Page props----", this.props);
-    // const { difficulty, match} = this.props;
-
     const total = this.props.rankingData.totalNotes;
     const hit = this.props.rankingData.hitNotes;
     return (
@@ -77,8 +121,8 @@ class Ranking extends React.Component {
             <div>HIT: {hit}</div>
             <div>MISS: {total - hit}</div>
             <div>SCORE: {hit * 100}</div>
-            <div>{Math.round((hit / total) * 100)} %</div>
-            <div>RANK: A</div>
+            <div>ACCURATE: {Math.round((hit / total) * 100)} %</div>
+            <div>RANK: {this.rankingRule()}</div>
           </div>
 
           <div className="record">
@@ -102,7 +146,6 @@ const mapStateToProps = state => {
 
   return {
     rankingData: state.rankingData,
-    difficulty: state.difficulty,
     auth: state.auth,
     rankingRecord: state.rankingRecord
   };
@@ -110,5 +153,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { renderRankingData, storeRecordToDB, fetchRankingDataFromSong }
+  { renderRankingData, storeRecordToDB, fetchRankingRecordFromSong }
 )(Ranking);

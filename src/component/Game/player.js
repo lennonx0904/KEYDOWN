@@ -5,7 +5,7 @@ import {
   drawEffect
 } from "./helpers";
 
-export const player = (noteA, noteB, noteC, noteD, unit) => {
+export const player = (noteA, noteB, noteC, noteD, unit, audio) => {
   const btnD = document.querySelector(".btn-d");
   const btnF = document.querySelector(".btn-f");
   const btnK = document.querySelector(".btn-k");
@@ -75,25 +75,21 @@ export const player = (noteA, noteB, noteC, noteD, unit) => {
       // D = 68
       case 68:
         btnD.classList.remove("btn-d-active");
-        // drawTrack(7, 8, 1, 0, unit, "rgba(0,0,0,0.0)");
         clearCanvas(unit);
         break;
       // F = 70
       case 70:
         btnF.classList.remove("btn-f-active");
-        // drawTrack(8, 9, 2, 1, unit, "rgba(0,0,0,0.0)");
         clearCanvas(unit);
         break;
       // K = 75
       case 75:
         btnK.classList.remove("btn-k-active");
-        // drawTrack(9, 10, 3, 2, unit, "rgba(0,0,0,0.0)");
         clearCanvas(unit);
         break;
       // L = 76
       case 76:
         btnL.classList.remove("btn-l-active");
-        // drawTrack(10, 11, 4, 3, unit, "rgba(0,0,0,0.0)");
         clearCanvas(unit);
         break;
 
@@ -104,5 +100,9 @@ export const player = (noteA, noteB, noteC, noteD, unit) => {
 
   window.addEventListener("keydown", play, false);
   window.addEventListener("keyup", keyupUI, false);
-  return () => {};
+
+  audio.addEventListener("ended", () => {
+    window.removeEventListener("keydown", play, false);
+    window.removeEventListener("keyup", keyupUI, false);
+  });
 };
