@@ -30,7 +30,7 @@ class Game extends React.Component {
     console.log("didupdate props", this.props);
     console.log("didupdate state", this.state);
 
-    const { inGame, playingSongData, difficulty } = this.props;
+    const { inGame, playingSongData, difficulty, match } = this.props;
     if (inGame && playingSongData.beatData) {
       console.log("props.inGame----過去啦", inGame);
       let rankingData = {
@@ -41,14 +41,18 @@ class Game extends React.Component {
         hitNotesD: 0
       };
       localStorage.setItem("rankingData", JSON.stringify(rankingData));
+
       playingSongData.audio.addEventListener("ended", () => {
         console.log("我在componentDidUpdate裡的監聽結束了");
+        window.location.hash = `#/ranking/${match.params.id}`;
       });
+
       this.stop = mainGame(
         this.state.unit,
         playingSongData.beatData,
         playingSongData.audio,
-        difficulty
+        difficulty,
+        match
       );
     }
   }
@@ -131,7 +135,6 @@ class Game extends React.Component {
       <div className="view">
         <div className="game-wrap">
           <div className="canvas-wrap">
-          
             <PureCanvas
               width={this.state.unit * 18}
               height={this.state.unit * 13}
@@ -142,7 +145,7 @@ class Game extends React.Component {
               height={this.state.unit * 13}
             />
           </div>
-  
+
           <div className="game-buttons" style={style}>
             <div className="game-btn btn-d">D</div>
             <div className="game-btn btn-f">F</div>
@@ -151,8 +154,8 @@ class Game extends React.Component {
           </div>
         </div>
         <div>
-        <button onClick={this.write}>write</button>
-        <button onClick={this.checkAudioandGame}>start</button>
+          {/* <button onClick={this.write}>write</button>
+          <button onClick={this.checkAudioandGame}>start</button> */}
           <Link to={`/ranking/${this.props.match.params.id}`}>ranking</Link>
         </div>
       </div>

@@ -8,9 +8,6 @@
 .game-wrap {
   width: 60%;
   margin: 0;
-  /* display: flex; */
-  /* margin-top: 20px; */
-  /* background-color: #ade0e9; */
 }
 .canvas-wrap {
   position: relative;

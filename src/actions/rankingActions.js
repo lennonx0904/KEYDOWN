@@ -8,7 +8,7 @@ export const renderRankingData = rankingData => {
   };
 };
 
-export const storeRecord = (doc, difficutly, data) => dispatch => {
+export const storeRecordToDB = (doc, difficutly, data) => dispatch => {
   db.collection("songList")
     .doc(doc)
     .collection(difficutly)
@@ -26,6 +26,7 @@ export const fetchRankingDataFromSong = (doc, difficutly) => dispatch => {
   db.collection("songList")
     .doc(doc)
     .collection(difficutly)
+    .orderBy("score", "desc")
     .get()
     .then(q => {
       q.forEach(doc => {

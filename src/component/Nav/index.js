@@ -10,6 +10,8 @@ class Nav extends React.Component {
     this.props.checkAuthState();
   }
   render() {
+    console.log('Nav props----',this.props);
+    
     return (
       <div className="nav-bar">
         <Logo />

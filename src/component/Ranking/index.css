@@ -1,3 +1,57 @@
-.recordfromSong {
-    margin-top: 20px;
+.view {
+  width: 100%;
+  /* background-color: aqua; */
+}
+.ranking-wrap {
+  width: 80%;
+  background-color: blueviolet;
+  display: flex;
+}
+
+.current-ranking {
+  width: 33%;
+  font-size: 18px;
+  padding: 24px 0 0 24px;
+  /* display: flex; */
+
+  background-color: #eeff33;
+}
+.current-ranking >div {
+    margin: 12px 0;
+}
+.record {
+  margin: 0 auto;
+  width: 66%;
+}
+
+.record-board {
+  display: flex;
+  justify-content: space-evenly;
+  padding: 10px 0;
+  background-color: yellowgreen;
+  text-align: center;
+  border-bottom: 1px solid #000000;
+}
+
+/* .title {
+  border-bottom: 1px solid #000000;
+} */
+
+.record-item:nth-child(1) {
+  width: 20%;
+  /* background-color: #883388; */
+}
+
+.record-item:nth-child(2) {
+  width: 20%;
+  /* background-color: #3300ff; */
+}
+
+.record-item:nth-child(3) {
+  width: 20%;
+  /* background-color: #22f300; */
+}
+.record-item:nth-child(4) {
+  width: 25%;
+  /* background-color: #ff0033; */
 }

@@ -62,7 +62,21 @@ export const drawReadyState = unit => {
   ctx.font = "36px Courier New";
   ctx.fillStyle = "#fff";
   ctx.fillText("Press to Start", 0, 0);
+
   ctx.restore();
+
+  // test effect
+  // ctx.save();
+  // ctx.beginPath();
+  // ctx.translate(cw / 4 - cw / 8, 12 * unit-10);
+  // ctx.strokeStyle = "#fff";
+  // ctx.arc(0, 0, unit * 2, 0, Math.PI, true);
+  // ctx.stroke();
+  // ctx.fillStyle = "#fff";
+  // ctx.textAlign = "center";
+  // ctx.font = "36px Courier New";
+  // ctx.fillText("HIT!", 0, 0);
+  // ctx.restore();
 };
 
 export const drawTrack = (x1, x2, x3, x4, unit, color) => {
@@ -70,22 +84,9 @@ export const drawTrack = (x1, x2, x3, x4, unit, color) => {
     ".player-canvas"
   ));
   const ctx = canvas.getContext("2d");
-  ctx.clearRect(0, 0, 18 * unit, 13 * unit);
+  // ctx.clearRect(0, 0, 18 * unit, 13 * unit);
   let cw = 18 * unit;
   let ch = 13 * unit;
-
-  // ctx.save();
-  // ctx.globalCompositeOperation = "destination-out";
-  // //draw shape to cover up stuff underneath
-  // ctx.beginPath();
-  // ctx.moveTo(x1 * unit, 0);
-  // ctx.lineTo(x2 * unit, 0);
-  // ctx.lineTo((cw * x3) / 4, ch);
-  // ctx.lineTo((cw * x4) / 4, ch);
-  // ctx.closePath();
-  // ctx.fillStyle = "rgba(0,0,0,0)";
-  // ctx.fill();
-  // ctx.restore();
 
   // Fill Background Color
   ctx.beginPath();
@@ -98,34 +99,25 @@ export const drawTrack = (x1, x2, x3, x4, unit, color) => {
   ctx.fill();
 };
 
+export const clearCanvas = unit => {
+  const canvas = document.querySelector(".player-canvas");
+  const ctx = canvas.getContext("2d");
+  ctx.clearRect(0, 0, 18 * unit, 13 * unit);
+};
+
 export const drawEffect = (x, unit) => {
-  const canvas = /** @type {HTMLCanvasElement} */ (document.querySelector(
-    ".player-canvas"
-  ));
+  const canvas = document.querySelector(".player-canvas");
   //   const canvas = document.querySelector("#game-canvas");
   const ctx = canvas.getContext("2d");
   const cw = 18 * unit;
-  const ch = 13 * unit;
-
-  // ctx.save();
-  // ctx.beginPath();
-  // ctx.translate((cw * x) / 4 - cw / 8, 17*unit);
-  // ctx.arc(0,0,unit,0 ,Math.PI,false);
-  // ctx.fill();
-  // ctx.fillStyle = "#fff";
-  // ctx.textAlign = "center";
-  // ctx.font = "18px Courier New";
-  // ctx.fillText("HIT!", 0, 0);
-  // ctx.restore();
 
   ctx.save();
   ctx.beginPath();
-  ctx.translate(cw / 2, 17 * unit);
-  ctx.arc(0, 0, unit, 0, Math.PI, false);
-  ctx.fill();
+  ctx.translate((cw * x) / 4 - cw / 8, 12 * unit - 10);
+
   ctx.fillStyle = "#fff";
   ctx.textAlign = "center";
-  ctx.font = "18px Courier New";
+  ctx.font = "36px Courier New";
   ctx.fillText("HIT!", 0, 0);
   ctx.restore();
 };

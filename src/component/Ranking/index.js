@@ -3,16 +3,21 @@ import { connect } from "react-redux";
 
 import {
   renderRankingData,
-  storeRecord,
+  storeRecordToDB,
   fetchRankingDataFromSong
 } from "../../actions/rankingActions";
 import "./index.css";
 
 class Ranking extends React.Component {
   componentDidMount() {
-    this.passRankingDataToStore();
     const { difficulty, match, fetchRankingDataFromSong } = this.props;
-    fetchRankingDataFromSong(match.params.id, difficulty);
+    if (this.props.difficulty !== "") {
+      this.storeRecord();
+      fetchRankingDataFromSong(match.params.id, difficulty);
+    }
+    this.passRankingDataToStore();
+    // hard code 記得改回來
+    // fetchRankingDataFromSong(match.params.id, "easy");
   }
 
   passRankingDataToStore = () => {
@@ -23,17 +28,13 @@ class Ranking extends React.Component {
     this.props.renderRankingData({ totalNotes, hitNotes });
   };
 
-  renderPlayerRankingData = () => {
-    // 之後用
-    const { difficulty, match, fetchRankingDataFromSong } = this.props;
-    fetchRankingDataFromSong(match.params.id, difficulty);
-  };
 
   storeRecord = () => {
     // console.log('storeRecord==props', this.props);
-    const { difficulty, match, storeRecord, rankingData, auth } = this.props;
+    const { difficulty, match, storeRecordToDB, rankingData, auth } = this.props;
+    console.log("why nan rankingData.hitNotes---", rankingData.hitNotes);
+
     console.log(difficulty, match.params.id, rankingData, auth.name);
-    // const level = difficulty;
     const date = new Date();
     const time = `${date.getFullYear()}/${date.getMonth() +
       1}/${date.getDate()} ${date.getHours()}:${date.getMinutes()}`;
@@ -44,23 +45,22 @@ class Ranking extends React.Component {
       score: rankingData.hitNotes * 100,
       time: time
     };
-    // date= 2019/4/22 ,name,rank,score
-    storeRecord(match.params.id, difficulty, data);
+    console.log("data==Why NaN====", data);
+
+    // storeRecordToDB(match.params.id, difficulty, data);
   };
 
-  renderRecordfromSong= ()=> {
-    return(
-      this.props.rankingRecord.dataFromSong.map(data => {
-        return (
-          <div key={data.time}>
-            <span> NAME : {data.name}</span>
-            <span> SCORE : {data.score}</span>
-            <span> RANK : {data.rank}</span>
-            <span> DATE : {data.time}</span>
-          </div>
-        )
-      })
-    );
+  renderRecordfromSong = () => {
+    return this.props.rankingRecord.dataFromSong.map(data => {
+      return (
+        <div className="record-board" key={data.time}>
+          <div className="record-item"> {data.name}</div>
+          <div className="record-item"> {data.score}</div>
+          <div className="record-item"> {data.rank}</div>
+          <div className="record-item"> {data.time}</div>
+        </div>
+      );
+    });
   };
 
   render() {
@@ -70,23 +70,27 @@ class Ranking extends React.Component {
     const total = this.props.rankingData.totalNotes;
     const hit = this.props.rankingData.hitNotes;
     return (
-      <div>
-        <div>
-          <div>TOTALNOTAE: {total}</div>
-          <div>HIT: {hit}</div>
-          <div>MISS: {total - hit}</div>
-          <div>SCORE: {hit * 100}</div>
-          <div>{Math.round((hit / total) * 100)} %</div>
-          <div>RANK: A</div>
-        </div>
-        <div>
-          <p>Do you want to store the record?</p>
-          <button onClick={this.storeRecord}>YES</button>
-          {/* <button onClick={this.renderPlayerRankingData}>test</button> */}
-        </div>
-        <div className='recordfromSong'>
-        <div>RECORD</div>
-          {this.renderRecordfromSong()}
+      <div className="view">
+        <div className="ranking-wrap">
+          <div className="current-ranking">
+            <div>TotalNotes: {total}</div>
+            <div>HIT: {hit}</div>
+            <div>MISS: {total - hit}</div>
+            <div>SCORE: {hit * 100}</div>
+            <div>{Math.round((hit / total) * 100)} %</div>
+            <div>RANK: A</div>
+          </div>
+
+          <div className="record">
+            <div>RECORD</div>
+            <div className="record-board title">
+              <div className="record-item"> Name</div>
+              <div className="record-item"> Score</div>
+              <div className="record-item"> Rank</div>
+              <div className="record-item"> Date</div>
+            </div>
+            {this.renderRecordfromSong()}
+          </div>
         </div>
       </div>
     );
@@ -106,5 +110,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { renderRankingData, storeRecord, fetchRankingDataFromSong }
+  { renderRankingData, storeRecordToDB, fetchRankingDataFromSong }
 )(Ranking);

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter, Route } from "react-router-dom";
+import { HashRouter, Route } from "react-router-dom";
 
 import Nav from "./Nav";
 import AuthForm from "./AuthForm";
@@ -11,7 +11,7 @@ import Ranking from "./Ranking";
 class App extends Component {
   render() {
     return (
-      <BrowserRouter>
+      <HashRouter>
         <Nav />
         <AuthForm />
         <div>
@@ -20,7 +20,7 @@ class App extends Component {
           <Route path="/game/:id" component={Game} />
           <Route path="/ranking/:id" component={Ranking} />
         </div>
-      </BrowserRouter>
+      </HashRouter>
     );
   }
 }

@@ -53,7 +53,6 @@ class LoginForm extends React.Component {
   };
 
   render() {
-    console.log("sigh in form props---", this.props);
     return <>{this.props.auth.uid ? null : this.renderForm()}</>;
   }
 }

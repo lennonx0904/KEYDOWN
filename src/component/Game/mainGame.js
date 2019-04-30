@@ -1,9 +1,13 @@
 import { player } from "./player";
 import { updateLocalStorage } from "./helpers";
 
-export const mainGame = (unit, beatData, audio, difficulty) => {
+export const mainGame = (unit, beatData, audio, difficulty, match) => {
   // const audio = audioSource;
   audio.play();
+  audio.addEventListener("ended", () => {
+    console.log("我在maingame裡的監聽結束了");
+    window.location.hash = `/ranking/${match.params.id}`;
+  });
   // 全域變數
   let updateFPS = 100;
   let time = 0;
@@ -11,7 +15,6 @@ export const mainGame = (unit, beatData, audio, difficulty) => {
   let round = 0;
   let spead = unit / 5;
   let bpm = 100;
-  //控制
 
   const canvas = document.querySelector("#game-canvas");
   const ctx = canvas.getContext("2d");
@@ -88,54 +91,52 @@ export const mainGame = (unit, beatData, audio, difficulty) => {
 
   const update = () => {
     time++;
-    if (time % ((updateFPS * 60) / bpm) === 0) {
-      round++;
 
-      beatData[round].forEach((e, index) => {
-        if (beatData[round][0] === 1) {
-          noteA.push(new Note());
-          totalNotes++;
-          updateLocalStorage("totalNotes", totalNotes);
-        }
-        if (beatData[round][1] === 1) {
-          noteB.push(
-            new Note({
-              pos1: new Pos(-unit, 0),
-              pos2: new Pos(0, 0),
-              color: "#75d0f5",
-              shadowColor: "#5ad0fa"
-            })
-          );
-          totalNotes++;
-          updateLocalStorage("totalNotes", totalNotes);
-        }
-        if (beatData[round][2] === 1) {
-          noteC.push(
-            new Note({
-              pos1: new Pos(unit, 0),
-              pos2: new Pos(0, 0),
-              color: "#ff0000",
-              shadowColor: "#ff5a5a"
-            })
-          );
-          totalNotes++;
-          updateLocalStorage("totalNotes", totalNotes);
-        }
-        if (beatData[round][3] === 1) {
-          noteD.push(
-            new Note({
-              pos1: new Pos(unit, 0),
-              pos2: new Pos(unit * 2, 0),
-              color: "#9100f1",
-              shadowColor: "#aa27ff"
-            })
-          );
-          totalNotes++;
-          updateLocalStorage("totalNotes", totalNotes);
-        }
-      });
+    if (time > 115) {
+      if (time % ((updateFPS * 60) / bpm) === 0) {
+        round++;
+
+        beatData[round].forEach((e, index) => {
+          if (beatData[round][0] === 1) {
+            noteA.push(new Note());
+            totalNotes++;
+          }
+          if (beatData[round][1] === 1) {
+            noteB.push(
+              new Note({
+                pos1: new Pos(-unit, 0),
+                pos2: new Pos(0, 0),
+                color: "#75d0f5",
+                shadowColor: "#5ad0fa"
+              })
+            );
+            totalNotes++;
+          }
+          if (beatData[round][2] === 1) {
+            noteC.push(
+              new Note({
+                pos1: new Pos(unit, 0),
+                pos2: new Pos(0, 0),
+                color: "#ff0000",
+                shadowColor: "#ff5a5a"
+              })
+            );
+            totalNotes++;
+          }
+          if (beatData[round][3] === 1) {
+            noteD.push(
+              new Note({
+                pos1: new Pos(unit, 0),
+                pos2: new Pos(unit * 2, 0),
+                color: "#9100f1",
+                shadowColor: "#aa27ff"
+              })
+            );
+            totalNotes++;
+          }
+        });
+      }
     }
-
     noteA.forEach(e => e.update());
     noteB.forEach(e => e.update());
     noteC.forEach(e => e.update());
@@ -161,7 +162,9 @@ export const mainGame = (unit, beatData, audio, difficulty) => {
         noteD.splice(index, 1);
       }
     });
+    console.log("totalNotes", totalNotes/4);
 
+    updateLocalStorage("totalNotes", totalNotes/4);
     render();
   };
 

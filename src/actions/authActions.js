@@ -64,7 +64,11 @@ export const checkAuthState = () => dispatch => {
         .get()
         .then(doc => {
           if (doc) {
-            dispatch({ type: "GET_USER_NAME", payload: doc.data().userName });
+            console.log(doc.data());
+            
+            dispatch({type: "GET_USER_NAME", payload: doc.data().userName });
+          }else{
+            console.log('error');
           }
         });
     } else {
