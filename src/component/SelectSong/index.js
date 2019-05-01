@@ -48,43 +48,28 @@ class SelectSong extends React.Component {
           <div className="song-details">
             <div className="song-title">
               {song.data.title}
-              <i
+              {/* <i
                 className="far fa-play-circle play-song"
                 // url={song.url}
                 onClick={this.playSong}
-              />
+              /> */}
             </div>
 
             <div className="song-auth">{song.data.auth}</div>
           </div>
           <div className="difficulty-wrap">
             <Link to={`/game/${song.id}?easy`}>
-              <button
-                className="difficulty easy"
-                name={song.data.name}
-                // url={song.url}
-                // onClick={this.selectSong}
-              >
+              <button className="difficulty easy" name={song.data.name}>
                 EASY
               </button>
             </Link>
             <Link to={`/game/${song.id}?normal`}>
-              <button
-                className="difficulty normal"
-                name={song.data.name}
-                // url={song.url}
-                // onClick={this.selectSong}
-              >
+              <button className="difficulty normal" name={song.data.name}>
                 NORMAL
               </button>
             </Link>
             <Link to={`/game/${song.id}?hard`}>
-              <button
-                className="difficulty hard"
-                name={song.data.name}
-                // url={song.url}
-                // onClick={this.selectSong}
-              >
+              <button className="difficulty hard" name={song.data.name}>
                 HARD
               </button>
             </Link>

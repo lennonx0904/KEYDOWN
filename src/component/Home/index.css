@@ -1,6 +1,6 @@
 .banner {
   width: 100%;
-  min-height: calc(100vh - 50px);
+  min-height: calc(100vh - 70px);
   background-image: url("../../img/dj.jpg");
   background-position: center;
   background-size: cover;
@@ -37,4 +37,19 @@
 .enter-btn > a {
   text-decoration: none;
   color: #000000;
+}
+
+@media (min-width: 1024px) {
+}
+
+@media (min-width: 720px) and (max-width: 1023px) {
+}
+
+@media (min-width: 480px) and (max-width: 719px) {
+}
+
+@media (max-width: 479px) {
+  .enter-btn {
+    font-size: 2.2rem;
+  }
 }

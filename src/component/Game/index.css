@@ -11,6 +11,7 @@
 }
 .canvas-wrap {
   position: relative;
+  margin-top: 24px;
   /* display: flex; */
 }
 

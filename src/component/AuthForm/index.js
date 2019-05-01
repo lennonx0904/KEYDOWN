@@ -7,10 +7,11 @@ import "./index.css";
 
 class AuthForm extends React.Component {
   render() {
+    const { signUpForm, loginForm } = this.props.showing;
     return (
       <>
-        {this.props.signUpForm && <SignUpForm />}
-        {this.props.loginForm && <LoginForm />}
+        {signUpForm && <SignUpForm />}
+        {loginForm && <LoginForm />}
       </>
     );
   }
@@ -18,8 +19,7 @@ class AuthForm extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    loginForm: state.loginForm,
-    signUpForm: state.signUpForm
+    showing: state.showing
   };
 };
 

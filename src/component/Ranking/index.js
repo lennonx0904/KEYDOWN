@@ -21,9 +21,9 @@ class Ranking extends React.Component {
     } else {
       window.location.hash = "#/";
     }
-    // if (!this.state.hasStored) {
-    //   this.storeRecord();
-    // }
+    if (!this.state.hasStored) {
+      this.storeRecord();
+    }
     const { match, location, fetchRankingRecord } = this.props;
     const difficulty = location.search.slice(1);
     if (difficulty !== "") {
@@ -97,7 +97,6 @@ class Ranking extends React.Component {
     storeRecordToDB(match.params.id, difficulty, data);
     this.setState({ hasStored: true });
   };
-
 
   render() {
     console.log("ranking Page props----", this.props);

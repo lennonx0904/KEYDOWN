@@ -29,11 +29,14 @@ export const logOut = () => dispatch => {
 export const signUp = data => dispatch => {
   const { userName, email, password, comfirmPassword } = data;
   if (userName === "") {
-    alert("Please enter your name.");
+    dispatch({ type: "SIGH_UP_ERROR", payload: "Please enter your name" });
     return;
   }
   if (password !== comfirmPassword) {
-    alert("Please comfirm your password.");
+    dispatch({
+      type: "SIGH_UP_ERROR",
+      payload: "Please comfirm your password"
+    });
     return;
   }
   firebase
@@ -65,9 +68,9 @@ export const checkAuthState = () => dispatch => {
         .then(doc => {
           if (doc) {
             console.log(doc.data());
-            dispatch({type: "GET_USER_NAME", payload: doc.data().userName });
-          }else{
-            console.log('error');
+            dispatch({ type: "GET_USER_NAME", payload: doc.data().userName });
+          } else {
+            console.log("error");
           }
         });
     } else {

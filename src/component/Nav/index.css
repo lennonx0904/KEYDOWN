@@ -7,8 +7,8 @@
   justify-content: space-between;
 }
 .logo {
-  margin-left: 50px;
   font-size: 36px;
+  padding: 0 48px;
 }
 .logo > a {
   text-decoration: none;
@@ -17,6 +17,9 @@
 .buttons {
   display: flex;
   margin-right: 50px;
+}
+.menu-button {
+  display: none;
 }
 .nav-button {
   font-size: 18px;
@@ -32,4 +35,60 @@
 .nav-button:hover {
   background-color: rgba(255, 255, 255, 0.8);
   border-color: rgba(255, 255, 255, 0.8);
+}
+
+@media (min-width: 721px) and (max-width: 1024px) {
+  .logo {
+    padding: 0 32px;
+  }
+
+  .nav-button {
+    background-color: #ffffff;
+  }
+  .buttons {
+    margin-right: 16px;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 720px) {
+  .logo {
+    padding: 0 24px;
+  }
+
+  .nav-button {
+    background-color: #ffffff;
+  }
+  .buttons {
+    margin-right: 0px;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo {
+    font-size: 32px;
+    padding: 0 24px;
+  }
+  .menu-button {
+    display: block;
+    margin: 0 16px;
+  }
+  .menu-button > img {
+    width: 40px;
+  }
+  .buttons {
+    display: none;
+  }
+  .mobile-buttons {
+    position: fixed;
+    z-index: 10;
+    width: 100%;
+  }
+  .mobile-btn {
+    width: 100%;
+    font-size: 28px;
+    background-color: rgba(255, 255, 255, 0.9);
+    text-align: center;
+    padding: 8px;
+    border: 1px solid #3a3a3a;
+  }
 }

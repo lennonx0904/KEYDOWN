@@ -1,11 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
-import { showLoginForm, showSignUpForm } from "../../actions";
+import { showLoginForm, showSignUpForm } from "../../actions/showingActions";
 import { logOut } from "../../actions/authActions";
 
 class NavButtons extends React.Component {
   renderLogInAndSignUpBtn = () => {
-    const { loginForm, signUpForm, showLoginForm, showSignUpForm } = this.props;
+    const { showing, showLoginForm, showSignUpForm } = this.props;
     return (
       <>
         <button
@@ -13,7 +13,7 @@ class NavButtons extends React.Component {
           onClick={() => {
             showLoginForm(true);
           }}
-          disabled={signUpForm}
+          disabled={showing.signUpForm}
         >
           Log In
         </button>
@@ -22,7 +22,7 @@ class NavButtons extends React.Component {
           onClick={() => {
             showSignUpForm(true);
           }}
-          disabled={loginForm}
+          disabled={showing.loginForm}
         >
           Sign Up
         </button>
@@ -46,8 +46,6 @@ class NavButtons extends React.Component {
         {this.props.auth.uid
           ? this.renderLogOutBtn()
           : this.renderLogInAndSignUpBtn()}
-        {/* {this.renderLogInAndSignUpBtn()}
-        {this.renderLogOutBtn()} */}
       </div>
     );
   }
@@ -56,8 +54,7 @@ class NavButtons extends React.Component {
 const mapStatetoProps = state => {
   return {
     auth: state.auth,
-    loginForm: state.loginForm,
-    signUpForm: state.signUpForm
+    showing: state.showing
   };
 };
 

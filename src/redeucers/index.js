@@ -1,8 +1,9 @@
 import { combineReducers } from "redux";
-import showLoginFormReducer from "./showLoginFormReducer";
-import showSignUpFormReducer from "./showSignUpFormReducer";
+// import showLoginFormReducer from "./showLoginFormReducer";
+// import showSignUpFormReducer from "./showSignUpFormReducer";
 import fetchSongListReducer from "./fetchSongListReducer";
 import checkInGameReducer from "./checkInGameReducer";
+import showingReducer from './showingReducer';
 import authReducer from "./authReducer";
 import rankingReducer from "./rankingReducer";
 
@@ -35,8 +36,9 @@ const renderRankingDataReducer = (state = {}, action) => {
 
 export default combineReducers({
   auth: authReducer,
-  loginForm: showLoginFormReducer,
-  signUpForm: showSignUpFormReducer,
+  showing: showingReducer,
+  // loginForm: showLoginFormReducer,
+  // signUpForm: showSignUpFormReducer,
   songList: fetchSongListReducer,
   // difficulty: selectDifficultyReducer,
   inGame: checkInGameReducer,

@@ -3,19 +3,7 @@ import "firebase/auth";
 
 const db = firebase.firestore();
 
-export const showLoginForm = boolean => {
-  return {
-    type: "SHOW_LOGIN_FORM",
-    payload: boolean
-  };
-};
 
-export const showSignUpForm = boolean => {
-  return {
-    type: "SHOW_SIGNUP_FORM",
-    payload: boolean
-  };
-};
 
 export const fetchSongList = () => dispatch => {
   let arr = [];
@@ -30,14 +18,7 @@ export const fetchSongList = () => dispatch => {
     );
 };
 
-// 這隻要刪掉
 
-// export const selectDifficulty = difficulty => {
-//   return {
-//     type: "SELECT_SONG_TO_PLAY",
-//     payload: difficulty
-//   };
-// };
 
 export const checkInGame = boolean => {
   return {

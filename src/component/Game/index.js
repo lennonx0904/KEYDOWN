@@ -125,7 +125,7 @@ class Game extends React.Component {
       return <Redirect to="/select" />;
     }
     const style = {
-      margin: `${this.state.unit * 13 + 7}px 0 0 0`,
+      margin: `${this.state.unit * 13 + 31}px 0 0 0`,
       width: `${this.state.unit * 18 + 1}px`
     };
 
