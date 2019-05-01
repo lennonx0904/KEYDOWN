@@ -1,41 +1,49 @@
 .view {
   width: 100%;
-  /* background-color: aqua; */
+  
 }
 .ranking-wrap {
   width: 80%;
-  background-color: blueviolet;
   display: flex;
+  color:#ffffff;
 }
 
 .current-ranking {
   width: 33%;
-  font-size: 18px;
-  padding: 24px 0 0 24px;
-  /* display: flex; */
-
-  background-color: #eeff33;
+  font-size: 20px;
+  margin-top: 24px;
+/* background-color: aqua; */
 }
-.current-ranking >div {
-    margin: 12px 0;
+.current-ranking > div {
+  margin: 12px 0;
 }
 .record {
-  margin: 0 auto;
+  margin: 24px auto;
   width: 66%;
+  /* font-size: 18px; */
 }
-
+.row {
+  width: 90%;
+  display: flex;
+  justify-content: space-between;
+  margin: 24px;
+}
 .record-board {
   display: flex;
   justify-content: space-evenly;
   padding: 10px 0;
-  background-color: yellowgreen;
   text-align: center;
-  border-bottom: 1px solid #000000;
+  border-bottom: 1px solid #ffffff;
+
+
+  /* background-color: yellowgreen; */
 }
 
-/* .title {
-  border-bottom: 1px solid #000000;
-} */
+.title {
+  border-bottom: 1px solid #ffffff;
+  padding: 18px 0;
+  font-weight: bolder;
+}
 
 .record-item:nth-child(1) {
   width: 20%;
@@ -54,4 +62,18 @@
 .record-item:nth-child(4) {
   width: 25%;
   /* background-color: #ff0033; */
+}
+
+@media (min-width: 768x) and (max-width: 1024px){
+
+  .record-item:nth-child(4) {
+    /* width: 25%; */
+    background-color: #ff0033;
+    /* display: none; */
+  }
+
+
+  .record-item{
+    background-color: #ff0033
+  }
 }

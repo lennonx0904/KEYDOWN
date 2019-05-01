@@ -4,8 +4,10 @@ import { connect } from "react-redux";
 import {
   renderRankingData,
   storeRecordToDB,
-  fetchRankingRecordFromSong
+  fetchRankingRecord
 } from "../../actions/rankingActions";
+import CurrentRank from "./CurrentRank";
+import Record from "./Record";
 import "./index.css";
 
 class Ranking extends React.Component {
@@ -19,13 +21,13 @@ class Ranking extends React.Component {
     } else {
       window.location.hash = "#/";
     }
-    if (!this.state.hasStored) {
-      this.storeRecord();
-    }
-    const { match, location, fetchRankingRecordFromSong } = this.props;
+    // if (!this.state.hasStored) {
+    //   this.storeRecord();
+    // }
+    const { match, location, fetchRankingRecord } = this.props;
     const difficulty = location.search.slice(1);
     if (difficulty !== "") {
-      fetchRankingRecordFromSong(match.params.id, difficulty);
+      fetchRankingRecord(match.params.id, difficulty);
     }
   }
 
@@ -85,7 +87,7 @@ class Ranking extends React.Component {
     const data = {
       name: auth.name,
       rank: this.rankingRule(),
-      score: hit * 100,
+      score: hit * 98,
       time: time
     };
     console.log("data==Why NaN====", data);
@@ -96,44 +98,25 @@ class Ranking extends React.Component {
     this.setState({ hasStored: true });
   };
 
-  renderRecordfromSong = () => {
-    return this.props.rankingRecord.dataFromSong.map(data => {
-      return (
-        <div className="record-board" key={data.time}>
-          <div className="record-item"> {data.name}</div>
-          <div className="record-item"> {data.score}</div>
-          <div className="record-item"> {data.rank}</div>
-          <div className="record-item"> {data.time}</div>
-        </div>
-      );
-    });
-  };
 
   render() {
     console.log("ranking Page props----", this.props);
-    const total = this.props.rankingData.totalNotes;
-    const hit = this.props.rankingData.hitNotes;
     return (
       <div className="view">
         <div className="ranking-wrap">
-          <div className="current-ranking">
-            <div>TotalNotes: {total}</div>
-            <div>HIT: {hit}</div>
-            <div>MISS: {total - hit}</div>
-            <div>SCORE: {hit * 100}</div>
-            <div>ACCURATE: {Math.round((hit / total) * 100)} %</div>
-            <div>RANK: {this.rankingRule()}</div>
-          </div>
+          <CurrentRank
+            rankingData={this.props.rankingData}
+            rankingRule={this.rankingRule}
+          />
 
           <div className="record">
-            <div>RECORD</div>
             <div className="record-board title">
               <div className="record-item"> Name</div>
               <div className="record-item"> Score</div>
               <div className="record-item"> Rank</div>
               <div className="record-item"> Date</div>
             </div>
-            {this.renderRecordfromSong()}
+            <Record rankingRecord={this.props.rankingRecord.record} />
           </div>
         </div>
       </div>
@@ -142,7 +125,7 @@ class Ranking extends React.Component {
 }
 
 const mapStateToProps = state => {
-  // console.log("ranking---Store state", state);
+  console.log("ranking---Store state", state);
 
   return {
     rankingData: state.rankingData,
@@ -153,5 +136,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { renderRankingData, storeRecordToDB, fetchRankingRecordFromSong }
+  { renderRankingData, storeRecordToDB, fetchRankingRecord }
 )(Ranking);

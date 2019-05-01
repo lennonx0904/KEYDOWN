@@ -2,7 +2,6 @@ import { player } from "./player";
 import { updateLocalStorage } from "./helpers";
 
 export const mainGame = (unit, beatData, audio, difficulty, match) => {
-  // const audio = audioSource;
   audio.play();
 
   // 全域變數

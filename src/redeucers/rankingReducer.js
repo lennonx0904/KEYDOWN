@@ -1,12 +1,12 @@
 const initState = {
-  dataFromSong: []
+  record: []
 };
 
 const rankingReducer = (state = initState, action) => {
   switch (action.type) {
-    case "FETCH_RANKING_RECORD_FROM_SONG":
+    case "FETCH_RANKING_RECORD":
       console.log(action.payload);
-      return { ...state, dataFromSong: action.payload };
+      return { ...state, record: action.payload };
 
     default:
       return state;

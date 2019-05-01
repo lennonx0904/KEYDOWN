@@ -21,7 +21,7 @@ export const storeRecordToDB = (doc, difficutly, data) => dispatch => {
     });
 };
 
-export const fetchRankingRecordFromSong = (doc, difficutly) => dispatch => {
+export const fetchRankingRecord = (doc, difficutly) => dispatch => {
   let arr = [];
   db.collection("songList")
     .doc(doc)
@@ -33,7 +33,7 @@ export const fetchRankingRecordFromSong = (doc, difficutly) => dispatch => {
       q.forEach(doc => {
         console.log(doc.data());
         arr.push(doc.data());
-        dispatch({ type: "FETCH_RANKING_RECORD_FROM_SONG", payload: arr });
+        dispatch({ type: "FETCH_RANKING_RECORD", payload: arr });
       });
     });
 };
