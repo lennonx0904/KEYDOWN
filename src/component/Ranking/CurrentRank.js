@@ -1,10 +1,14 @@
 import React from "react";
+import { rankingRule } from "../Game/helpers";
 
 const CurrentRank = props => {
-//   console.log("CurrentRank--props", props);
+  const total = props.currentRanking.totalNotes;
+  const hit =
+    props.currentRanking.hitNotesA +
+    props.currentRanking.hitNotesB +
+    props.currentRanking.hitNotesC +
+    props.currentRanking.hitNotesD;
 
-  const total = props.rankingData.totalNotes;
-  const hit = props.rankingData.hitNotes;
   return (
     <>
       <div className="current-ranking">
@@ -14,7 +18,7 @@ const CurrentRank = props => {
         </div>
         <div className="row">
           <div>HIT</div>
-          <div> {hit}</div>
+          <div>{hit}</div>
         </div>
         <div className="row">
           <div>MISS</div>
@@ -30,7 +34,7 @@ const CurrentRank = props => {
         </div>
         <div className="row">
           <div>RANK</div>
-          <div>{props.rankingRule()}</div>
+          <div>{rankingRule()}</div>
         </div>
       </div>
     </>

@@ -1,5 +1,9 @@
-.view {
+.ranking-view {
   width: 100%;
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  background-color: #1d1d1d;
   
 }
 .ranking-wrap {

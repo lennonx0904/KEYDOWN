@@ -6,11 +6,9 @@ export const updateLocalStorage = (key, value) => {
 };
 
 export const drawReadyState = unit => {
-  const canvas = /** @type {HTMLCanvasElement} */ (document.querySelector(
-    "#game-canvas"
-  ));
-  //   const canvas = document.querySelector("#game-canvas");
+  const canvas = document.querySelector("#game-canvas");
   const ctx = canvas.getContext("2d");
+
   let cw = 18 * unit;
   let ch = 13 * unit;
 
@@ -55,28 +53,15 @@ export const drawReadyState = unit => {
   );
 
   // press to start
+
   ctx.save();
   ctx.beginPath();
   ctx.translate(cw / 2, ch / 2);
   ctx.textAlign = "center";
-  ctx.font = "36px Courier New";
+  ctx.font = `${unit}px Courier New`;
   ctx.fillStyle = "#fff";
   ctx.fillText("Press to Start", 0, 0);
-
   ctx.restore();
-
-  // test effect
-  // ctx.save();
-  // ctx.beginPath();
-  // ctx.translate(cw / 4 - cw / 8, 12 * unit-10);
-  // ctx.strokeStyle = "#fff";
-  // ctx.arc(0, 0, unit * 2, 0, Math.PI, true);
-  // ctx.stroke();
-  // ctx.fillStyle = "#fff";
-  // ctx.textAlign = "center";
-  // ctx.font = "36px Courier New";
-  // ctx.fillText("HIT!", 0, 0);
-  // ctx.restore();
 };
 
 export const drawTrack = (x1, x2, x3, x4, unit, color) => {
@@ -107,17 +92,72 @@ export const clearCanvas = unit => {
 
 export const drawEffect = (x, unit) => {
   const canvas = document.querySelector(".player-canvas");
-  //   const canvas = document.querySelector("#game-canvas");
   const ctx = canvas.getContext("2d");
   const cw = 18 * unit;
 
   ctx.save();
   ctx.beginPath();
-  ctx.translate((cw * x) / 4 - cw / 8, 12 * unit - 10);
+  ctx.translate((cw * x) / 4 - cw / 8, 12 * unit - 12);
 
   ctx.fillStyle = "#fff";
   ctx.textAlign = "center";
-  ctx.font = "36px Courier New";
-  ctx.fillText("HIT!", 0, 0);
+  ctx.font = `${unit}px Courier New`;
+  ctx.fillText("HIT", 0, 0);
   ctx.restore();
+};
+
+export const drawGameOverState = unit => {
+  const canvas = document.querySelector("#game-canvas");
+  const ctx = canvas.getContext("2d");
+  ctx.clearRect(0, 0, 18 * unit, 13 * unit);
+  let cw = 18 * unit;
+  let ch = 13 * unit;
+
+  //  lib function
+  ctx.line = function(p1, p2, color, shadowColor, height) {
+    ctx.beginPath();
+    ctx.moveTo(p1.x, p1.y);
+    ctx.lineTo(p2.x, p2.y);
+    ctx.strokeStyle = color;
+    ctx.shadowBlur = 60;
+    ctx.shadowColor = shadowColor;
+    ctx.lineWidth = height;
+    ctx.stroke();
+  };
+
+  // press to start
+
+  ctx.save();
+  ctx.beginPath();
+  ctx.translate(cw / 2, ch / 2);
+  ctx.textAlign = "center";
+  ctx.font = `${unit}px Courier New`;
+  ctx.fillStyle = "#000";
+  ctx.fillText("Game Over", 0, 0);
+  ctx.restore();
+};
+
+export const rankingRule = () => {
+  if (!localStorage.rankingData) {
+    return;
+  }
+  let rankingData = JSON.parse(localStorage.rankingData);
+  const total = rankingData.totalNotes;
+  const hit =
+    rankingData.hitNotesA +
+    rankingData.hitNotesB +
+    rankingData.hitNotesC +
+    rankingData.hitNotesD;
+  let accurate = Math.round((hit / total) * 100);
+  if (accurate >= 90) {
+    return "A";
+  } else if (accurate >= 80) {
+    return "B";
+  } else if (accurate >= 70) {
+    return "C";
+  } else if (accurate >= 60) {
+    return "D";
+  } else {
+    return "E";
+  }
 };

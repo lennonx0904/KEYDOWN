@@ -1,11 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { checkInGame } from "../../actions";
-import "./index.css";
+import "./home.css";
 
 class Home extends React.Component {
- 
   render() {
     return (
       <div className="banner">
@@ -19,15 +17,13 @@ class Home extends React.Component {
   }
 }
 
+// 記得刪掉 mapStateToProps
 const mapStateToProps = state => {
-  console.log('home--state---',state);
-  
+  console.log("home--state---", state);
+
   return {
-    playingSongData: state.playingSongData,
+    playingSongData: state.playingSongData
   };
 };
 
-export default connect(
-  mapStateToProps,
-  { checkInGame }
-)(Home);
+export default connect(mapStateToProps)(Home);

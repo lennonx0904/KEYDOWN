@@ -2,8 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 
 import SignUpForm from "./SignUpForm";
-import LoginForm from "./LoginFrom";
-import "./index.css";
+import LoginForm from "./LoginForm";
+import "./authForm.css";
 
 class AuthForm extends React.Component {
   render() {

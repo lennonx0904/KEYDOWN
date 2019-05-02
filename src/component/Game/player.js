@@ -41,22 +41,18 @@ export const player = (noteA, noteB, noteC, noteD, unit, audio) => {
       case 68:
         btnD.classList.add("btn-d-active");
         drawTrack(7, 8, 1, 0, unit, "rgba(255,255,255,0.2)");
-        // drawTrackA(unit, "rgba(255,255,255,0.2)");
         judgeA();
         break;
       // F = 70
       case 70:
         btnF.classList.add("btn-f-active");
         drawTrack(8, 9, 2, 1, unit, "rgba(255,255,255,0.2)");
-
-        // drawTrackB(unit, "rgba(255,255,255,0.2)");
         judgeB();
         break;
       // K = 75
       case 75:
         btnK.classList.add("btn-k-active");
         drawTrack(9, 10, 3, 2, unit, "rgba(255,255,255,0.2)");
-
         judgeC();
         break;
       // L = 76
@@ -65,7 +61,6 @@ export const player = (noteA, noteB, noteC, noteD, unit, audio) => {
         drawTrack(10, 11, 4, 3, unit, "rgba(255,255,255,0.2)");
         judgeD();
         break;
-
       default:
         break;
     }
@@ -104,5 +99,37 @@ export const player = (noteA, noteB, noteC, noteD, unit, audio) => {
   audio.addEventListener("ended", () => {
     window.removeEventListener("keydown", play, false);
     window.removeEventListener("keyup", keyupUI, false);
+  });
+
+  // for mobile touchstart ------------
+  btnD.addEventListener("touchstart", () => {
+    drawTrack(7, 8, 1, 0, unit, "rgba(255,255,255,0.2)");
+    judgeA();
+  });
+  btnF.addEventListener("touchstart", () => {
+    drawTrack(8, 9, 2, 1, unit, "rgba(255,255,255,0.2)");
+    judgeB();
+  });
+  btnK.addEventListener("touchstart", () => {
+    drawTrack(9, 10, 3, 2, unit, "rgba(255,255,255,0.2)");
+    judgeC();
+  });
+  btnL.addEventListener("touchstart", () => {
+    drawTrack(10, 11, 4, 3, unit, "rgba(255,255,255,0.2)");
+    judgeD();
+  });
+
+  // for mobile touchend
+  btnD.addEventListener("touchend", () => {
+    clearCanvas(unit);
+  });
+  btnF.addEventListener("touchend", () => {
+    clearCanvas(unit);
+  });
+  btnK.addEventListener("touchend", () => {
+    clearCanvas(unit);
+  });
+  btnL.addEventListener("touchend", () => {
+    clearCanvas(unit);
   });
 };

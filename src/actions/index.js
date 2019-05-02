@@ -20,34 +20,7 @@ export const fetchSongList = () => dispatch => {
 
 
 
-export const checkInGame = boolean => {
-  return {
-    type: "CHECK_IN_GAME",
-    payload: boolean
-  };
-};
 
-export const fetchPlayingSongData = (songId, difficulty) => dispatch => {
-  let obj = {};
-  db.collection("songList")
-    .doc(songId)
-    .collection("gameData")
-    .get()
-    .then(function(querySnapshot) {
-      querySnapshot.forEach(doc => {
-        // obj = Object.assign({songURL: doc.data().url, beatData: doc.data()[difficulty] });
-        obj = Object.assign({
-          audio: new Audio(doc.data().url),
-          beatData: JSON.parse(doc.data()[difficulty])
-        });
-
-        dispatch({ type: "FETCH_PLAYING_SONG_DATA", payload: obj });
-      });
-    })
-    .catch(error => {
-      console.log("Error getting documents: ", error);
-    });
-};
 
 // 這只是用來寫假的 beatData
 export const writeData = data => {

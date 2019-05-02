@@ -9,13 +9,13 @@ class Record extends React.Component {
     // const data = this.props.rankingRecord;
     return (
       <>
-        {this.props.rankingRecord.map(data => {
+        {this.props.rankingRecord.map(record => {
           return (
-            <div className="record-board" key={data.time}>
-              <div className="record-item"> {data.name}</div>
-              <div className="record-item"> {data.score}</div>
-              <div className="record-item"> {data.rank}</div>
-              <div className="record-item"> {data.time}</div>
+            <div className="record-board" key={record.id}>
+              <div className="record-item"> {record.data.name}</div>
+              <div className="record-item"> {record.data.score}</div>
+              <div className="record-item"> {record.data.rank}</div>
+              <div className="record-item"> {record.data.time}</div>
             </div>
           );
         })}

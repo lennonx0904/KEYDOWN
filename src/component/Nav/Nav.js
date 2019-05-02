@@ -4,7 +4,7 @@ import Logo from "./Logo";
 import NavButtons from "./NavButtons";
 import NavButtonsMobile from "./NavButtonsMobile";
 import menu from "../../img/menu.png";
-import "./index.css";
+import "./nav.css";
 import { showMobileButtons } from "../../actions/showingActions";
 import { checkAuthState } from "../../actions/authActions";
 

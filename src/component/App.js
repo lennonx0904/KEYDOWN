@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import { HashRouter, Route } from "react-router-dom";
 
-import Nav from "./Nav";
-import AuthForm from "./AuthForm";
+import Nav from "./Nav/Nav";
+import AuthForm from "./AuthForm/AuthForm";
 import Home from "./Home";
-import SelectSong from "./SelectSong";
-import Game from "./Game";
-import Ranking from "./Ranking";
+import SelectSong from "./SelectSong/SelectSong";
+import Game from "./Game/Game";
+import Ranking from "./Ranking/Ranking";
 
 class App extends Component {
   render() {

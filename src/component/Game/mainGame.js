@@ -3,7 +3,7 @@ import { updateLocalStorage } from "./helpers";
 
 export const mainGame = (unit, beatData, audio, difficulty, match) => {
   audio.play();
-
+audio.currentTime = 200;
   // 全域變數
   let updateFPS = 100;
   let time = 0;
@@ -48,7 +48,7 @@ export const mainGame = (unit, beatData, audio, difficulty, match) => {
         pos2: new Pos(-unit, 0),
         color: "#ffff00",
         shadowColor: "#fcfc68",
-        height: 10,
+        height: unit / 5,
         speed: spead
       };
       Object.assign(def, args);
@@ -90,6 +90,8 @@ export const mainGame = (unit, beatData, audio, difficulty, match) => {
     if (time > 115) {
       if (time % ((updateFPS * 60) / bpm) === 0) {
         round++;
+        // console.log('round----', round);
+        
         beatData[round].forEach((e, index) => {
           if (beatData[round][0] === 1) {
             noteA.push(new Note());

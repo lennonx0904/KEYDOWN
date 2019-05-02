@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { fetchSongList } from "../../actions";
-import "./index.css";
+import "./selectSong.css";
 
 class SelectSong extends React.Component {
   state = {
