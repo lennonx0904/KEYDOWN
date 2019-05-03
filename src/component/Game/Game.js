@@ -44,11 +44,12 @@ class Game extends React.Component {
   componentDidUpdate() {
     // console.log("didupdate props", this.props);
     // console.log("didupdate state", this.state);
-    console.log("componentDidUpdate");
+    // console.log("componentDidUpdate");
 
     const { game, match, location, setGameOverState, auth } = this.props;
-
+    console.log("componentDidUpdate inGame", game.inGame);
     const difficulty = location.search.slice(1);
+
     if (game.inGame && game.playingSongData && !game.gameOver) {
       const rankingData = {
         name: auth.name,

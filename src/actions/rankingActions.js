@@ -12,10 +12,7 @@ export const fetchRankingRecord = (doc, difficutly) => dispatch => {
     .get()
     .then(q => {
       q.forEach(doc => {
-        console.log(doc.data());
         arr.push({ id: doc.id, data: doc.data() });
-        console.log("新資料樣子", arr);
-
         dispatch({ type: "FETCH_RANKING_RECORD", payload: arr });
       });
     });

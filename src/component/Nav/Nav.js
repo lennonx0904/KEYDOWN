@@ -14,7 +14,7 @@ class Nav extends React.Component {
   }
 
   render() {
-    console.log("Nav props----", this.props);
+    // console.log("Nav props----", this.props);
     const { showing, showMobileButtons } = this.props;
     return (
       <>
