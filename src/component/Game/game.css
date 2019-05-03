@@ -1,3 +1,4 @@
+
 .game-view {
   width: 100%;
   display: flex;
@@ -39,61 +40,64 @@
   align-items: center;
   justify-content: center;
   margin-top: -5px;
-  font-size: 24px;
+  font-size: 36px;
   font-weight: bold;
   border-radius: 15px;
   color: #ffffff;
   /* border: 1px solid black; */
+
+  font-family: "Palanquin Dark", sans-serif;
+
 }
 
 .btn-d {
-  background-color: #ffff00;
-  border-bottom: 5px solid #c4c400;
-  text-shadow: 0px -2px #c4c400;
+  background-color: #3498db;
+  border-bottom: 5px solid #2980b9;
+  text-shadow: 0px -2px #2980b9;
 }
 .btn-f {
-  background-color: #75d0f5;
-  border-bottom: 5px solid #5fa9c6;
-  text-shadow: 0px -2px #5fa9c6;
+  background-color: #e74c3c;
+  border-bottom: 5px solid #bd3e31;
+  text-shadow: 0px -2px #bd3e31;
 }
 .btn-k {
-  background-color: #ff0000;
-  border-bottom: 5px solid #c40000;
-  text-shadow: 0px -2px #c40000;
+  background-color: #9fff5b;
+  border-bottom: 5px solid #7ecc47;
+  text-shadow: 0px -2px #7ecc47;
 }
 
 .btn-l {
-  background-color: #9100f1;
-  border-bottom: 5px solid #7400c1;
-  text-shadow: 0px -2px #7400c1;
+  background-color: #f9f524;
+  border-bottom: 5px solid #cecb18;
+  text-shadow: 0px -2px #cecb18;
 }
 
 .btn-d-active {
-  border-bottom: 2px solid #c4c400;
+  border-bottom: 2px solid #2980b9;
 }
 
 .btn-f-active {
-  border-bottom: 2px solid #5fa9c6;
+  border-bottom: 2px solid #BD3E31;
 }
 .btn-k-active {
-  border-bottom: 2px solid #c40000;
+  border-bottom: 2px solid #7ecc47;
 }
 
 .btn-l-active {
-  border-bottom: 2px solid #7400c1;
+  border-bottom: 2px solid #cecb18;
 }
 
 .btn-d:active {
-  border-bottom: 2px solid #c4c400;
+  border-bottom: 2px solid #2980b9;
 }
 .btn-f:active {
-  border-bottom: 2px solid #5fa9c6;
+  border-bottom: 2px solid #BD3E31;
 }
 .btn-k:active {
-  border-bottom: 2px solid #c40000;
+  border-bottom: 2px solid #7ecc47;
 }
 .btn-l:active {
-  border-bottom: 2px solid #7400c1;
+  border-bottom: 2px solid #cecb18;
 }
 @media (min-width: 1024px) {
 }

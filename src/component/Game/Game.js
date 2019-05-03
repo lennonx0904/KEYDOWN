@@ -32,13 +32,16 @@ class Game extends React.Component {
     fetchPlayingSongData(match.params.id, difficulty);
     console.log("did mount inGame", game.inGame);
 
-    if (!game.inGame) {
+    const canvas = document.querySelector(".player-canvas");
+    const startGame = () => {
+      setInGameState(true);
+      canvas.removeEventListener("click", startGame);
+      return false;
+    };
+    // if (!game.inGame) {
       drawReadyState(this.state.unit);
-      const canvas = document.querySelector(".player-canvas");
-      canvas.addEventListener("click", () => {
-        setInGameState(true);
-      });
-    }
+      canvas.addEventListener("click", startGame);
+    // }
   }
 
   componentDidUpdate() {
@@ -49,8 +52,8 @@ class Game extends React.Component {
     const { game, match, location, setGameOverState, auth } = this.props;
     console.log("componentDidUpdate inGame", game.inGame);
     const difficulty = location.search.slice(1);
-
     if (game.inGame && game.playingSongData && !game.gameOver) {
+      // canvas.removeEventListener("click", test);
       const rankingData = {
         name: auth.name,
         totalNotes: 0,

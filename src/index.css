@@ -1,21 +1,11 @@
+@import url("https://fonts.googleapis.com/css?family=Palanquin+Dark|Ubuntu");
 * {
   box-sizing: border-box;
 }
 
+html,
 body {
   margin: 0;
-}
-
-.none {
-  display: none;
-}
-
-.hidden {
-  visibility: hidden;
-}
-
-.visible {
-  visibility: visible;
 }
 
 a:link {

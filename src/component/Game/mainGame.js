@@ -3,7 +3,7 @@ import { updateLocalStorage } from "./helpers";
 
 export const mainGame = (unit, beatData, audio, difficulty, match) => {
   audio.play();
-audio.currentTime = 200;
+  audio.currentTime = 200;
   // 全域變數
   let updateFPS = 100;
   let time = 0;
@@ -46,8 +46,9 @@ audio.currentTime = 200;
         centerPos: new Pos(cw / 2, 0),
         pos1: new Pos(-(unit * 2), 0),
         pos2: new Pos(-unit, 0),
-        color: "#ffff00",
-        shadowColor: "#fcfc68",
+        color: "#75d0f5",
+        shadowColor: "#5ad0fa",
+
         height: unit / 5,
         speed: spead
       };
@@ -91,7 +92,7 @@ audio.currentTime = 200;
       if (time % ((updateFPS * 60) / bpm) === 0) {
         round++;
         // console.log('round----', round);
-        
+
         beatData[round].forEach((e, index) => {
           if (beatData[round][0] === 1) {
             noteA.push(new Note());
@@ -102,8 +103,8 @@ audio.currentTime = 200;
               new Note({
                 pos1: new Pos(-unit, 0),
                 pos2: new Pos(0, 0),
-                color: "#75d0f5",
-                shadowColor: "#5ad0fa"
+                color: "#ff0000",
+                shadowColor: "#ff5a5a"
               })
             );
             totalNotes++;
@@ -113,8 +114,8 @@ audio.currentTime = 200;
               new Note({
                 pos1: new Pos(unit, 0),
                 pos2: new Pos(0, 0),
-                color: "#ff0000",
-                shadowColor: "#ff5a5a"
+                color: "#83ff2b",
+                shadowColor: "#6fd328"
               })
             );
             totalNotes++;
@@ -124,8 +125,8 @@ audio.currentTime = 200;
               new Note({
                 pos1: new Pos(unit, 0),
                 pos2: new Pos(unit * 2, 0),
-                color: "#9100f1",
-                shadowColor: "#aa27ff"
+                color: "#ffff00",
+                shadowColor: "#fcfc68"
               })
             );
             totalNotes++;

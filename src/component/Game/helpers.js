@@ -58,9 +58,9 @@ export const drawReadyState = unit => {
   ctx.beginPath();
   ctx.translate(cw / 2, ch / 2);
   ctx.textAlign = "center";
-  ctx.font = `${unit}px Courier New`;
+  ctx.font = `${unit}px cursive`;
   ctx.fillStyle = "#fff";
-  ctx.fillText("Press to Start", 0, 0);
+  ctx.fillText("Click to Start", 0, 0);
   ctx.restore();
 };
 

@@ -1,7 +1,7 @@
 .nav-bar {
   width: 100%;
   height: 70px;
-  background-color: #FF004F;
+  background-color: #ff004f;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -12,7 +12,10 @@
 }
 .logo > a {
   text-decoration: none;
-  color: #3a3a3a;
+  color: #ffffff;
+  text-shadow: 3px 3px #b7012b;
+  /* ----字型------- */
+  font-family: "Palanquin Dark", sans-serif;
 }
 .buttons {
   display: flex;
@@ -37,7 +40,7 @@
   border-color: rgba(255, 255, 255, 0.8);
 }
 
-@media (min-width: 721px) and (max-width: 1024px) {
+@media (min-width: 720px) and (max-width: 1023px) {
   .logo {
     padding: 0 32px;
   }
@@ -50,7 +53,7 @@
   }
 }
 
-@media (min-width: 481px) and (max-width: 720px) {
+@media (min-width: 480px) and (max-width: 719px) {
   .logo {
     padding: 0 28px;
   }
@@ -62,7 +65,7 @@
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 479px) {
   .logo {
     font-size: 32px;
     padding: 0 24px;
