@@ -12,7 +12,10 @@ const showingReducer = (state = initState, action) => {
       return { ...state, signUpForm: action.payload };
     case "SHOW_MOBILE_BUTTONS":
       return { ...state, mobileButtons: action.payload };
-
+    case "LOGIN_SUCCESS":
+      return { ...state, loginForm: false };
+    case "SIGH_UP_SUCCESS":
+      return { ...state, signUpForm: false };
     default:
       return state;
   }

@@ -34,19 +34,22 @@ class NavButtonsMobile extends React.Component {
     );
   };
 
+  renderLogOutBtn = () => {
+    return (
+      <>
+        <button className="mobile-btn" onClick={this.props.logOut}>
+          Log Out
+        </button>
+      </>
+    );
+  };
+
   render() {
-    console.log("mobile btn props", this.props);
-    const { auth, logOut } = this.props;
+    const { auth } = this.props;
     return (
       <>
         <div className="mobile-buttons">
-          {auth.uid ? (
-            <button className="mobile-btn" onClick={logOut()}>
-              Log Out
-            </button>
-          ) : (
-            this.renderLogInAndSignUpBtn()
-          )}
+          {auth.uid ? this.renderLogOutBtn() : this.renderLogInAndSignUpBtn()}
         </div>
       </>
     );
@@ -54,6 +57,8 @@ class NavButtonsMobile extends React.Component {
 }
 
 const mapStatetoProps = state => {
+  console.log("mobil-btn-state", state);
+
   return {
     auth: state.auth,
     showing: state.showing

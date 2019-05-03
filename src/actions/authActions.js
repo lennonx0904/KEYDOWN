@@ -9,6 +9,7 @@ export const logIn = data => dispatch => {
     .then(() => {
       firebase.auth().onAuthStateChanged(user => {
         console.log("log in 以後抓user.uid", user.uid);
+        dispatch({ type: "LOGIN_SUCCESS" });
         dispatch({ type: "STORE_USER_UID", payload: user.uid });
       });
     })
