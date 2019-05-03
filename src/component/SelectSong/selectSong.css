@@ -15,24 +15,24 @@
 .song {
   background-color: #fffaf8;
   border: 1px solid #878787;
-  border-radius: 50px;
+  border-radius: 10px;
   padding: 10px;
   width: 100%;
-  height: 100px;
+  /* height: 100px; */
   margin: 40px auto;
   display: flex;
+  align-items: center;
   transform: scale(1);
   transition: 0.1s transform;
-  cursor: pointer;
 }
 
 .song:hover {
-  transform: scale(1.04);
+  transform: scale(1.02);
 }
 
 .song-details {
-  flex: 1;
-  margin-left: 60px;
+  margin-left: 30px;
+  margin-right: auto;
 }
 
 .song-title {
@@ -42,47 +42,41 @@
   font-size: 18px;
   margin-top: 10px;
 }
-/* .song-title {
-  font-size: 24px;
-} */
-.play-song {
-  margin-left: 12px;
-}
-
-/* .song-auth {
-  font-size: 18px;
-  margin-top: 10px;
-} */
 
 .difficulty-wrap {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-right: 40px;
+  /* margin-left: auto; */
 }
 .difficulty {
-  /* border: 1px solid #ff004f; */
-  width: 70px;
-  height: 70px;
+  width: 80px;
+  height: 80px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 10px;
-  font-size: 14px;
+  margin: 10px 20px;
+  font-size: 16px;
   color: #fffaf8;
   border: none;
   background-color: rgba(255, 0, 79, 0.5);
-  border-radius: 50%;
+  border-radius: 5px;
   transform: scale(1);
   transition: 0.1s transform;
+  cursor: pointer;
+}
+
+.normal {
+  background-color: rgba(255, 0, 79, 0.6);
+}
+.hard {
+  background-color: rgba(255, 0, 79, 0.7);
 }
 
 .difficulty:hover {
   background-color: rgba(255, 0, 79, 1);
   transform: scale(1.1);
-}
-
-@media (min-width: 1024px) {
 }
 
 @media (min-width: 720px) and (max-width: 1023px) {
@@ -91,7 +85,7 @@
     margin-top: 48px;
   }
   .song-details {
-    margin-left: 40px;
+    margin-left: 30px;
   }
   .song-title {
     font-size: 24px;
@@ -101,7 +95,7 @@
     margin-top: 10px;
   }
   .difficulty-wrap {
-    margin-right: 30px;
+    margin: 0;
   }
 }
 
@@ -110,30 +104,40 @@
     width: 90%;
     margin-top: 16px;
   }
+  .song {
+    width: 100%;
+    flex-wrap: wrap;
+    margin: 30px auto;
+  }
   .song-details {
     display: flex;
-    flex-wrap: wrap;
     align-items: center;
-    margin-left: 40px;
+    width: 100%;
+    padding: 5px 10px;
+    margin: 0;
   }
   .song-title {
-    width: 100%;
+    width: 50%;
     font-size: 18px;
   }
   .song-auth {
-    width: 100%;
+    width: 50%;
     font-size: 16px;
+    margin-top: 0px;
   }
   .difficulty-wrap {
-    width: 50%;
-    justify-content: space-around;
-    margin-right: 12px;
+    width: 100%;
+    margin: 10px 10px 0;
+    justify-content: space-between;
+  }
+  .difficulty-wrap > a {
+    width: 25%;
   }
   .difficulty {
-    width: 65px;
-    height: 65px;
+    width: 100%;
+    height: 40px;
     font-size: 12px;
-    margin: 5px;
+    margin: 0px;
   }
 }
 
@@ -149,9 +153,11 @@
   }
   .song-details {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     width: 100%;
-    margin-left: 30px;
+    padding: 5px;
+    margin: 0;
   }
   .song-title {
     width: 100%;
@@ -160,17 +166,20 @@
   .song-auth {
     width: 100%;
     font-size: 16px;
-    margin-top: 0px;
+    margin-top: 5px;
   }
   .difficulty-wrap {
     width: 100%;
     margin: 0px;
-    justify-content: space-around;
+    justify-content: space-between;
+  }
+  .difficulty-wrap > a {
+    width: 30%;
   }
   .difficulty {
-    width: 55px;
-    height: 55px;
+    width: 100%;
+    height: 40px;
     font-size: 12px;
-    margin: 5px;
+    margin: 0px;
   }
 }
