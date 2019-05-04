@@ -203,14 +203,14 @@ export const mainGame = (unit, beatData, audio, difficulty, match) => {
     noteD.forEach(e => e.render());
   }
 
-  const startTimer = setInterval(() => {
+  const startGameTimer = setInterval(() => {
     update();
   }, 1000 / updateFPS);
 
   player(noteA, noteB, noteC, noteD, unit, audio);
 
   return () => {
-    clearInterval(startTimer);
+    clearInterval(startGameTimer);
     audio.pause();
     audio.currentTime = 0;
   };

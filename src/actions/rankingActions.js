@@ -2,10 +2,10 @@ import firebase from "./firebase";
 const db = firebase.firestore();
 
 
-export const fetchRankingRecord = (doc, difficutly) => dispatch => {
+export const fetchRankingRecord = (docId, difficutly) => dispatch => {
   let arr = [];
   db.collection("songList")
-    .doc(doc)
+    .doc(docId)
     .collection(difficutly)
     .orderBy("score", "desc")
     .limit(10)

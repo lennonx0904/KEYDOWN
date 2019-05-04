@@ -1,7 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Redirect } from "react-router";
-import { Link } from "react-router-dom";
 
 import PureCanvas from "./PureCanvas";
 import "./game.css";
@@ -11,9 +9,12 @@ import {
   setGameOverState,
   storeRecordToDB
 } from "../../actions/gameActions";
+import { fetchRankingRecord } from "../../actions/rankingActions";
 import { writeData } from "../../actions";
 import { mainGame } from "./mainGame";
-import { drawReadyState, drawGameOverState, rankingRule } from "./helpers";
+import { drawReadyState, drawFinishState, rankingRule } from "./helpers";
+import BestRecord from "./BestRecord";
+import CurrentSocre from "./CurrentSocre";
 
 class Game extends React.Component {
   state = { unit: 0 };
@@ -22,26 +23,23 @@ class Game extends React.Component {
   }
   componentDidMount() {
     const {
-      game,
       match,
       location,
       fetchPlayingSongData,
-      setInGameState
+      setInGameState,
+      fetchRankingRecord
     } = this.props;
     const difficulty = location.search.slice(1);
     fetchPlayingSongData(match.params.id, difficulty);
-    console.log("did mount inGame", game.inGame);
-
+    fetchRankingRecord(match.params.id, difficulty);
     const canvas = document.querySelector(".player-canvas");
     const startGame = () => {
       setInGameState(true);
       canvas.removeEventListener("click", startGame);
       return false;
     };
-    // if (!game.inGame) {
-      drawReadyState(this.state.unit);
-      canvas.addEventListener("click", startGame);
-    // }
+    drawReadyState(this.state.unit);
+    canvas.addEventListener("click", startGame);
   }
 
   componentDidUpdate() {
@@ -53,7 +51,6 @@ class Game extends React.Component {
     console.log("componentDidUpdate inGame", game.inGame);
     const difficulty = location.search.slice(1);
     if (game.inGame && game.playingSongData && !game.gameOver) {
-      // canvas.removeEventListener("click", test);
       const rankingData = {
         name: auth.name,
         totalNotes: 0,
@@ -63,7 +60,7 @@ class Game extends React.Component {
         hitNotesD: 0
       };
       localStorage.setItem("rankingData", JSON.stringify(rankingData));
-      this.stop = mainGame(
+      this.stopGame = mainGame(
         this.state.unit,
         game.playingSongData.beatData,
         game.playingSongData.audio,
@@ -72,9 +69,9 @@ class Game extends React.Component {
       );
       let audio = game.playingSongData.audio;
       audio.addEventListener("ended", () => {
-        this.stop();
+        this.stopGame();
         setGameOverState(true);
-        drawGameOverState(this.state.unit);
+        drawFinishState(this.state.unit);
         this.storeRecord();
         const canvas = document.querySelector(".player-canvas");
         canvas.addEventListener("click", () => {
@@ -94,18 +91,22 @@ class Game extends React.Component {
     // make sure this.stop won't be undefined
     // 使用者未開始遊戲就跳轉頁面會讓 this.stop == undefined
     if (game.inGame) {
-      this.stop();
+      this.stopGame();
     }
   }
 
   setCanvasSize = () => {
     console.log("measureCanvasSize", window.innerWidth);
     let unit;
-    if (window.innerWidth > 720) {
+    if (window.innerWidth > 1024) {
+      unit = Math.round(window.innerWidth * 0.022);
+    } else if (window.innerWidth > 720) {
       unit = Math.round(window.innerWidth * 0.033);
     } else {
       unit = Math.round(window.innerWidth * 0.04);
     }
+    console.log("measureCanvasSize", unit);
+
     this.setState({ unit: unit });
   };
 
@@ -191,6 +192,10 @@ class Game extends React.Component {
     return (
       <div className="game-view">
         <div className="game-wrap">
+          <div className="battle">
+            <BestRecord record={this.props.ranking.record} />
+            <CurrentSocre />
+          </div>
           <div className="canvas-wrap">
             <PureCanvas width={unit * 18} height={unit * 13} />
             <canvas
@@ -227,7 +232,8 @@ class Game extends React.Component {
 const mapStateToProps = state => {
   return {
     game: state.game,
-    auth: state.auth
+    auth: state.auth,
+    ranking: state.ranking
   };
 };
 
@@ -238,6 +244,7 @@ export default connect(
     fetchPlayingSongData,
     setGameOverState,
     storeRecordToDB,
+    fetchRankingRecord,
     writeData
   }
 )(Game);

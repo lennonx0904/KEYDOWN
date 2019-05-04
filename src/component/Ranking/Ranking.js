@@ -23,7 +23,7 @@ class Ranking extends React.Component {
   }
 
   render() {
-    // console.log("ranking Page props----", this.props);
+    console.log("ranking Page props----", this.props.ranking);
 
     // if (localStorage.rankingData) {
     //   const rankingData = JSON.parse(localStorage.rankingData);

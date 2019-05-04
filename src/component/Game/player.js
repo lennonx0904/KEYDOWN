@@ -10,7 +10,17 @@ export const player = (noteA, noteB, noteC, noteD, unit, audio) => {
   const btnF = document.querySelector(".btn-f");
   const btnK = document.querySelector(".btn-k");
   const btnL = document.querySelector(".btn-l");
+  const currentSocre = document.querySelector(".current-socre");
 
+  const scoreCounter = () => {
+    if (!localStorage.rankingData) {
+      return;
+    }
+    let data = JSON.parse(localStorage.rankingData);
+    let score =
+      (data.hitNotesA + data.hitNotesB + data.hitNotesC + data.hitNotesD) * 98;
+    return score;
+  };
   const judge = (noteArray, trackIndex, key) => {
     let hitNotes = 0;
     return () => {
@@ -25,6 +35,7 @@ export const player = (noteA, noteB, noteC, noteD, unit, audio) => {
           hitNotes++;
           drawEffect(trackIndex, unit);
           updateLocalStorage(key, hitNotes);
+          currentSocre.textContent = scoreCounter();
         }
       }
     };
@@ -40,25 +51,25 @@ export const player = (noteA, noteB, noteC, noteD, unit, audio) => {
       // D = 68
       case 68:
         btnD.classList.add("btn-d-active");
-        drawTrack(7, 8, 1, 0, unit, "rgba(255,255,255,0.2)");
+        drawTrack(7, 8, 1, 0, unit, "rgba(255,255,255,0.1)");
         judgeA();
         break;
       // F = 70
       case 70:
         btnF.classList.add("btn-f-active");
-        drawTrack(8, 9, 2, 1, unit, "rgba(255,255,255,0.2)");
+        drawTrack(8, 9, 2, 1, unit, "rgba(255,255,255,0.1)");
         judgeB();
         break;
       // K = 75
       case 75:
         btnK.classList.add("btn-k-active");
-        drawTrack(9, 10, 3, 2, unit, "rgba(255,255,255,0.2)");
+        drawTrack(9, 10, 3, 2, unit, "rgba(255,255,255,0.1)");
         judgeC();
         break;
       // L = 76
       case 76:
         btnL.classList.add("btn-l-active");
-        drawTrack(10, 11, 4, 3, unit, "rgba(255,255,255,0.2)");
+        drawTrack(10, 11, 4, 3, unit, "rgba(255,255,255,0.1)");
         judgeD();
         break;
       default:
@@ -103,19 +114,19 @@ export const player = (noteA, noteB, noteC, noteD, unit, audio) => {
 
   // for mobile touchstart ------------
   btnD.addEventListener("touchstart", () => {
-    drawTrack(7, 8, 1, 0, unit, "rgba(255,255,255,0.2)");
+    drawTrack(7, 8, 1, 0, unit, "rgba(255,255,255,0.1)");
     judgeA();
   });
   btnF.addEventListener("touchstart", () => {
-    drawTrack(8, 9, 2, 1, unit, "rgba(255,255,255,0.2)");
+    drawTrack(8, 9, 2, 1, unit, "rgba(255,255,255,0.1)");
     judgeB();
   });
   btnK.addEventListener("touchstart", () => {
-    drawTrack(9, 10, 3, 2, unit, "rgba(255,255,255,0.2)");
+    drawTrack(9, 10, 3, 2, unit, "rgba(255,255,255,0.1)");
     judgeC();
   });
   btnL.addEventListener("touchstart", () => {
-    drawTrack(10, 11, 4, 3, unit, "rgba(255,255,255,0.2)");
+    drawTrack(10, 11, 4, 3, unit, "rgba(255,255,255,0.1)");
     judgeD();
   });
 

@@ -58,7 +58,7 @@ export const drawReadyState = unit => {
   ctx.beginPath();
   ctx.translate(cw / 2, ch / 2);
   ctx.textAlign = "center";
-  ctx.font = `${unit}px cursive`;
+  ctx.font = `${unit}px Courier New`;
   ctx.fillStyle = "#fff";
   ctx.fillText("Click to Start", 0, 0);
   ctx.restore();
@@ -106,7 +106,7 @@ export const drawEffect = (x, unit) => {
   ctx.restore();
 };
 
-export const drawGameOverState = unit => {
+export const drawFinishState = unit => {
   const canvas = document.querySelector("#game-canvas");
   const ctx = canvas.getContext("2d");
   ctx.clearRect(0, 0, 18 * unit, 13 * unit);
@@ -133,7 +133,7 @@ export const drawGameOverState = unit => {
   ctx.textAlign = "center";
   ctx.font = `${unit}px Courier New`;
   ctx.fillStyle = "#000";
-  ctx.fillText("Game Over", 0, 0);
+  ctx.fillText("Click to Ranking Page", 0, 0);
   ctx.restore();
 };
 
