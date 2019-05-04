@@ -69,10 +69,13 @@ class Game extends React.Component {
       );
       let audio = game.playingSongData.audio;
       audio.addEventListener("ended", () => {
+        const currentSocre = this.countCurrentScore();
+        console.log("currentSocre", currentSocre);
+
         this.stopGame();
         setGameOverState(true);
-        drawFinishState(this.state.unit);
-        this.storeRecord();
+        drawFinishState(this.state.unit, currentSocre);
+        this.storeRecord(currentSocre);
         const canvas = document.querySelector(".player-canvas");
         canvas.addEventListener("click", () => {
           window.location.hash = `#/ranking/${match.params.id}${
@@ -110,7 +113,18 @@ class Game extends React.Component {
     this.setState({ unit: unit });
   };
 
-  storeRecord = () => {
+  countCurrentScore = () => {
+    const rankingData = JSON.parse(localStorage.rankingData);
+    const currentScore =
+      (rankingData.hitNotesA +
+        rankingData.hitNotesB +
+        rankingData.hitNotesC +
+        rankingData.hitNotesD) *
+      98;
+    return currentScore;
+  };
+
+  storeRecord = currentSocre => {
     if (!localStorage.rankingData) {
       return;
     }
@@ -118,18 +132,18 @@ class Game extends React.Component {
     const difficulty = location.search.slice(1);
     console.log(difficulty, match.params.id, auth.name);
     const rankingData = JSON.parse(localStorage.rankingData);
-    const hit =
-      rankingData.hitNotesA +
-      rankingData.hitNotesB +
-      rankingData.hitNotesC +
-      rankingData.hitNotesD;
+    // const hit =
+    //   rankingData.hitNotesA +
+    //   rankingData.hitNotesB +
+    //   rankingData.hitNotesC +
+    //   rankingData.hitNotesD;
     const date = new Date();
     const time = `${date.getFullYear()}/${date.getMonth() +
       1}/${date.getDate()} ${date.getHours()}:${date.getMinutes()}`;
     const data = {
       name: rankingData.name,
       rank: rankingRule(),
-      score: hit * 98,
+      score: currentSocre,
       time: time
     };
     if (!data.name) {

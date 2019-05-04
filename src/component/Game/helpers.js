@@ -106,35 +106,46 @@ export const drawEffect = (x, unit) => {
   ctx.restore();
 };
 
-export const drawFinishState = unit => {
+export const drawFinishState = (unit, currentScore) => {
   const canvas = document.querySelector("#game-canvas");
   const ctx = canvas.getContext("2d");
   ctx.clearRect(0, 0, 18 * unit, 13 * unit);
   let cw = 18 * unit;
   let ch = 13 * unit;
 
-  //  lib function
-  ctx.line = function(p1, p2, color, shadowColor, height) {
+  let score = 0;
+  const drawScore = () => {
+    score += 98;
+    ctx.clearRect(0, 0, 18 * unit, 13 * unit);
+    ctx.rect(0, 0, 18 * unit, 13 * unit);
+    ctx.fillStyle = "#1d1d1d";
+    ctx.fill();
+    
+    ctx.save();
     ctx.beginPath();
-    ctx.moveTo(p1.x, p1.y);
-    ctx.lineTo(p2.x, p2.y);
-    ctx.strokeStyle = color;
-    ctx.shadowBlur = 60;
-    ctx.shadowColor = shadowColor;
-    ctx.lineWidth = height;
-    ctx.stroke();
+    ctx.translate(cw / 2, ch / 4);
+    ctx.textAlign = "center";
+    ctx.font = `${unit}px Courier New`;
+    ctx.fillStyle = "#fff";
+    ctx.fillText(`You got ${score} points!`, 0, 0);
+    ctx.restore();
+
+    ctx.save();
+    ctx.beginPath();
+    ctx.translate(cw / 2, ch / 2);
+    ctx.textAlign = "center";
+    ctx.font = `${unit}px Courier New`;
+    ctx.fillStyle = "#fff";
+    ctx.fillText("Click to Ranking Page", 0, 0);
+    ctx.restore();
   };
 
-  // press to start
-
-  ctx.save();
-  ctx.beginPath();
-  ctx.translate(cw / 2, ch / 2);
-  ctx.textAlign = "center";
-  ctx.font = `${unit}px Courier New`;
-  ctx.fillStyle = "#000";
-  ctx.fillText("Click to Ranking Page", 0, 0);
-  ctx.restore();
+  const drawScoreTimer = setInterval(() => {
+    drawScore();
+    if (score >= currentScore) {
+      clearInterval(drawScoreTimer);
+    }
+  }, 10);
 };
 
 export const rankingRule = () => {

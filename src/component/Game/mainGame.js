@@ -3,7 +3,7 @@ import { updateLocalStorage } from "./helpers";
 
 export const mainGame = (unit, beatData, audio, difficulty, match) => {
   audio.play();
-  audio.currentTime = 200;
+  audio.currentTime = 190;
   // 全域變數
   let updateFPS = 100;
   let time = 0;
