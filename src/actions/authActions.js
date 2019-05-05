@@ -8,7 +8,6 @@ export const logIn = data => dispatch => {
     .signInWithEmailAndPassword(data.email, data.password)
     .then(() => {
       firebase.auth().onAuthStateChanged(user => {
-        console.log("log in 以後抓user.uid", user.uid);
         dispatch({ type: "LOGIN_SUCCESS" });
         dispatch({ type: "STORE_USER_UID", payload: user.uid });
       });
@@ -44,7 +43,6 @@ export const signUp = data => dispatch => {
     .auth()
     .createUserWithEmailAndPassword(email, password)
     .then(res => {
-      console.log("sigh up 裡的 user----", res.user.uid);
       let uid = res.user.uid;
       dispatch({ type: "STORE_USER_UID", payload: uid });
       db.collection("users")
@@ -69,9 +67,8 @@ export const checkAuthState = () => dispatch => {
         .then(doc => {
           if (doc) {
             console.log(doc.data());
+
             dispatch({ type: "GET_USER_NAME", payload: doc.data().userName });
-          } else {
-            console.log("error");
           }
         });
     } else {

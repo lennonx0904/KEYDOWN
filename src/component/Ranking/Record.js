@@ -2,11 +2,6 @@ import React from "react";
 
 class Record extends React.Component {
   render() {
-    console.log(
-      "Record Component props.rankingRecord--",
-      this.props.rankingRecord
-    );
-    // const data = this.props.rankingRecord;
     return (
       <>
         {this.props.rankingRecord.map(record => {

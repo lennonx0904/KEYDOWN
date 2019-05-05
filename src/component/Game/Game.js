@@ -12,7 +12,12 @@ import {
 import { fetchRankingRecord } from "../../actions/rankingActions";
 import { writeData } from "../../actions";
 import { mainGame } from "./mainGame";
-import { drawReadyState, drawFinishState, rankingRule } from "./helpers";
+import {
+  drawReadyState,
+  drawComingSoon,
+  drawFinishState,
+  rankingRule
+} from "./helpers";
 import BestRecord from "./BestRecord";
 import CurrentSocre from "./CurrentSocre";
 
@@ -43,13 +48,13 @@ class Game extends React.Component {
   }
 
   componentDidUpdate() {
-    // console.log("didupdate props", this.props);
-    // console.log("didupdate state", this.state);
-    // console.log("componentDidUpdate");
-
     const { game, match, location, setGameOverState, auth } = this.props;
-    console.log("componentDidUpdate inGame", game.inGame);
     const difficulty = location.search.slice(1);
+
+    if (!game.playingSongData) {
+      drawComingSoon(this.state.unit);
+    }
+
     if (game.inGame && game.playingSongData && !game.gameOver) {
       const rankingData = {
         name: auth.name,
@@ -70,8 +75,6 @@ class Game extends React.Component {
       let audio = game.playingSongData.audio;
       audio.addEventListener("ended", () => {
         const currentSocre = this.countCurrentScore();
-        console.log("currentSocre", currentSocre);
-
         this.stopGame();
         setGameOverState(true);
         drawFinishState(this.state.unit, currentSocre);
@@ -87,19 +90,17 @@ class Game extends React.Component {
   }
 
   componentWillUnmount() {
-    console.log("componentWillUnmount");
     const { setInGameState, setGameOverState, game } = this.props;
     setInGameState(false);
     setGameOverState(false);
     // make sure this.stop won't be undefined
-    // 使用者未開始遊戲就跳轉頁面會讓 this.stop == undefined
-    if (game.inGame) {
+    // 使用者未開始遊戲或沒有遊戲資訊的跳轉頁面
+    if (game.inGame && game.playingSongData) {
       this.stopGame();
     }
   }
 
   setCanvasSize = () => {
-    console.log("measureCanvasSize", window.innerWidth);
     let unit;
     if (window.innerWidth > 1024) {
       unit = Math.round(window.innerWidth * 0.022);
@@ -108,8 +109,6 @@ class Game extends React.Component {
     } else {
       unit = Math.round(window.innerWidth * 0.04);
     }
-    console.log("measureCanvasSize", unit);
-
     this.setState({ unit: unit });
   };
 
@@ -128,15 +127,9 @@ class Game extends React.Component {
     if (!localStorage.rankingData) {
       return;
     }
-    const { match, location, storeRecordToDB, auth } = this.props;
+    const { match, location, storeRecordToDB } = this.props;
     const difficulty = location.search.slice(1);
-    console.log(difficulty, match.params.id, auth.name);
     const rankingData = JSON.parse(localStorage.rankingData);
-    // const hit =
-    //   rankingData.hitNotesA +
-    //   rankingData.hitNotesB +
-    //   rankingData.hitNotesC +
-    //   rankingData.hitNotesD;
     const date = new Date();
     const time = `${date.getFullYear()}/${date.getMonth() +
       1}/${date.getDate()} ${date.getHours()}:${date.getMinutes()}`;
@@ -152,44 +145,99 @@ class Game extends React.Component {
     // storeRecordToDB(match.params.id, difficulty, data);
   };
 
-  checkAudioandGame = () => {
-    const audio = this.props.playingSongData.audio;
-    audio.play();
-
-    console.log("第一次 audio", audio.currentTime);
-
-    let timer = setInterval(() => {
-      console.log("currentTime", audio.currentTime);
-    }, 1000 / 100);
-
-    audio.addEventListener("ended", () => {
-      console.log("end-currentTime----", audio.currentTime);
-      console.log("結束了");
-      clearInterval(timer);
-    });
-
-    audio.addEventListener("pause", () => {
-      clearInterval(timer);
-    });
-
-    audio.addEventListener("timeupdate", () => {
-      if (audio.currentTime.toFixed(2) === "3.23") {
-        console.log("timeupdate裡的----", audio.currentTime);
-      }
-    });
-  };
-
   write = () => {
-    let data = [];
+    // let data =[]
+    let data = [
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+      [1, 0, 0, 0],
+      [0, 0, 0, 0],
+      [0, 1, 0, 0],
+      [0, 0, 0, 0],
+      [0, 0, 1, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 1],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+      [1, 0, 0, 0],
+      [0, 0, 0, 0],
+      [0, 1, 0, 0],
+      [0, 0, 0, 0],
+      [0, 0, 1, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 1],
+      [0, 0, 0, 0],
+      [0, 1, 0, 1],
+      [0, 0, 0, 0],
+      [0, 1, 0, 1],
+      [0, 0, 0, 0],
+      [1, 0, 1, 0],
+      [0, 0, 0, 0],
+      [1, 0, 1, 0],
+      [0, 0, 0, 0],
+      [0, 1, 0, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 1],
+      [0, 0, 0, 0],
+      [1, 0, 0, 0],
+      [0, 0, 0, 0],
+      [1, 1, 0, 0],
+      [0, 0, 0, 0],
+      [1, 0, 0, 0],
+      [0, 0, 0, 0],
+      [1, 0, 1, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 1],
+      [0, 0, 0, 0],
+      [0, 0, 1, 1],
+      [0, 0, 0, 0],
+      [0, 0, 1, 0],
+      [0, 0, 0, 0],
+      [0, 0, 1, 1],
+      [0, 0, 0, 0],
+      [0, 1, 0, 0],
+      [0, 0, 0, 0],
+      [0, 1, 0, 0],
+      [0, 0, 0, 0],
+      [0, 0, 1, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 1],
+      [0, 0, 0, 0],
+      [1, 0, 1, 0],
+      [0, 0, 0, 0],
+      [1, 0, 0, 1],
+      [0, 0, 0, 0],
+      [0, 1, 0, 0],
+      [0, 0, 0, 0],
+      [0, 1, 1, 0],
+      [0, 0, 0, 0],
+      [0, 1, 0, 1],
+      [0, 0, 0, 0],
+      [0, 0, 0, 1],
+      [0, 0, 0, 0],
+      [0, 0, 1, 0],
+      [0, 0, 0, 0],
+      [0, 1, 0, 0],
+      [0, 0, 0, 0],
+      [1, 0, 0, 0],
+      [0, 0, 0, 0],
+      [0, 1, 0, 1],
+      [0, 0, 0, 0],
+      [0, 1, 1, 0],
+      [0, 0, 0, 0]
+    ];
     const makeRandom = () => {
       let num = Math.random();
-      if (num < 0.65) {
+      if (num < 0.7) {
         return 0;
       } else {
         return 1;
       }
     };
-    for (let i = 0; i < 400; i++) {
+    for (let i = 0; i < 630; i++) {
       let newArr = [makeRandom(), makeRandom(), makeRandom(), makeRandom()];
       data.push(newArr);
     }
@@ -197,7 +245,8 @@ class Game extends React.Component {
   };
 
   render() {
-    console.log("Game props----", this.props);
+    console.log("game", this.props);
+
     const unit = this.state.unit;
     const style = {
       margin: `${unit * 13 + 31}px 0 0 0`,
@@ -227,17 +276,17 @@ class Game extends React.Component {
           </div>
         </div>
 
-        {/* <div>
+        <div>
           <button onClick={this.write}>write</button>
           <button onClick={this.checkAudioandGame}>start</button>
-          <Link
+          {/* <Link
             to={`/ranking/${this.props.match.params.id}${
               this.props.location.search
             }`}
           >
             ranking
-          </Link>
-        </div> */}
+          </Link> */}
+        </div>
       </div>
     );
   }

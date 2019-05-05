@@ -57,8 +57,6 @@ class NavButtonsMobile extends React.Component {
 }
 
 const mapStatetoProps = state => {
-  console.log("mobil-btn-state", state);
-
   return {
     auth: state.auth,
     showing: state.showing

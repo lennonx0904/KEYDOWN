@@ -1,7 +1,6 @@
 import firebase from "./firebase";
 const db = firebase.firestore();
 
-
 export const fetchRankingRecord = (docId, difficutly) => dispatch => {
   let arr = [];
   db.collection("songList")

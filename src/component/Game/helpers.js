@@ -63,7 +63,24 @@ export const drawReadyState = unit => {
   ctx.fillText("Click to Start", 0, 0);
   ctx.restore();
 };
-
+export const drawComingSoon = unit => {
+  const canvas = document.querySelector("#game-canvas");
+  const ctx = canvas.getContext("2d");
+  ctx.clearRect(0, 0, 18 * unit, 13 * unit);
+  ctx.rect(0, 0, 18 * unit, 13 * unit);
+  ctx.fillStyle = "#1d1d1d";
+  ctx.fill();
+  let cw = 18 * unit;
+  let ch = 13 * unit;
+  ctx.save();
+  ctx.beginPath();
+  ctx.translate(cw / 2, ch / 2);
+  ctx.textAlign = "center";
+  ctx.font = `${unit}px Courier New`;
+  ctx.fillStyle = "#fff";
+  ctx.fillText("Coming Soon...", 0, 0);
+  ctx.restore();
+};
 export const drawTrack = (x1, x2, x3, x4, unit, color) => {
   const canvas = /** @type {HTMLCanvasElement} */ (document.querySelector(
     ".player-canvas"
@@ -120,7 +137,7 @@ export const drawFinishState = (unit, currentScore) => {
     ctx.rect(0, 0, 18 * unit, 13 * unit);
     ctx.fillStyle = "#1d1d1d";
     ctx.fill();
-    
+
     ctx.save();
     ctx.beginPath();
     ctx.translate(cw / 2, ch / 4);
@@ -145,7 +162,7 @@ export const drawFinishState = (unit, currentScore) => {
     if (score >= currentScore) {
       clearInterval(drawScoreTimer);
     }
-  }, 10);
+  }, 5);
 };
 
 export const rankingRule = () => {

@@ -19,8 +19,6 @@ class Home extends React.Component {
 
 // 記得刪掉 mapStateToProps
 const mapStateToProps = state => {
-  // console.log("home--state---", state);
-
   return {
     playingSongData: state.playingSongData
   };

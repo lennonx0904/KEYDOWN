@@ -23,23 +23,13 @@ class Ranking extends React.Component {
   }
 
   render() {
-    console.log("ranking Page props----", this.props.ranking);
-
-    // if (localStorage.rankingData) {
-    //   const rankingData = JSON.parse(localStorage.rankingData);
-    //   const totalNotes = rankingData.totalNotes;
-    //   const hitNotes =
-    //     rankingData.hitNotesA +
-    //     rankingData.hitNotesB +
-    //     rankingData.hitNotesC +
-    //     rankingData.hitNotesD;
-    // }
-
     return (
       <div className="ranking-view">
         <div className="ranking-wrap">
           {localStorage.rankingData ? (
-            <CurrentRank currentRanking={JSON.parse(localStorage.rankingData)} />
+            <CurrentRank
+              currentRanking={JSON.parse(localStorage.rankingData)}
+            />
           ) : null}
 
           <div className="record">
@@ -58,8 +48,6 @@ class Ranking extends React.Component {
 }
 
 const mapStateToProps = state => {
-  console.log("ranking---Store state", state);
-
   return {
     rankingData: state.rankingData,
     auth: state.auth,

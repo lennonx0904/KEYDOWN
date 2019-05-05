@@ -1,16 +1,23 @@
 import { player } from "./player";
 import { updateLocalStorage } from "./helpers";
 
-export const mainGame = (unit, beatData, audio, difficulty, match) => {
+export const mainGame = (unit, beatData, audio, difficulty) => {
   audio.play();
-  audio.currentTime = 190;
+  // audio.currentTime = 190;
   // 全域變數
   let updateFPS = 100;
   let time = 0;
-  // let score = 0;
   let round = 0;
   let spead = unit / 5;
   let bpm = 100;
+
+  if (difficulty === "easy") {
+    bpm /= 2;
+    spead *= 0.8
+  }
+  if (difficulty === "hard") {
+    bpm *= 2;
+  }
 
   const canvas = document.querySelector("#game-canvas");
   const ctx = canvas.getContext("2d");
@@ -91,7 +98,7 @@ export const mainGame = (unit, beatData, audio, difficulty, match) => {
     if (time > 115) {
       if (time % ((updateFPS * 60) / bpm) === 0) {
         round++;
-        // console.log('round----', round);
+        console.log("round----", round);
 
         beatData[round].forEach((e, index) => {
           if (beatData[round][0] === 1) {

@@ -10,7 +10,7 @@
 .song-list {
   max-width: 1200px;
   width: 70%;
-  margin-top: 64px;
+  margin-top: 36px;
 }
 .song {
   background-color: #fffaf8;
@@ -18,7 +18,6 @@
   border-radius: 10px;
   padding: 10px;
   width: 100%;
-  /* height: 100px; */
   margin: 40px auto;
   display: flex;
   align-items: center;
@@ -82,7 +81,6 @@
 @media (min-width: 720px) and (max-width: 1023px) {
   .song-list {
     width: 80%;
-    margin-top: 48px;
   }
   .song-details {
     margin-left: 30px;

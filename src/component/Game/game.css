@@ -32,7 +32,6 @@
 
 #game-canvas {
   margin: 0;
-  /* border: 1px solid #1d1d1d; */
   background-color: #ffffff;
   position: absolute;
   top: 0;
@@ -40,7 +39,6 @@
 }
 .player-canvas {
   margin: 0;
-  /* border: 1px solid #1d1d1d; */
   position: absolute;
   top: 0;
   left: 0;
