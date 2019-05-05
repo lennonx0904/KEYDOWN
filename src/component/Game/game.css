@@ -27,7 +27,6 @@
 .canvas-wrap {
   position: relative;
   margin-top: 24px;
-  /* display: flex; */
 }
 
 #game-canvas {
@@ -59,8 +58,6 @@
   font-weight: bold;
   border-radius: 15px;
   color: #ffffff;
-  /* border: 1px solid black; */
-
   font-family: "Palanquin Dark", sans-serif;
 }
 
@@ -114,9 +111,6 @@
   border-bottom: 2px solid #cecb18;
 }
 
-@media (min-width: 720px) and (max-width: 1023px) {
-}
-
 @media (min-width: 480px) and (max-width: 719px) {
   .battle {
     font-size: 26px;
@@ -133,7 +127,6 @@
     margin-top: 16px;
     font-size: 18px;
   }
-
   .game-btn {
     font-size: 18px;
     height: 40px;

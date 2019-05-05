@@ -22,12 +22,10 @@ export const fetchPlayingSongData = (songId, difficulty) => dispatch => {
     .get()
     .then(function(querySnapshot) {
       querySnapshot.forEach(doc => {
-        // obj = Object.assign({songURL: doc.data().url, beatData: doc.data()[difficulty] });
         obj = Object.assign({
           audio: new Audio(doc.data().url),
           beatData: JSON.parse(doc.data()[difficulty])
         });
-
         dispatch({ type: "FETCH_PLAYING_SONG_DATA", payload: obj });
       });
     })

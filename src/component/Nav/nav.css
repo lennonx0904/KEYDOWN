@@ -14,7 +14,6 @@
   text-decoration: none;
   color: #ffffff;
   text-shadow: 3px 3px #b7012b;
-  /* ----字型------- */
   font-family: "Palanquin Dark", sans-serif;
 }
 .buttons {
@@ -44,7 +43,6 @@
   .logo {
     padding: 0 32px;
   }
-
   .nav-button {
     background-color: #ffffff;
   }

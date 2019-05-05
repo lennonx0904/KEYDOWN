@@ -21,6 +21,7 @@ export const player = (noteA, noteB, noteC, noteD, unit, audio) => {
       (data.hitNotesA + data.hitNotesB + data.hitNotesC + data.hitNotesD) * 98;
     return score;
   };
+  
   const judge = (noteArray, trackIndex, key) => {
     let hitNotes = 0;
     return () => {
@@ -112,7 +113,7 @@ export const player = (noteA, noteB, noteC, noteD, unit, audio) => {
     window.removeEventListener("keyup", keyupUI, false);
   });
 
-  // for mobile touchstart ------------
+  // for mobile touchstart
   btnD.addEventListener("touchstart", () => {
     drawTrack(7, 8, 1, 0, unit, "rgba(255,255,255,0.1)");
     judgeA();

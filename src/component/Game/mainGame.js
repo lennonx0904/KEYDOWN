@@ -3,17 +3,16 @@ import { updateLocalStorage } from "./helpers";
 
 export const mainGame = (unit, beatData, audio, difficulty) => {
   audio.play();
-  // audio.currentTime = 190;
   // 全域變數
   let updateFPS = 100;
   let time = 0;
   let round = 0;
-  let spead = unit / 5;
+  let speed = unit / 5;
   let bpm = 100;
 
   if (difficulty === "easy") {
     bpm /= 2;
-    spead *= 0.8
+    speed *= 0.8;
   }
   if (difficulty === "hard") {
     bpm *= 2;
@@ -38,7 +37,6 @@ export const mainGame = (unit, beatData, audio, difficulty) => {
     ctx.lineWidth = height;
     ctx.stroke();
   };
-  drawBackground();
 
   class Pos {
     constructor(x, y) {
@@ -46,7 +44,7 @@ export const mainGame = (unit, beatData, audio, difficulty) => {
       this.y = y || 0;
     }
   }
-  // Class Note
+
   class Note {
     constructor(args) {
       let def = {
@@ -55,9 +53,8 @@ export const mainGame = (unit, beatData, audio, difficulty) => {
         pos2: new Pos(-unit, 0),
         color: "#75d0f5",
         shadowColor: "#5ad0fa",
-
         height: unit / 5,
-        speed: spead
+        speed: speed
       };
       Object.assign(def, args);
       Object.assign(this, def);
@@ -95,11 +92,11 @@ export const mainGame = (unit, beatData, audio, difficulty) => {
 
   const update = () => {
     time++;
+
+    // offset = 115
     if (time > 115) {
       if (time % ((updateFPS * 60) / bpm) === 0) {
         round++;
-        console.log("round----", round);
-
         beatData[round].forEach((e, index) => {
           if (beatData[round][0] === 1) {
             noteA.push(new Note());
@@ -141,7 +138,7 @@ export const mainGame = (unit, beatData, audio, difficulty) => {
         });
       }
     }
-
+    
     noteA.forEach(e => e.update());
     noteB.forEach(e => e.update());
     noteC.forEach(e => e.update());
@@ -171,7 +168,16 @@ export const mainGame = (unit, beatData, audio, difficulty) => {
     render();
   };
 
-  function drawBackground() {
+  const render = () => {
+    ctx.clearRect(0, 0, 18 * unit, 13 * unit);
+    drawBackground();
+    noteA.forEach(e => e.render());
+    noteB.forEach(e => e.render());
+    noteC.forEach(e => e.render());
+    noteD.forEach(e => e.render());
+  };
+
+  const drawBackground = () => {
     for (let i = 0; i < 5; i++) {
       ctx.line(
         { x: (i + 7) * unit, y: 0 },
@@ -199,16 +205,7 @@ export const mainGame = (unit, beatData, audio, difficulty) => {
       null,
       2
     );
-  }
-
-  function render() {
-    ctx.clearRect(0, 0, 18 * unit, 13 * unit);
-    drawBackground();
-    noteA.forEach(e => e.render());
-    noteB.forEach(e => e.render());
-    noteC.forEach(e => e.render());
-    noteD.forEach(e => e.render());
-  }
+  };
 
   const startGameTimer = setInterval(() => {
     update();
@@ -216,6 +213,7 @@ export const mainGame = (unit, beatData, audio, difficulty) => {
 
   player(noteA, noteB, noteC, noteD, unit, audio);
 
+  // set the closure let outside Component can clearInterval
   return () => {
     clearInterval(startGameTimer);
     audio.pause();

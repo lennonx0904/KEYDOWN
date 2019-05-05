@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { connect } from "react-redux";
 import "./home.css";
 
 class Home extends React.Component {
@@ -17,11 +16,4 @@ class Home extends React.Component {
   }
 }
 
-// 記得刪掉 mapStateToProps
-const mapStateToProps = state => {
-  return {
-    playingSongData: state.playingSongData
-  };
-};
-
-export default connect(mapStateToProps)(Home);
+export default Home;

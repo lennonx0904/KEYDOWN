@@ -53,7 +53,6 @@ export const drawReadyState = unit => {
   );
 
   // press to start
-
   ctx.save();
   ctx.beginPath();
   ctx.translate(cw / 2, ch / 2);
@@ -86,7 +85,6 @@ export const drawTrack = (x1, x2, x3, x4, unit, color) => {
     ".player-canvas"
   ));
   const ctx = canvas.getContext("2d");
-  // ctx.clearRect(0, 0, 18 * unit, 13 * unit);
   let cw = 18 * unit;
   let ch = 13 * unit;
 
@@ -115,7 +113,6 @@ export const drawEffect = (x, unit) => {
   ctx.save();
   ctx.beginPath();
   ctx.translate((cw * x) / 4 - cw / 8, 12 * unit - 12);
-
   ctx.fillStyle = "#fff";
   ctx.textAlign = "center";
   ctx.font = `${unit}px Courier New`;
@@ -132,7 +129,11 @@ export const drawFinishState = (unit, currentScore) => {
 
   let score = 0;
   const drawScore = () => {
-    score += 98;
+    if (currentScore === 0) {
+      score = 0;
+    } else {
+      score += 98;
+    }
     ctx.clearRect(0, 0, 18 * unit, 13 * unit);
     ctx.rect(0, 0, 18 * unit, 13 * unit);
     ctx.fillStyle = "#1d1d1d";
