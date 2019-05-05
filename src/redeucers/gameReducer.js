@@ -1,7 +1,7 @@
 const initState = {
   inGame: false,
   playingSongData: null,
-  gameOver: false
+  gameFinish: false
 };
 
 const gameReducer = (state = initState, action) => {
@@ -10,8 +10,8 @@ const gameReducer = (state = initState, action) => {
       return { ...state, inGame: action.payload };
     case "FETCH_PLAYING_SONG_DATA":
       return { ...state, playingSongData: action.payload };
-    case "SET_GAME_OVER_STATE":
-      return { ...state, gameOver: action.payload };
+    case "SET_GAME_FINISH_STATE":
+      return { ...state, gameFinish: action.payload };
     default:
       return state;
   }

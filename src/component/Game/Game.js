@@ -7,7 +7,7 @@ import CurrentSocre from "./CurrentSocre";
 import {
   setInGameState,
   fetchPlayingSongData,
-  setGameOverState,
+  setGameFinishState,
   storeRecordToDB
 } from "../../actions/gameActions";
 import { fetchRankingRecord } from "../../actions/rankingActions";
@@ -50,12 +50,12 @@ class Game extends React.Component {
   }
 
   componentDidUpdate() {
-    const { game, match, location, setGameOverState, auth } = this.props;
+    const { game, match, location, setGameFinishState, auth } = this.props;
     const difficulty = location.search.slice(1);
     if (!game.playingSongData) {
       drawComingSoon(this.state.unit);
     }
-    if (game.inGame && game.playingSongData && !game.gameOver) {
+    if (game.inGame && game.playingSongData && !game.gameFinish) {
       const rankingData = {
         name: auth.name,
         totalNotes: 0,
@@ -77,7 +77,7 @@ class Game extends React.Component {
       audio.addEventListener("ended", () => {
         const currentSocre = this.countCurrentScore();
         this.stopGame();
-        setGameOverState(true);
+        setGameFinishState(true);
         drawFinishState(this.state.unit, currentSocre);
         this.storeRecord(currentSocre);
         const canvas = document.querySelector(".player-canvas");
@@ -91,9 +91,9 @@ class Game extends React.Component {
   }
 
   componentWillUnmount() {
-    const { setInGameState, setGameOverState, game } = this.props;
+    const { setInGameState, setGameFinishState, game } = this.props;
     setInGameState(false);
-    setGameOverState(false);
+    setGameFinishState(false);
     // make sure this.stopGame won't be undefined
     // 使用者未開始遊戲或沒有遊戲資訊的跳轉頁面
     if (game.inGame && game.playingSongData) {
@@ -192,7 +192,7 @@ export default connect(
   {
     setInGameState,
     fetchPlayingSongData,
-    setGameOverState,
+    setGameFinishState,
     storeRecordToDB,
     fetchRankingRecord
   }

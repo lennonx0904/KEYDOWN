@@ -7,9 +7,10 @@ export const setInGameState = boolean => {
     payload: boolean
   };
 };
-export const setGameOverState = boolean => {
+
+export const setGameFinishState = boolean => {
   return {
-    type: "SET_GAME_OVER_STATE",
+    type: "SET_GAME_FINISH_STATE",
     payload: boolean
   };
 };
