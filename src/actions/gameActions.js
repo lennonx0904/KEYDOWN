@@ -20,7 +20,7 @@ export const fetchPlayingSongData = (songId, difficulty) => dispatch => {
     .doc(songId)
     .collection("gameData")
     .get()
-    .then(function(querySnapshot) {
+    .then(querySnapshot => {
       querySnapshot.forEach(doc => {
         obj = Object.assign({
           audio: new Audio(doc.data().url),

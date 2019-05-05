@@ -2,7 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 
 import PureCanvas from "./PureCanvas";
-import "./game.css";
+import BestRecord from "./BestRecord";
+import CurrentSocre from "./CurrentSocre";
 import {
   setInGameState,
   fetchPlayingSongData,
@@ -17,14 +18,15 @@ import {
   drawFinishState,
   rankingRule
 } from "./helpers";
-import BestRecord from "./BestRecord";
-import CurrentSocre from "./CurrentSocre";
+import "./game.css";
 
 class Game extends React.Component {
   state = { unit: 0 };
+
   componentWillMount() {
     this.setCanvasSize();
   }
+
   componentDidMount() {
     const {
       match,
@@ -50,11 +52,9 @@ class Game extends React.Component {
   componentDidUpdate() {
     const { game, match, location, setGameOverState, auth } = this.props;
     const difficulty = location.search.slice(1);
-
     if (!game.playingSongData) {
       drawComingSoon(this.state.unit);
     }
-
     if (game.inGame && game.playingSongData && !game.gameOver) {
       const rankingData = {
         name: auth.name,
@@ -65,7 +65,7 @@ class Game extends React.Component {
         hitNotesD: 0
       };
       localStorage.setItem("rankingData", JSON.stringify(rankingData));
-      // start game 
+      // start game
       // this.stopGame using the closure in mainGame to clearInterval
       this.stopGame = mainGame(
         this.state.unit,
@@ -73,7 +73,7 @@ class Game extends React.Component {
         game.playingSongData.audio,
         difficulty
       );
-      let audio = game.playingSongData.audio;
+      const audio = game.playingSongData.audio;
       audio.addEventListener("ended", () => {
         const currentSocre = this.countCurrentScore();
         this.stopGame();
@@ -110,7 +110,7 @@ class Game extends React.Component {
     } else {
       unit = Math.round(window.innerWidth * 0.04);
     }
-    this.setState({ unit: unit });
+    this.setState({ unit });
   };
 
   countCurrentScore = () => {

@@ -15,7 +15,6 @@ class SelectSong extends React.Component {
         <div key={song.id} className="song">
           <div className="song-details">
             <div className="song-title">{song.data.title}</div>
-
             <div className="song-auth">{song.data.auth}</div>
           </div>
           <div className="difficulty-wrap">

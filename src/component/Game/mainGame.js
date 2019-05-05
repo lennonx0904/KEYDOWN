@@ -3,7 +3,7 @@ import { updateLocalStorage } from "./helpers";
 
 export const mainGame = (unit, beatData, audio, difficulty) => {
   audio.play();
-  // 全域變數
+
   let updateFPS = 100;
   let time = 0;
   let round = 0;
@@ -138,7 +138,7 @@ export const mainGame = (unit, beatData, audio, difficulty) => {
         });
       }
     }
-    
+
     noteA.forEach(e => e.update());
     noteB.forEach(e => e.update());
     noteC.forEach(e => e.update());

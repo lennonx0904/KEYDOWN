@@ -63,12 +63,14 @@ input:focus {
   .auth-wrap {
     width: 70%;
   }
+
   .signup-form,
   .login-form {
     font-size: 20px;
     width: 85%;
     margin: 10% auto;
   }
+
   input {
     font-size: 16px;
   }
@@ -78,12 +80,14 @@ input:focus {
   .auth-wrap {
     width: 80%;
   }
+
   .signup-form,
   .login-form {
     font-size: 20px;
     width: 85%;
     margin: 10% auto;
   }
+  
   input {
     font-size: 16px;
   }

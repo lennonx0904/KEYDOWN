@@ -22,7 +22,6 @@ const authReducer = (state = initState, action) => {
       return { ...state, authError: null };
     case "SHOW_SIGNUP_FORM":
       return { ...state, authError: null };
-
     default:
       return state;
   }

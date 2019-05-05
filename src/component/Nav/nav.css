@@ -6,23 +6,28 @@
   align-items: center;
   justify-content: space-between;
 }
+
 .logo {
   font-size: 36px;
   padding: 0 48px;
 }
+
 .logo > a {
   text-decoration: none;
   color: #ffffff;
   text-shadow: 3px 3px #b7012b;
   font-family: "Palanquin Dark", sans-serif;
 }
+
 .buttons {
   display: flex;
   margin-right: 50px;
 }
+
 .menu-button {
   display: none;
 }
+
 .nav-button {
   font-size: 18px;
   border-radius: 22.5px;
@@ -33,6 +38,7 @@
   outline: none;
   border: none;
 }
+
 .nav-button:focus,
 .nav-button:hover {
   background-color: rgba(255, 255, 255, 0.8);
@@ -43,9 +49,11 @@
   .logo {
     padding: 0 32px;
   }
+
   .nav-button {
     background-color: #ffffff;
   }
+
   .buttons {
     margin-right: 16px;
   }
@@ -55,9 +63,11 @@
   .logo {
     padding: 0 28px;
   }
+
   .nav-button {
     background-color: #ffffff;
   }
+
   .buttons {
     margin-right: 16px;
   }
@@ -68,21 +78,29 @@
     font-size: 32px;
     padding: 0 24px;
   }
+
   .menu-button {
     display: block;
     margin: 0 16px;
+    outline: none;
+    border: none;
+    background-color: rgba(255, 255, 255, 0);
   }
+
   .menu-button > img {
     width: 40px;
   }
+
   .buttons {
     display: none;
   }
+
   .mobile-buttons {
     position: fixed;
     z-index: 10;
     width: 100%;
   }
+  
   .mobile-btn {
     width: 100%;
     font-size: 28px;

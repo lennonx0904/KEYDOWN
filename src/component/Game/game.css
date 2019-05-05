@@ -5,6 +5,7 @@
   min-height: 100vh;
   background-color: #1d1d1d;
 }
+
 .battle {
   color: #ffffff;
   display: flex;
@@ -20,6 +21,7 @@
   border: 1px solid #878787;
   padding: 10px 0;
 }
+
 .score-in-board {
   padding-top: 12px;
 }
@@ -36,6 +38,7 @@
   top: 0;
   left: 0;
 }
+
 .player-canvas {
   margin: 0;
   position: absolute;
@@ -47,6 +50,7 @@
   width: 100%;
   display: flex;
 }
+
 .game-btn {
   width: 25%;
   height: 70px;
@@ -66,11 +70,13 @@
   border-bottom: 5px solid #2980b9;
   text-shadow: 0px -2px #2980b9;
 }
+
 .btn-f {
   background-color: #e74c3c;
   border-bottom: 5px solid #bd3e31;
   text-shadow: 0px -2px #bd3e31;
 }
+
 .btn-k {
   background-color: #9fff5b;
   border-bottom: 5px solid #7ecc47;
@@ -90,6 +96,7 @@
 .btn-f-active {
   border-bottom: 2px solid #bd3e31;
 }
+
 .btn-k-active {
   border-bottom: 2px solid #7ecc47;
 }
@@ -101,12 +108,15 @@
 .btn-d:active {
   border-bottom: 2px solid #2980b9;
 }
+
 .btn-f:active {
   border-bottom: 2px solid #bd3e31;
 }
+
 .btn-k:active {
   border-bottom: 2px solid #7ecc47;
 }
+
 .btn-l:active {
   border-bottom: 2px solid #cecb18;
 }
@@ -115,6 +125,7 @@
   .battle {
     font-size: 26px;
   }
+
   .game-btn {
     font-size: 18px;
     height: 50px;
@@ -127,6 +138,7 @@
     margin-top: 16px;
     font-size: 18px;
   }
+  
   .game-btn {
     font-size: 18px;
     height: 40px;

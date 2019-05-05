@@ -62,6 +62,7 @@ export const drawReadyState = unit => {
   ctx.fillText("Click to Start", 0, 0);
   ctx.restore();
 };
+
 export const drawComingSoon = unit => {
   const canvas = document.querySelector("#game-canvas");
   const ctx = canvas.getContext("2d");
@@ -80,6 +81,7 @@ export const drawComingSoon = unit => {
   ctx.fillText("Coming Soon...", 0, 0);
   ctx.restore();
 };
+
 export const drawTrack = (x1, x2, x3, x4, unit, color) => {
   const canvas = /** @type {HTMLCanvasElement} */ (document.querySelector(
     ".player-canvas"

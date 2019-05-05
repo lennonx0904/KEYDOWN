@@ -8,6 +8,7 @@
   background-repeat: no-repeat;
   position: relative;
 }
+
 .enter-wrap {
   position: absolute;
   top: 70%;
@@ -28,6 +29,7 @@
   transition: 0.1s transform;
   text-decoration: none;
 }
+
 .enter-btn:hover {
   color: rgba(0, 0, 0, 1);
   background: rgba(255, 255, 255, 1);

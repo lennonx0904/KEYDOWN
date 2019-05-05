@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+
 import { showLoginForm } from "../../actions/showingActions";
 import { logIn } from "../../actions/authActions";
 
@@ -63,9 +64,11 @@ class LoginForm extends React.Component {
     return <>{this.props.auth.uid ? null : this.renderForm()}</>;
   }
 }
+
 const mapStateToProps = state => {
   return { auth: state.auth };
 };
+
 export default connect(
   mapStateToProps,
   { showLoginForm, logIn }

@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+
 import { showLoginForm, showSignUpForm } from "../../actions/showingActions";
 import { logOut } from "../../actions/authActions";
 
