@@ -32,6 +32,10 @@ export const fetchPlayingSongData = (songId, difficulty) => dispatch => {
     })
     .catch(error => {
       console.log("Error getting documents: ", error);
+      dispatch({
+        type: "FETCH_PLAYING_SONG_DATA",
+        payload: "error"
+      });
     });
 };
 

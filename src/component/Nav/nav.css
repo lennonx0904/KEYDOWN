@@ -4,12 +4,13 @@
   background-color: #ff004f;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  /* justify-content: space-between; */
 }
 
 .logo {
   font-size: 36px;
   padding: 0 48px;
+  margin-right: auto;
 }
 
 .logo > a {
@@ -17,6 +18,13 @@
   color: #ffffff;
   text-shadow: 3px 3px #b7012b;
   font-family: "Palanquin Dark", sans-serif;
+}
+.greeting {
+  color: #ffffff;
+  text-shadow: 2px 2px #b7012b;
+  font-family: "Palanquin Dark", sans-serif;
+  font-size: 24px;
+  margin-right: 10px;
 }
 
 .buttons {
@@ -64,6 +72,10 @@
     padding: 0 28px;
   }
 
+  .greeting {
+    display: none;
+  }
+
   .nav-button {
     background-color: #ffffff;
   }
@@ -77,6 +89,10 @@
   .logo {
     font-size: 32px;
     padding: 0 24px;
+  }
+
+  .greeting {
+    display: none;
   }
 
   .menu-button {
@@ -100,7 +116,7 @@
     z-index: 10;
     width: 100%;
   }
-  
+
   .mobile-btn {
     width: 100%;
     font-size: 28px;

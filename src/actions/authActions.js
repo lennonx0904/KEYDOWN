@@ -9,7 +9,6 @@ export const logIn = data => dispatch => {
     .then(() => {
       firebase.auth().onAuthStateChanged(user => {
         dispatch({ type: "LOGIN_SUCCESS" });
-        dispatch({ type: "STORE_USER_UID", payload: user.uid });
       });
     })
     .catch(error => {

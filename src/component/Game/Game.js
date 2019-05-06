@@ -52,10 +52,12 @@ class Game extends React.Component {
   componentDidUpdate() {
     const { game, match, location, setGameFinishState, auth } = this.props;
     const difficulty = location.search.slice(1);
-    if (!game.playingSongData) {
+    console.log("game.playingSongData", game.playingSongData);
+
+    if (game.playingSongData === "error") {
       drawComingSoon(this.state.unit);
     }
-    if (game.inGame && game.playingSongData && !game.gameFinish) {
+    if (game.inGame && game.playingSongData.audio && !game.gameFinish) {
       const rankingData = {
         name: auth.name,
         totalNotes: 0,

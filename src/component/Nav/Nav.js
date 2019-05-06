@@ -1,12 +1,14 @@
 import React from "react";
 import { connect } from "react-redux";
+
 import Logo from "./Logo";
 import NavButtons from "./NavButtons";
 import NavButtonsMobile from "./NavButtonsMobile";
-import menu from "../../img/menu.png";
-import "./nav.css";
 import { showMobileButtons } from "../../actions/showingActions";
 import { checkAuthState } from "../../actions/authActions";
+import menu from "../../img/menu.png";
+import "./nav.css";
+
 
 class Nav extends React.Component {
   componentDidMount() {
@@ -14,11 +16,12 @@ class Nav extends React.Component {
   }
 
   render() {
-    const { showing, showMobileButtons } = this.props;
+    const { showing, showMobileButtons, auth } = this.props;
     return (
       <>
         <div className="nav-bar">
           <Logo />
+          {auth.name ? <div className="greeting">Hi ! {auth.name}</div> : null}
           <button
             className="menu-button"
             disabled={showing.loginForm || showing.signUpForm}
