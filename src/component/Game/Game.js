@@ -1,7 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import PureCanvas from "./PureCanvas";
+import GameCanvas from "./GameCanvas";
+import PlayerCanvas from "./PlayerCanvas";
 import BestRecord from "./BestRecord";
 import CurrentSocre from "./CurrentSocre";
 import {
@@ -16,17 +17,17 @@ import {
   drawReadyState,
   drawComingSoon,
   drawFinishState,
-  rankingRule
+  rankingCounter
 } from "./helpers";
 import "./game.css";
 
 class Game extends React.Component {
   state = { unit: 0 };
+  getCanvas = React.createRef();
 
   componentWillMount() {
     this.setCanvasSize();
   }
-
   componentDidMount() {
     const {
       match,
@@ -35,25 +36,24 @@ class Game extends React.Component {
       setInGameState,
       fetchRankingRecord
     } = this.props;
+    const docId = match.params.id;
     const difficulty = location.search.slice(1);
-    fetchPlayingSongData(match.params.id, difficulty);
-    fetchRankingRecord(match.params.id, difficulty);
+    fetchPlayingSongData(docId, difficulty);
+    fetchRankingRecord(docId, difficulty);
     drawReadyState(this.state.unit);
     // limit player can only click once
-    const canvas = document.querySelector(".player-canvas");
     const startGame = () => {
       setInGameState(true);
-      canvas.removeEventListener("click", startGame);
+      this.getCanvas.current.removeEventListener("click", startGame);
       return false;
     };
-    canvas.addEventListener("click", startGame);
+    this.getCanvas.current.addEventListener("click", startGame);
   }
 
   componentDidUpdate() {
     const { game, match, location, setGameFinishState, auth } = this.props;
+    const docId = match.params.id;
     const difficulty = location.search.slice(1);
-    console.log("game.playingSongData", game.playingSongData);
-
     if (game.playingSongData === "error") {
       drawComingSoon(this.state.unit);
     }
@@ -77,13 +77,12 @@ class Game extends React.Component {
       );
       const audio = game.playingSongData.audio;
       audio.addEventListener("ended", () => {
-        const currentSocre = this.countCurrentScore();
+        const currentSocre = rankingCounter().score;
         this.stopGame();
         setGameFinishState(true);
         drawFinishState(this.state.unit, currentSocre);
-        this.storeRecord(currentSocre);
-        const canvas = document.querySelector(".player-canvas");
-        canvas.addEventListener("click", () => {
+        this.storeRecord(docId, difficulty);
+        this.getCanvas.current.addEventListener("click", () => {
           window.location.hash = `#/ranking/${match.params.id}${
             location.search
           }`;
@@ -115,42 +114,29 @@ class Game extends React.Component {
     this.setState({ unit });
   };
 
-  countCurrentScore = () => {
-    const rankingData = JSON.parse(localStorage.rankingData);
-    const currentScore =
-      (rankingData.hitNotesA +
-        rankingData.hitNotesB +
-        rankingData.hitNotesC +
-        rankingData.hitNotesD) *
-      98;
-    return currentScore;
-  };
-
-  storeRecord = currentSocre => {
+  storeRecord = (docId, difficulty) => {
     if (!localStorage.rankingData) {
       return;
     }
-    const { match, location, storeRecordToDB } = this.props;
-    const difficulty = location.search.slice(1);
     const rankingData = JSON.parse(localStorage.rankingData);
     const date = new Date();
     const time = `${date.getFullYear()}/${date.getMonth() +
       1}/${date.getDate()} ${date.getHours()}:${date.getMinutes()}`;
     const data = {
       name: rankingData.name,
-      rank: rankingRule(),
-      score: currentSocre,
+      rank: rankingCounter().rank,
+      score: rankingCounter().score,
       time: time
     };
     if (!data.name) {
       return;
     }
-    storeRecordToDB(match.params.id, difficulty, data);
+    storeRecordToDB(docId, difficulty, data);
   };
 
   render() {
     const unit = this.state.unit;
-    const style = {
+    const btnStyle = {
       margin: `${unit * 13 + 31}px 0 0 0`,
       width: `${unit * 18 + 1}px`
     };
@@ -162,14 +148,14 @@ class Game extends React.Component {
             <CurrentSocre />
           </div>
           <div className="canvas-wrap">
-            <PureCanvas width={unit * 18} height={unit * 13} />
-            <canvas
-              className="player-canvas"
+            <GameCanvas width={unit * 18} height={unit * 13} />
+            <PlayerCanvas
               width={unit * 18}
               height={unit * 13}
+              getCanvas={this.getCanvas}
             />
           </div>
-          <div className="game-buttons" style={style}>
+          <div className="game-buttons" style={btnStyle}>
             <div className="game-btn btn-d">D</div>
             <div className="game-btn btn-f">F</div>
             <div className="game-btn btn-k">K</div>

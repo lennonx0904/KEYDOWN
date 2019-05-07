@@ -1,6 +1,6 @@
 export const updateLocalStorage = (key, value) => {
-  let tempObj = JSON.parse(localStorage.rankingData);
-  let target = key;
+  const tempObj = JSON.parse(localStorage.rankingData);
+  const target = key;
   tempObj[target] = value;
   localStorage.rankingData = JSON.stringify(tempObj);
 };
@@ -70,8 +70,8 @@ export const drawComingSoon = unit => {
   ctx.rect(0, 0, 18 * unit, 13 * unit);
   ctx.fillStyle = "#1d1d1d";
   ctx.fill();
-  let cw = 18 * unit;
-  let ch = 13 * unit;
+  const cw = 18 * unit;
+  const ch = 13 * unit;
   ctx.save();
   ctx.beginPath();
   ctx.translate(cw / 2, ch / 2);
@@ -82,39 +82,36 @@ export const drawComingSoon = unit => {
   ctx.restore();
 };
 
-export const drawTrack = (x1, x2, x3, x4, unit, color) => {
-  const canvas = /** @type {HTMLCanvasElement} */ (document.querySelector(
-    ".player-canvas"
-  ));
+export const drawTrack = (beginX, trackIndex, unit) => {
+  const canvas = document.querySelector("#player-canvas");
   const ctx = canvas.getContext("2d");
-  let cw = 18 * unit;
-  let ch = 13 * unit;
-
+  const cw = 18 * unit;
+  const ch = 13 * unit;
   // Fill Background Color
   ctx.beginPath();
-  ctx.moveTo(x1 * unit, 0);
-  ctx.lineTo(x2 * unit, 0);
-  ctx.lineTo((cw * x3) / 4, ch);
-  ctx.lineTo((cw * x4) / 4, ch);
+  ctx.moveTo(beginX * unit, 0);
+  ctx.lineTo((beginX + 1) * unit, 0);
+  ctx.lineTo((cw * trackIndex) / 4, ch);
+  ctx.lineTo((cw * (trackIndex - 1)) / 4, ch);
   ctx.closePath();
-  ctx.fillStyle = color;
+  ctx.fillStyle = "rgba(255,255,255,0.1)";
   ctx.fill();
 };
 
 export const clearCanvas = unit => {
-  const canvas = document.querySelector(".player-canvas");
+  const canvas = document.querySelector("#player-canvas");
   const ctx = canvas.getContext("2d");
   ctx.clearRect(0, 0, 18 * unit, 13 * unit);
 };
 
-export const drawEffect = (x, unit) => {
-  const canvas = document.querySelector(".player-canvas");
+export const drawHitEffect = (trackIndex, unit) => {
+  const canvas = document.querySelector("#player-canvas");
   const ctx = canvas.getContext("2d");
   const cw = 18 * unit;
 
   ctx.save();
   ctx.beginPath();
-  ctx.translate((cw * x) / 4 - cw / 8, 12 * unit - 12);
+  ctx.translate((cw * trackIndex) / 4 - cw / 8, 12 * unit - 12);
   ctx.fillStyle = "#fff";
   ctx.textAlign = "center";
   ctx.font = `${unit}px Courier New`;
@@ -126,8 +123,8 @@ export const drawFinishState = (unit, currentScore) => {
   const canvas = document.querySelector("#game-canvas");
   const ctx = canvas.getContext("2d");
   ctx.clearRect(0, 0, 18 * unit, 13 * unit);
-  let cw = 18 * unit;
-  let ch = 13 * unit;
+  const cw = 18 * unit;
+  const ch = 13 * unit;
 
   let score = 0;
   const drawScore = () => {
@@ -136,6 +133,7 @@ export const drawFinishState = (unit, currentScore) => {
     } else {
       score += 98;
     }
+
     ctx.clearRect(0, 0, 18 * unit, 13 * unit);
     ctx.rect(0, 0, 18 * unit, 13 * unit);
     ctx.fillStyle = "#1d1d1d";
@@ -168,27 +166,31 @@ export const drawFinishState = (unit, currentScore) => {
   }, 5);
 };
 
-export const rankingRule = () => {
+export const rankingCounter = () => {
   if (!localStorage.rankingData) {
     return;
   }
-  let rankingData = JSON.parse(localStorage.rankingData);
+  const rankingData = JSON.parse(localStorage.rankingData);
   const total = rankingData.totalNotes;
   const hit =
     rankingData.hitNotesA +
     rankingData.hitNotesB +
     rankingData.hitNotesC +
     rankingData.hitNotesD;
-  let accurate = Math.round((hit / total) * 100);
+  const miss = total - hit;
+  const score = hit * 98;
+  const accurate = Math.round((hit / total) * 100);
+  let rank;
   if (accurate >= 90) {
-    return "A";
+    rank = "A";
   } else if (accurate >= 80) {
-    return "B";
+    rank = "B";
   } else if (accurate >= 70) {
-    return "C";
+    rank = "C";
   } else if (accurate >= 60) {
-    return "D";
+    rank = "D";
   } else {
-    return "E";
+    rank = "E";
   }
+  return { total, hit, miss, score, accurate, rank };
 };

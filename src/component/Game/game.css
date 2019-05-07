@@ -39,7 +39,7 @@
   left: 0;
 }
 
-.player-canvas {
+#player-canvas {
   margin: 0;
   position: absolute;
   top: 0;
@@ -138,7 +138,7 @@
     margin-top: 16px;
     font-size: 18px;
   }
-  
+
   .game-btn {
     font-size: 18px;
     height: 40px;

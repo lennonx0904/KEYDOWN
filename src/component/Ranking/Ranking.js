@@ -26,12 +26,7 @@ class Ranking extends React.Component {
     return (
       <div className="ranking-view">
         <div className="ranking-wrap">
-          {localStorage.rankingData ? (
-            <CurrentRank
-              currentRanking={JSON.parse(localStorage.rankingData)}
-            />
-          ) : null}
-
+          {localStorage.rankingData ? <CurrentRank /> : null}
           <div className="record">
             <div className="record-board title">
               <div className="record-item"> Name</div>

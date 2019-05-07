@@ -1,8 +1,9 @@
 import {
   updateLocalStorage,
+  rankingCounter,
   drawTrack,
   clearCanvas,
-  drawEffect
+  drawHitEffect
 } from "./helpers";
 
 export const player = (noteA, noteB, noteC, noteD, unit, audio) => {
@@ -11,16 +12,6 @@ export const player = (noteA, noteB, noteC, noteD, unit, audio) => {
   const btnK = document.querySelector(".btn-k");
   const btnL = document.querySelector(".btn-l");
   const currentSocre = document.querySelector(".current-socre");
-
-  const scoreCounter = () => {
-    if (!localStorage.rankingData) {
-      return;
-    }
-    let data = JSON.parse(localStorage.rankingData);
-    let score =
-      (data.hitNotesA + data.hitNotesB + data.hitNotesC + data.hitNotesD) * 98;
-    return score;
-  };
 
   const judge = (noteArray, trackIndex, key) => {
     let hitNotes = 0;
@@ -34,9 +25,9 @@ export const player = (noteA, noteB, noteC, noteD, unit, audio) => {
           noteArray[0].shadowColor = "#000000";
           noteArray[0].height = 30;
           hitNotes++;
-          drawEffect(trackIndex, unit);
+          drawHitEffect(trackIndex, unit);
           updateLocalStorage(key, hitNotes);
-          currentSocre.textContent = scoreCounter();
+          currentSocre.textContent = rankingCounter().score;
         }
       }
     };
@@ -52,25 +43,25 @@ export const player = (noteA, noteB, noteC, noteD, unit, audio) => {
       // D = 68
       case 68:
         btnD.classList.add("btn-d-active");
-        drawTrack(7, 8, 1, 0, unit, "rgba(255,255,255,0.1)");
+        drawTrack(7, 1, unit);
         judgeA();
         break;
       // F = 70
       case 70:
         btnF.classList.add("btn-f-active");
-        drawTrack(8, 9, 2, 1, unit, "rgba(255,255,255,0.1)");
+        drawTrack(8, 2, unit);
         judgeB();
         break;
       // K = 75
       case 75:
         btnK.classList.add("btn-k-active");
-        drawTrack(9, 10, 3, 2, unit, "rgba(255,255,255,0.1)");
+        drawTrack(9, 3, unit);
         judgeC();
         break;
       // L = 76
       case 76:
         btnL.classList.add("btn-l-active");
-        drawTrack(10, 11, 4, 3, unit, "rgba(255,255,255,0.1)");
+        drawTrack(10, 4, unit);
         judgeD();
         break;
       default:
@@ -79,26 +70,23 @@ export const player = (noteA, noteB, noteC, noteD, unit, audio) => {
   };
 
   const keyupUI = e => {
+    clearCanvas(unit);
     switch (e.keyCode) {
       // D = 68
       case 68:
         btnD.classList.remove("btn-d-active");
-        clearCanvas(unit);
         break;
       // F = 70
       case 70:
         btnF.classList.remove("btn-f-active");
-        clearCanvas(unit);
         break;
       // K = 75
       case 75:
         btnK.classList.remove("btn-k-active");
-        clearCanvas(unit);
         break;
       // L = 76
       case 76:
         btnL.classList.remove("btn-l-active");
-        clearCanvas(unit);
         break;
 
       default:
@@ -116,19 +104,19 @@ export const player = (noteA, noteB, noteC, noteD, unit, audio) => {
 
   // for mobile
   btnD.addEventListener("touchstart", () => {
-    drawTrack(7, 8, 1, 0, unit, "rgba(255,255,255,0.1)");
+    drawTrack(7, 1, unit);
     judgeA();
   });
   btnF.addEventListener("touchstart", () => {
-    drawTrack(8, 9, 2, 1, unit, "rgba(255,255,255,0.1)");
+    drawTrack(8, 2, unit);
     judgeB();
   });
   btnK.addEventListener("touchstart", () => {
-    drawTrack(9, 10, 3, 2, unit, "rgba(255,255,255,0.1)");
+    drawTrack(9, 3, unit);
     judgeC();
   });
   btnL.addEventListener("touchstart", () => {
-    drawTrack(10, 11, 4, 3, unit, "rgba(255,255,255,0.1)");
+    drawTrack(10, 4, unit);
     judgeD();
   });
 

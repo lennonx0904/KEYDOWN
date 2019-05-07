@@ -3,16 +3,17 @@ import { updateLocalStorage } from "./helpers";
 
 export const mainGame = (unit, beatData, audio, difficulty) => {
   audio.play();
+  audio.currentTime = 200;
 
-  let updateFPS = 100;
+  const updateFPS = 100;
+  let speed = (unit * 0.8) / 5;
   let time = 0;
   let round = 0;
-  let speed = unit / 5;
   let bpm = 100;
 
   if (difficulty === "easy") {
     bpm /= 2;
-    speed *= 0.8;
+    // speed *= 0.8;
   }
   if (difficulty === "hard") {
     bpm *= 2;

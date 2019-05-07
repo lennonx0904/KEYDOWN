@@ -11,3 +11,8 @@ body {
 a:link {
   text-decoration: none !important;
 }
+
+button {
+  outline: none;
+  border: none;
+}

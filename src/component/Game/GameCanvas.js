@@ -1,6 +1,6 @@
 import React from "react";
 
-class PureCanvas extends React.Component {
+class GameCanvas extends React.Component {
   shouldComponentUpdate() {
     return false;
   }
@@ -16,4 +16,4 @@ class PureCanvas extends React.Component {
   }
 }
 
-export default PureCanvas;
+export default GameCanvas;
