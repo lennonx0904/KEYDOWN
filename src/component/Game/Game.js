@@ -68,7 +68,7 @@ class Game extends React.Component {
       };
       localStorage.setItem("rankingData", JSON.stringify(rankingData));
       // start game
-      // this.stopGame using the closure in mainGame to clearInterval
+      // this.stopGame use the closure in mainGame to clearInterval
       this.stopGame = mainGame(
         this.state.unit,
         game.playingSongData.beatData,
@@ -97,7 +97,7 @@ class Game extends React.Component {
     setGameFinishState(false);
     // make sure this.stopGame won't be undefined
     // 使用者未開始遊戲或沒有遊戲資訊的跳轉頁面
-    if (game.inGame && game.playingSongData) {
+    if (game.inGame && game.playingSongData !== "error") {
       this.stopGame();
     }
   }
@@ -115,23 +115,33 @@ class Game extends React.Component {
   };
 
   storeRecord = (docId, difficulty) => {
-    if (!localStorage.rankingData) {
+    if (!localStorage.rankingData || !rankingCounter().name) {
       return;
     }
-    const rankingData = JSON.parse(localStorage.rankingData);
+    const addZero = number => {
+      if (number < 10) {
+        return `0${number}`;
+      } else {
+        return number;
+      }
+    };
     const date = new Date();
-    const time = `${date.getFullYear()}/${date.getMonth() +
-      1}/${date.getDate()} ${date.getHours()}:${date.getMinutes()}`;
+    const time = `${date.getFullYear()}/${addZero(
+      date.getMonth() + 1
+    )}/${addZero(date.getDate())} ${addZero(date.getHours())}:${addZero(
+      date.getMinutes()
+    )}`;
     const data = {
-      name: rankingData.name,
+      name: rankingCounter().name,
       rank: rankingCounter().rank,
       score: rankingCounter().score,
       time: time
     };
-    if (!data.name) {
-      return;
-    }
-    storeRecordToDB(docId, difficulty, data);
+    console.log("docId", docId);
+    console.log("difficulty", difficulty);
+    console.log("data", data);
+
+    // storeRecordToDB(docId, difficulty, data);
   };
 
   render() {
@@ -140,13 +150,17 @@ class Game extends React.Component {
       margin: `${unit * 13 + 31}px 0 0 0`,
       width: `${unit * 18 + 1}px`
     };
+    const { game, ranking } = this.props;
+    console.log(game.playingSongData === null);
+
     return (
       <div className="game-view">
         <div className="game-wrap">
           <div className="battle">
-            <BestRecord record={this.props.ranking.record} />
+            <BestRecord record={ranking.record} />
             <CurrentSocre />
           </div>
+
           <div className="canvas-wrap">
             <GameCanvas width={unit * 18} height={unit * 13} />
             <PlayerCanvas

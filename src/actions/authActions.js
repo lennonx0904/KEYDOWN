@@ -59,17 +59,17 @@ export const signUp = data => dispatch => {
 export const checkAuthState = () => dispatch => {
   firebase.auth().onAuthStateChanged(user => {
     if (user) {
-      dispatch({ type: "GET_USER_UID", payload: user.uid });
+      dispatch({ type: "FETCH_USER_UID", payload: user.uid });
       db.collection("users")
         .doc(user.uid)
         .get()
         .then(doc => {
           if (doc) {
-            dispatch({ type: "GET_USER_NAME", payload: doc.data().userName });
+            dispatch({ type: "FETCH_USER_NAME", payload: doc.data().userName });
           }
         });
     } else {
-      dispatch({ type: "GET_USER_UID", payload: null });
+      dispatch({ type: "FETCH_USER_UID", payload: null });
     }
   });
 };

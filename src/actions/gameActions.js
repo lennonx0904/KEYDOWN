@@ -45,6 +45,8 @@ export const storeRecordToDB = (doc, difficutly, data) => dispatch => {
     .collection(difficutly)
     .add(data)
     .then(() => {
+      console.log('lod一下',data);
+      
       dispatch({ type: "STORE_RECORD" });
     })
     .catch(error => {

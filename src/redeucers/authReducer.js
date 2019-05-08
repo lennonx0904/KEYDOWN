@@ -16,9 +16,9 @@ const authReducer = (state = initState, action) => {
       return { ...state, authError: action.payload };
     case "LOGOUT_SUCCESS":
       return { ...state, name: null };
-    case "GET_USER_UID":
+    case "FETCH_USER_UID":
       return { ...state, uid: action.payload };
-    case "GET_USER_NAME":
+    case "FETCH_USER_NAME":
       return { ...state, name: action.payload };
     case "SHOW_LOGIN_FORM":
       return { ...state, authError: null };

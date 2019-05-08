@@ -171,6 +171,7 @@ export const rankingCounter = () => {
     return;
   }
   const rankingData = JSON.parse(localStorage.rankingData);
+  const name = rankingData.name;
   const total = rankingData.totalNotes;
   const hit =
     rankingData.hitNotesA +
@@ -192,5 +193,7 @@ export const rankingCounter = () => {
   } else {
     rank = "E";
   }
-  return { total, hit, miss, score, accurate, rank };
+  // console.log({ name, total, hit, miss, score, accurate, rank });
+
+  return { name, total, hit, miss, score, accurate, rank };
 };

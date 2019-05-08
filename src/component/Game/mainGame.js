@@ -3,17 +3,15 @@ import { updateLocalStorage } from "./helpers";
 
 export const mainGame = (unit, beatData, audio, difficulty) => {
   audio.play();
-  audio.currentTime = 200;
 
   const updateFPS = 100;
-  let speed = (unit * 0.8) / 5;
-  let time = 0;
+  let speed = unit / 5;
   let round = 0;
   let bpm = 100;
 
   if (difficulty === "easy") {
     bpm /= 2;
-    // speed *= 0.8;
+    speed *= 0.8;
   }
   if (difficulty === "hard") {
     bpm *= 2;
@@ -90,54 +88,61 @@ export const mainGame = (unit, beatData, audio, difficulty) => {
   let noteC = [];
   let noteD = [];
   let totalNotes = 0;
+  // offset
+  let lastPosition = 0.3;
 
   const update = () => {
-    time++;
+    const getFixedNum = float => {
+      return parseFloat(float.toFixed(1));
+    };
 
-    // offset = 115
-    if (time > 115) {
-      if (time % ((updateFPS * 60) / bpm) === 0) {
-        round++;
-        beatData[round].forEach((e, index) => {
-          if (beatData[round][0] === 1) {
-            noteA.push(new Note());
-            totalNotes++;
-          }
-          if (beatData[round][1] === 1) {
-            noteB.push(
-              new Note({
-                pos1: new Pos(-unit, 0),
-                pos2: new Pos(0, 0),
-                color: "#ff0000",
-                shadowColor: "#ff5a5a"
-              })
-            );
-            totalNotes++;
-          }
-          if (beatData[round][2] === 1) {
-            noteC.push(
-              new Note({
-                pos1: new Pos(unit, 0),
-                pos2: new Pos(0, 0),
-                color: "#83ff2b",
-                shadowColor: "#6fd328"
-              })
-            );
-            totalNotes++;
-          }
-          if (beatData[round][3] === 1) {
-            noteD.push(
-              new Note({
-                pos1: new Pos(unit, 0),
-                pos2: new Pos(unit * 2, 0),
-                color: "#ffff00",
-                shadowColor: "#fcfc68"
-              })
-            );
-            totalNotes++;
-          }
-        });
-      }
+    let now = getFixedNum(audio.currentTime);
+    let deltaTime = getFixedNum(60 / bpm);
+
+    if (getFixedNum(now - lastPosition) === deltaTime) {
+      lastPosition += deltaTime;
+      round++;
+      console.log("round", round);
+
+      beatData[round].forEach((e, index) => {
+        if (beatData[round][0] === 0 || beatData[round][0] === 1) {
+          noteA.push(new Note());
+          totalNotes++;
+        }
+        if (beatData[round][1] === 1) {
+          noteB.push(
+            new Note({
+              pos1: new Pos(-unit, 0),
+              pos2: new Pos(0, 0),
+              color: "#ff0000",
+              shadowColor: "#ff5a5a"
+            })
+          );
+          totalNotes++;
+        }
+        if (beatData[round][2] === 1) {
+          noteC.push(
+            new Note({
+              pos1: new Pos(unit, 0),
+              pos2: new Pos(0, 0),
+              color: "#83ff2b",
+              shadowColor: "#6fd328"
+            })
+          );
+          totalNotes++;
+        }
+        if (beatData[round][3] === 1) {
+          noteD.push(
+            new Note({
+              pos1: new Pos(unit, 0),
+              pos2: new Pos(unit * 2, 0),
+              color: "#ffff00",
+              shadowColor: "#fcfc68"
+            })
+          );
+          totalNotes++;
+        }
+      });
     }
 
     noteA.forEach(e => e.update());

@@ -17,13 +17,8 @@ export const player = (noteA, noteB, noteC, noteD, unit, audio) => {
     let hitNotes = 0;
     return () => {
       if (noteArray[0]) {
-        if (
-          noteArray[0].centerPos.y > 11 * unit &&
-          noteArray[0].centerPos.y < 13 * unit
-        ) {
-          noteArray[0].color = "#000000";
-          noteArray[0].shadowColor = "#000000";
-          noteArray[0].height = 30;
+        const currentPosY = noteArray[0].centerPos.y;
+        if (currentPosY > 11 * unit && currentPosY < 13 * unit) {
           hitNotes++;
           drawHitEffect(trackIndex, unit);
           updateLocalStorage(key, hitNotes);
