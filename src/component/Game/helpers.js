@@ -104,7 +104,7 @@ export const clearCanvas = unit => {
   ctx.clearRect(0, 0, 18 * unit, 13 * unit);
 };
 
-export const drawJudgeEffect = (trackIndex, unit, text) => {
+export const drawJudgeEffect = (trackIndex, unit, text, combo) => {
   const canvas = document.querySelector("#player-canvas");
   const ctx = canvas.getContext("2d");
   const cw = 18 * unit;
@@ -118,6 +118,17 @@ export const drawJudgeEffect = (trackIndex, unit, text) => {
   ctx.font = `${unit}px Courier New`;
   ctx.fillText(text, 0, 0);
   ctx.restore();
+
+  if (combo > 1) {
+    ctx.save();
+    ctx.beginPath();
+    ctx.translate(cw / 2, ch / 2);
+    ctx.fillStyle = "#fff";
+    ctx.textAlign = "center";
+    ctx.font = `${unit}px Courier New`;
+    ctx.fillText(`COMBO ${combo}`, 0, 0);
+    ctx.restore();
+  }
 
   setTimeout(() => {
     ctx.clearRect(0, 0, cw, ch);

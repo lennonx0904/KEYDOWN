@@ -23,7 +23,7 @@ export const player = (noteA, noteB, noteC, noteD, unit, audio) => {
         hit++;
         combo++;
         noteArray.splice(0, 1);
-        drawJudgeEffect(trackIndex, unit, "HIT");
+        drawJudgeEffect(trackIndex, unit, "HIT", combo);
         updateLocalStorage("hit", hit);
         updateLocalStorage("combo", combo);
         currentSocre.textContent = rankingCounter().score;
