@@ -1,13 +1,20 @@
 import { player } from "./player";
-import { updateLocalStorage } from "./helpers";
+import { updateLocalStorage, drawJudgeEffect } from "./helpers";
 
 export const mainGame = (unit, beatData, audio, difficulty) => {
   audio.play();
-
   const updateFPS = 100;
-  let speed = unit / 5;
-  let round = 0;
+  const speed = unit / 5;
   let bpm = 100;
+  let round = 0;
+  let noteA = [];
+  let noteB = [];
+  let noteC = [];
+  let noteD = [];
+  let total = 0;
+  let miss = 0;
+  // time offset
+  let lastPosition = 0.2;
 
   if (difficulty === "easy") {
     bpm /= 2;
@@ -51,7 +58,7 @@ export const mainGame = (unit, beatData, audio, difficulty) => {
         pos1: new Pos(-(unit * 2), 0),
         pos2: new Pos(-unit, 0),
         color: "#75d0f5",
-        shadowColor: "#5ad0fa",
+        shadowColor: "#599eba",
         height: unit / 5,
         speed: speed
       };
@@ -82,15 +89,6 @@ export const mainGame = (unit, beatData, audio, difficulty) => {
       }
     }
   }
-
-  let noteA = [];
-  let noteB = [];
-  let noteC = [];
-  let noteD = [];
-  let total = 0;
-  let miss = 0;
-  // time offset
-  let lastPosition = 0.2;
 
   const update = () => {
     const getFixedTime = float => {
@@ -145,34 +143,42 @@ export const mainGame = (unit, beatData, audio, difficulty) => {
     }
 
     // update the position of notes for animation
-    noteA.forEach(note => note.update());
-    noteB.forEach(note => note.update());
-    noteC.forEach(note => note.update());
-    noteD.forEach(note => note.update());
+    noteA.forEach(e => e.update());
+    noteB.forEach(e => e.update());
+    noteC.forEach(e => e.update());
+    noteD.forEach(e => e.update());
 
     // remove notes which were outside of the canvas
     noteA.forEach((e, index) => {
       if (e.centerPos.y > ch) {
-        noteB.splice(index, 1);
+        drawJudgeEffect(1, unit, "MISS");
         miss++;
+        noteA.splice(index, 1);
+        updateLocalStorage("combo", 0);
       }
     });
     noteB.forEach((e, index) => {
       if (e.centerPos.y > ch) {
-        noteB.splice(index, 1);
+        drawJudgeEffect(2, unit, "MISS");
         miss++;
+        noteB.splice(index, 1);
+        updateLocalStorage("combo", 0);
       }
     });
     noteC.forEach((e, index) => {
       if (e.centerPos.y > ch) {
-        noteC.splice(index, 1);
+        drawJudgeEffect(3, unit, "MISS");
         miss++;
+        noteC.splice(index, 1);
+        updateLocalStorage("combo", 0);
       }
     });
     noteD.forEach((e, index) => {
       if (e.centerPos.y > ch) {
-        noteD.splice(index, 1);
+        drawJudgeEffect(4, unit, "MISS");
         miss++;
+        noteD.splice(index, 1);
+        updateLocalStorage("combo", 0);
       }
     });
 
@@ -186,10 +192,10 @@ export const mainGame = (unit, beatData, audio, difficulty) => {
     ctx.clearRect(0, 0, 18 * unit, 13 * unit);
     drawBackground();
     // noteArray.forEach(e => e.render());
-    noteA.forEach(note => note.render());
-    noteB.forEach(note => note.render());
-    noteC.forEach(note => note.render());
-    noteD.forEach(note => note.render());
+    noteA.forEach(e => e.render());
+    noteB.forEach(e => e.render());
+    noteC.forEach(e => e.render());
+    noteD.forEach(e => e.render());
   };
 
   const drawBackground = () => {

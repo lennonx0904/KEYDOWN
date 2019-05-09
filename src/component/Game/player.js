@@ -3,10 +3,10 @@ import {
   rankingCounter,
   drawTrack,
   clearCanvas,
-  drawHitEffect
+  drawJudgeEffect
 } from "./helpers";
 
-export const player = (noteA, noteB, noteC, noteD, noteArray, unit, audio) => {
+export const player = (noteA, noteB, noteC, noteD, unit, audio) => {
   const btnD = document.querySelector(".btn-d");
   const btnF = document.querySelector(".btn-f");
   const btnK = document.querySelector(".btn-k");
@@ -14,28 +14,27 @@ export const player = (noteA, noteB, noteC, noteD, noteArray, unit, audio) => {
   const currentSocre = document.querySelector(".current-socre");
   let hit = 0;
 
-  const judge = (noteArray, trackIndex, key) => {
+  const judge = (noteArray, trackIndex) => {
     return () => {
       if (!noteArray[0]) return;
-
-      const currentPosY = noteArray[0].centerPos.y;
-      if (currentPosY > 11 * unit && currentPosY < 13 * unit) {
+      const notePosY = noteArray[0].centerPos.y;
+      let combo = rankingCounter().combo;
+      if (notePosY > 11 * unit && notePosY < 13 * unit) {
         hit++;
+        combo++;
         noteArray.splice(0, 1);
-        drawHitEffect(trackIndex, unit);
+        drawJudgeEffect(trackIndex, unit, "HIT");
         updateLocalStorage("hit", hit);
-        // updateLocalStorage("miss", localStorage.rankingData.miss - 1);
-
+        updateLocalStorage("combo", combo);
         currentSocre.textContent = rankingCounter().score;
-        console.log("noteArray in playes", noteArray);
       }
     };
   };
 
-  const judgeA = judge(noteA, 1, "hitNotesA");
-  const judgeB = judge(noteB, 2, "hitNotesB");
-  const judgeC = judge(noteC, 3, "hitNotesC");
-  const judgeD = judge(noteD, 4, "hitNotesD");
+  const judgeA = judge(noteA, 1);
+  const judgeB = judge(noteB, 2);
+  const judgeC = judge(noteC, 3);
+  const judgeD = judge(noteD, 4);
 
   const play = e => {
     switch (e.keyCode) {

@@ -63,7 +63,8 @@ class Game extends React.Component {
         name: auth.name,
         total: 0,
         hit: 0,
-        miss: 0
+        miss: 0,
+        combo: 0
       };
       localStorage.setItem("rankingData", JSON.stringify(rankingData));
       // start game

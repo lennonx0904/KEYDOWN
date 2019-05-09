@@ -19,7 +19,7 @@ class LoginForm extends React.Component {
     this.props.logIn(this.state);
   };
 
-  renderForm = () => {
+  renderLogInForm = () => {
     return (
       <div className="auth-view">
         <div className="auth-wrap">
@@ -61,7 +61,7 @@ class LoginForm extends React.Component {
   };
 
   render() {
-    return <>{this.props.auth.uid ? null : this.renderForm()}</>;
+    return <>{this.props.auth.uid ? null : this.renderLogInForm()}</>;
   }
 }
 

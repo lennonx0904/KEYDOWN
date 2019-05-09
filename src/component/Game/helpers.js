@@ -104,10 +104,11 @@ export const clearCanvas = unit => {
   ctx.clearRect(0, 0, 18 * unit, 13 * unit);
 };
 
-export const drawHitEffect = (trackIndex, unit) => {
+export const drawJudgeEffect = (trackIndex, unit, text) => {
   const canvas = document.querySelector("#player-canvas");
   const ctx = canvas.getContext("2d");
   const cw = 18 * unit;
+  const ch = 13 * unit;
 
   ctx.save();
   ctx.beginPath();
@@ -115,16 +116,20 @@ export const drawHitEffect = (trackIndex, unit) => {
   ctx.fillStyle = "#fff";
   ctx.textAlign = "center";
   ctx.font = `${unit}px Courier New`;
-  ctx.fillText("HIT", 0, 0);
+  ctx.fillText(text, 0, 0);
   ctx.restore();
+
+  setTimeout(() => {
+    ctx.clearRect(0, 0, cw, ch);
+  }, 100);
 };
 
 export const drawFinishState = (unit, currentScore) => {
   const canvas = document.querySelector("#game-canvas");
   const ctx = canvas.getContext("2d");
-  ctx.clearRect(0, 0, 18 * unit, 13 * unit);
   const cw = 18 * unit;
   const ch = 13 * unit;
+  ctx.clearRect(0, 0, cw, ch);
 
   let score = 0;
   const drawScore = () => {
@@ -134,8 +139,8 @@ export const drawFinishState = (unit, currentScore) => {
       score += 98;
     }
 
-    ctx.clearRect(0, 0, 18 * unit, 13 * unit);
-    ctx.rect(0, 0, 18 * unit, 13 * unit);
+    ctx.clearRect(0, 0, cw, ch);
+    ctx.rect(0, 0, cw, ch);
     ctx.fillStyle = "#1d1d1d";
     ctx.fill();
 
@@ -146,18 +151,12 @@ export const drawFinishState = (unit, currentScore) => {
     ctx.font = `${unit}px Courier New`;
     ctx.fillStyle = "#fff";
     ctx.fillText(`You got ${score} points!`, 0, 0);
-    ctx.restore();
-
-    ctx.save();
-    ctx.beginPath();
-    ctx.translate(cw / 2, ch / 2);
-    ctx.textAlign = "center";
-    ctx.font = `${unit}px Courier New`;
-    ctx.fillStyle = "#fff";
+    ctx.translate(0, ch / 4);
     ctx.fillText("Click to Ranking Page", 0, 0);
     ctx.restore();
   };
 
+  // set clearInterval as a callback with condition
   const drawScoreTimer = setInterval(() => {
     drawScore();
     if (score >= currentScore) {
@@ -172,11 +171,8 @@ export const rankingCounter = () => {
   const name = rankingData.name;
   const total = rankingData.total;
   const hit = rankingData.hit;
-  // rankingData.hitNotesA +
-  // rankingData.hitNotesB +
-  // rankingData.hitNotesC +
-  // rankingData.hitNotesD;
-  const miss = total - hit;
+  const miss = rankingData.miss;
+  const combo = rankingData.combo;
   const score = hit * 98;
   const accurate = Math.round((hit / total) * 100);
   let rank;
@@ -191,7 +187,7 @@ export const rankingCounter = () => {
   } else {
     rank = "E";
   }
-  // console.log({ name, total, hit, miss, score, accurate, rank });
+  console.log({ name, total, hit, miss, combo, score, accurate, rank });
 
-  return { name, total, hit, miss, score, accurate, rank };
+  return { name, total, hit, miss, combo, score, accurate, rank };
 };
