@@ -6,24 +6,28 @@ import {
   drawHitEffect
 } from "./helpers";
 
-export const player = (noteA, noteB, noteC, noteD, unit, audio) => {
+export const player = (noteA, noteB, noteC, noteD, noteArray, unit, audio) => {
   const btnD = document.querySelector(".btn-d");
   const btnF = document.querySelector(".btn-f");
   const btnK = document.querySelector(".btn-k");
   const btnL = document.querySelector(".btn-l");
   const currentSocre = document.querySelector(".current-socre");
+  let hit = 0;
 
   const judge = (noteArray, trackIndex, key) => {
-    let hitNotes = 0;
     return () => {
-      if (noteArray[0]) {
-        const currentPosY = noteArray[0].centerPos.y;
-        if (currentPosY > 11 * unit && currentPosY < 13 * unit) {
-          hitNotes++;
-          drawHitEffect(trackIndex, unit);
-          updateLocalStorage(key, hitNotes);
-          currentSocre.textContent = rankingCounter().score;
-        }
+      if (!noteArray[0]) return;
+
+      const currentPosY = noteArray[0].centerPos.y;
+      if (currentPosY > 11 * unit && currentPosY < 13 * unit) {
+        hit++;
+        noteArray.splice(0, 1);
+        drawHitEffect(trackIndex, unit);
+        updateLocalStorage("hit", hit);
+        // updateLocalStorage("miss", localStorage.rankingData.miss - 1);
+
+        currentSocre.textContent = rankingCounter().score;
+        console.log("noteArray in playes", noteArray);
       }
     };
   };

@@ -167,17 +167,15 @@ export const drawFinishState = (unit, currentScore) => {
 };
 
 export const rankingCounter = () => {
-  if (!localStorage.rankingData) {
-    return;
-  }
+  if (!localStorage.rankingData) return;
   const rankingData = JSON.parse(localStorage.rankingData);
   const name = rankingData.name;
-  const total = rankingData.totalNotes;
-  const hit =
-    rankingData.hitNotesA +
-    rankingData.hitNotesB +
-    rankingData.hitNotesC +
-    rankingData.hitNotesD;
+  const total = rankingData.total;
+  const hit = rankingData.hit;
+  // rankingData.hitNotesA +
+  // rankingData.hitNotesB +
+  // rankingData.hitNotesC +
+  // rankingData.hitNotesD;
   const miss = total - hit;
   const score = hit * 98;
   const accurate = Math.round((hit / total) * 100);

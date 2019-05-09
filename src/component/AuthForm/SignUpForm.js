@@ -21,7 +21,7 @@ class SignUpForm extends React.Component {
     this.props.signUp(this.state);
   };
 
-  rendersSignupForm = () => {
+  renderSignupForm = () => {
     return (
       <div className="auth-view">
         <div className="auth-wrap">
@@ -85,7 +85,7 @@ class SignUpForm extends React.Component {
   };
 
   render() {
-    return <>{this.props.auth.uid ? null : this.rendersSignupForm()}</>;
+    return <>{this.props.auth.uid ? null : this.renderSignupForm()}</>;
   }
 }
 

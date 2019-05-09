@@ -11,7 +11,7 @@ export const mainGame = (unit, beatData, audio, difficulty) => {
 
   if (difficulty === "easy") {
     bpm /= 2;
-    speed *= 0.8;
+    // speed *= 0.8;
   }
   if (difficulty === "hard") {
     bpm *= 2;
@@ -87,100 +87,109 @@ export const mainGame = (unit, beatData, audio, difficulty) => {
   let noteB = [];
   let noteC = [];
   let noteD = [];
-  let totalNotes = 0;
-  // offset
-  let lastPosition = 0.3;
+  let total = 0;
+  let miss = 0;
+  // time offset
+  let lastPosition = 0.2;
 
   const update = () => {
-    const getFixedNum = float => {
+    const getFixedTime = float => {
       return parseFloat(float.toFixed(1));
     };
+    const currentTime = getFixedTime(audio.currentTime);
+    const deltaTime = getFixedTime(60 / bpm);
 
-    let now = getFixedNum(audio.currentTime);
-    let deltaTime = getFixedNum(60 / bpm);
-
-    if (getFixedNum(now - lastPosition) === deltaTime) {
+    // using SongPosition to generate notes
+    if (getFixedTime(currentTime - lastPosition) === deltaTime) {
       lastPosition += deltaTime;
       round++;
-      console.log("round", round);
-
-      beatData[round].forEach((e, index) => {
-        if (beatData[round][0] === 0 || beatData[round][0] === 1) {
-          noteA.push(new Note());
-          totalNotes++;
+      total += beatData[round].filter(e => e === 1).length;
+      // console.log("round", round);
+      for (let i = 0; i < 4; i++) {
+        if (beatData[round][i] === 1) {
+          switch (i) {
+            case 0:
+              return noteA.push(new Note());
+            case 1:
+              return noteB.push(
+                new Note({
+                  pos1: new Pos(-unit, 0),
+                  pos2: new Pos(),
+                  color: "#ff0000",
+                  shadowColor: "#ff5a5a"
+                })
+              );
+            case 2:
+              return noteC.push(
+                new Note({
+                  pos1: new Pos(unit, 0),
+                  pos2: new Pos(),
+                  color: "#83ff2b",
+                  shadowColor: "#6fd328"
+                })
+              );
+            case 3:
+              return noteD.push(
+                new Note({
+                  pos1: new Pos(unit, 0),
+                  pos2: new Pos(unit * 2, 0),
+                  color: "#ffff00",
+                  shadowColor: "#fcfc68"
+                })
+              );
+            default:
+              return;
+          }
         }
-        if (beatData[round][1] === 1) {
-          noteB.push(
-            new Note({
-              pos1: new Pos(-unit, 0),
-              pos2: new Pos(0, 0),
-              color: "#ff0000",
-              shadowColor: "#ff5a5a"
-            })
-          );
-          totalNotes++;
-        }
-        if (beatData[round][2] === 1) {
-          noteC.push(
-            new Note({
-              pos1: new Pos(unit, 0),
-              pos2: new Pos(0, 0),
-              color: "#83ff2b",
-              shadowColor: "#6fd328"
-            })
-          );
-          totalNotes++;
-        }
-        if (beatData[round][3] === 1) {
-          noteD.push(
-            new Note({
-              pos1: new Pos(unit, 0),
-              pos2: new Pos(unit * 2, 0),
-              color: "#ffff00",
-              shadowColor: "#fcfc68"
-            })
-          );
-          totalNotes++;
-        }
-      });
+      }
     }
 
-    noteA.forEach(e => e.update());
-    noteB.forEach(e => e.update());
-    noteC.forEach(e => e.update());
-    noteD.forEach(e => e.update());
+    // update the position of notes for animation
+    noteA.forEach(note => note.update());
+    noteB.forEach(note => note.update());
+    noteC.forEach(note => note.update());
+    noteD.forEach(note => note.update());
 
+    // remove notes which were outside of the canvas
     noteA.forEach((e, index) => {
       if (e.centerPos.y > ch) {
-        noteA.splice(index, 1);
+        noteB.splice(index, 1);
+        miss++;
       }
     });
     noteB.forEach((e, index) => {
       if (e.centerPos.y > ch) {
         noteB.splice(index, 1);
+        miss++;
       }
     });
     noteC.forEach((e, index) => {
       if (e.centerPos.y > ch) {
         noteC.splice(index, 1);
+        miss++;
       }
     });
     noteD.forEach((e, index) => {
       if (e.centerPos.y > ch) {
         noteD.splice(index, 1);
+        miss++;
       }
     });
-    updateLocalStorage("totalNotes", totalNotes / 4);
+
+    updateLocalStorage("total", total);
+    updateLocalStorage("miss", miss);
+
     render();
   };
 
   const render = () => {
     ctx.clearRect(0, 0, 18 * unit, 13 * unit);
     drawBackground();
-    noteA.forEach(e => e.render());
-    noteB.forEach(e => e.render());
-    noteC.forEach(e => e.render());
-    noteD.forEach(e => e.render());
+    // noteArray.forEach(e => e.render());
+    noteA.forEach(note => note.render());
+    noteB.forEach(note => note.render());
+    noteC.forEach(note => note.render());
+    noteD.forEach(note => note.render());
   };
 
   const drawBackground = () => {

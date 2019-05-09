@@ -9,7 +9,6 @@ import { checkAuthState } from "../../actions/authActions";
 import menu from "../../img/menu.png";
 import "./nav.css";
 
-
 class Nav extends React.Component {
   componentDidMount() {    
     this.props.checkAuthState();

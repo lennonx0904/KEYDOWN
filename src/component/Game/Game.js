@@ -28,6 +28,7 @@ class Game extends React.Component {
   componentWillMount() {
     this.setCanvasSize();
   }
+
   componentDidMount() {
     const {
       match,
@@ -60,11 +61,9 @@ class Game extends React.Component {
     if (game.inGame && game.playingSongData.audio && !game.gameFinish) {
       const rankingData = {
         name: auth.name,
-        totalNotes: 0,
-        hitNotesA: 0,
-        hitNotesB: 0,
-        hitNotesC: 0,
-        hitNotesD: 0
+        total: 0,
+        hit: 0,
+        miss: 0
       };
       localStorage.setItem("rankingData", JSON.stringify(rankingData));
       // start game
@@ -115,9 +114,7 @@ class Game extends React.Component {
   };
 
   storeRecord = (docId, difficulty) => {
-    if (!localStorage.rankingData || !rankingCounter().name) {
-      return;
-    }
+    if (!localStorage.rankingData || !rankingCounter().name) return;
     const addZero = number => {
       if (number < 10) {
         return `0${number}`;
@@ -160,7 +157,6 @@ class Game extends React.Component {
             <BestRecord record={ranking.record} />
             <CurrentSocre />
           </div>
-
           <div className="canvas-wrap">
             <GameCanvas width={unit * 18} height={unit * 13} />
             <PlayerCanvas
