@@ -2,9 +2,8 @@ import { player } from "./player";
 import { updateLocalStorage, drawJudgeEffect } from "./helpers";
 
 export const mainGame = (unit, beatData, audio, offset, difficulty) => {
-  console.log("offset", offset);
-
   audio.play();
+
   const updateFPS = 100;
   const speed = unit / 5;
   let bpm = 100;
@@ -16,8 +15,8 @@ export const mainGame = (unit, beatData, audio, offset, difficulty) => {
   let total = 0;
   let miss = 0;
   // time offset
-  // let lastPosition = offset;
-  let lastPosition = 0.8;
+  let lastPosition = offset;
+  // let lastPosition = 0.8;
 
   if (difficulty === "easy") {
     bpm /= 2;
@@ -101,19 +100,18 @@ export const mainGame = (unit, beatData, audio, offset, difficulty) => {
     if (getFixedTime(currentTime - lastPosition) === deltaTime) {
       lastPosition += deltaTime;
       round++;
-      total += beatData[round].filter(e => e === 1).length;      
-      console.log('beatData',beatData[round],'total',total);
-      
+      total += beatData[round].filter(e => e === 1).length;
+      console.log("beatData", beatData[round], "total", total);
+
       // console.log("round", round);
       for (let i = 0; i < 4; i++) {
         if (beatData[round][i] === 1) {
           switch (i) {
             case 0:
-              // total++;
-              return noteA.push(new Note());
+              noteA.push(new Note());
+              break;
             case 1:
-              // total++;
-              return noteB.push(
+              noteB.push(
                 new Note({
                   pos1: new Pos(-unit, 0),
                   pos2: new Pos(),
@@ -121,9 +119,9 @@ export const mainGame = (unit, beatData, audio, offset, difficulty) => {
                   shadowColor: "#ff5a5a"
                 })
               );
+              break;
             case 2:
-              // total++;
-              return noteC.push(
+              noteC.push(
                 new Note({
                   pos1: new Pos(unit, 0),
                   pos2: new Pos(),
@@ -131,9 +129,9 @@ export const mainGame = (unit, beatData, audio, offset, difficulty) => {
                   shadowColor: "#6fd328"
                 })
               );
+              break;
             case 3:
-              // total++;
-              return noteD.push(
+              noteD.push(
                 new Note({
                   pos1: new Pos(unit, 0),
                   pos2: new Pos(unit * 2, 0),
@@ -141,6 +139,7 @@ export const mainGame = (unit, beatData, audio, offset, difficulty) => {
                   shadowColor: "#fcfc68"
                 })
               );
+              break;
             default:
               return;
           }
