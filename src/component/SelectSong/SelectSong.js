@@ -20,19 +20,13 @@ class SelectSong extends React.Component {
           </div>
           <div className="difficulty-wrap">
             <Link to={`/game/${song.id}?easy`}>
-              <button className="difficulty easy" name={song.data.name}>
-                EASY
-              </button>
+              <button className="difficulty">EASY</button>
             </Link>
             <Link to={`/game/${song.id}?normal`}>
-              <button className="difficulty normal" name={song.data.name}>
-                NORMAL
-              </button>
+              <button className="difficulty">NORMAL</button>
             </Link>
             <Link to={`/game/${song.id}?hard`}>
-              <button className="difficulty hard" name={song.data.name}>
-                HARD
-              </button>
+              <button className="difficulty">HARD</button>
             </Link>
           </div>
         </div>

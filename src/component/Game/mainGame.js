@@ -1,7 +1,9 @@
 import { player } from "./player";
 import { updateLocalStorage, drawJudgeEffect } from "./helpers";
 
-export const mainGame = (unit, beatData, audio, difficulty) => {
+export const mainGame = (unit, beatData, audio, offset, difficulty) => {
+  console.log("offset", offset);
+
   audio.play();
   const updateFPS = 100;
   const speed = unit / 5;
@@ -14,7 +16,8 @@ export const mainGame = (unit, beatData, audio, difficulty) => {
   let total = 0;
   let miss = 0;
   // time offset
-  let lastPosition = 0.2;
+  // let lastPosition = offset;
+  let lastPosition = 0.8;
 
   if (difficulty === "easy") {
     bpm /= 2;
@@ -91,9 +94,6 @@ export const mainGame = (unit, beatData, audio, difficulty) => {
   }
 
   const update = () => {
-    const getFixedTime = float => {
-      return parseFloat(float.toFixed(1));
-    };
     const currentTime = getFixedTime(audio.currentTime);
     const deltaTime = getFixedTime(60 / bpm);
 
@@ -101,14 +101,18 @@ export const mainGame = (unit, beatData, audio, difficulty) => {
     if (getFixedTime(currentTime - lastPosition) === deltaTime) {
       lastPosition += deltaTime;
       round++;
-      total += beatData[round].filter(e => e === 1).length;
+      total += beatData[round].filter(e => e === 1).length;      
+      console.log('beatData',beatData[round],'total',total);
+      
       // console.log("round", round);
       for (let i = 0; i < 4; i++) {
         if (beatData[round][i] === 1) {
           switch (i) {
             case 0:
+              // total++;
               return noteA.push(new Note());
             case 1:
+              // total++;
               return noteB.push(
                 new Note({
                   pos1: new Pos(-unit, 0),
@@ -118,6 +122,7 @@ export const mainGame = (unit, beatData, audio, difficulty) => {
                 })
               );
             case 2:
+              // total++;
               return noteC.push(
                 new Note({
                   pos1: new Pos(unit, 0),
@@ -127,6 +132,7 @@ export const mainGame = (unit, beatData, audio, difficulty) => {
                 })
               );
             case 3:
+              // total++;
               return noteD.push(
                 new Note({
                   pos1: new Pos(unit, 0),
@@ -149,38 +155,10 @@ export const mainGame = (unit, beatData, audio, difficulty) => {
     noteD.forEach(e => e.update());
 
     // remove notes which were outside of the canvas
-    noteA.forEach((e, index) => {
-      if (e.centerPos.y > ch) {
-        drawJudgeEffect(1, unit, "MISS");
-        miss++;
-        noteA.splice(index, 1);
-        updateLocalStorage("combo", 0);
-      }
-    });
-    noteB.forEach((e, index) => {
-      if (e.centerPos.y > ch) {
-        drawJudgeEffect(2, unit, "MISS");
-        miss++;
-        noteB.splice(index, 1);
-        updateLocalStorage("combo", 0);
-      }
-    });
-    noteC.forEach((e, index) => {
-      if (e.centerPos.y > ch) {
-        drawJudgeEffect(3, unit, "MISS");
-        miss++;
-        noteC.splice(index, 1);
-        updateLocalStorage("combo", 0);
-      }
-    });
-    noteD.forEach((e, index) => {
-      if (e.centerPos.y > ch) {
-        drawJudgeEffect(4, unit, "MISS");
-        miss++;
-        noteD.splice(index, 1);
-        updateLocalStorage("combo", 0);
-      }
-    });
+    removeNotes(noteA, 1);
+    removeNotes(noteB, 2);
+    removeNotes(noteC, 3);
+    removeNotes(noteD, 4);
 
     updateLocalStorage("total", total);
     updateLocalStorage("miss", miss);
@@ -191,7 +169,6 @@ export const mainGame = (unit, beatData, audio, difficulty) => {
   const render = () => {
     ctx.clearRect(0, 0, 18 * unit, 13 * unit);
     drawBackground();
-    // noteArray.forEach(e => e.render());
     noteA.forEach(e => e.render());
     noteB.forEach(e => e.render());
     noteC.forEach(e => e.render());
@@ -226,6 +203,21 @@ export const mainGame = (unit, beatData, audio, difficulty) => {
       null,
       2
     );
+  };
+
+  const getFixedTime = float => {
+    return parseFloat(float.toFixed(1));
+  };
+
+  const removeNotes = (noteArray, trackIndex) => {
+    noteArray.forEach((e, index) => {
+      if (e.centerPos.y > ch) {
+        miss++;
+        noteArray.splice(index, 1);
+        drawJudgeEffect(trackIndex, unit, "MISS");
+        updateLocalStorage("combo", 0);
+      }
+    });
   };
 
   const startGameTimer = setInterval(() => {

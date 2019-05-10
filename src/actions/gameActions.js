@@ -25,8 +25,9 @@ export const fetchPlayingSongData = (songId, difficulty) => dispatch => {
       querySnapshot.forEach(doc => {
         obj = Object.assign({
           audio: new Audio(doc.data().url),
-          beatData: JSON.parse(doc.data()[difficulty])
-        });
+          beatData: JSON.parse(doc.data()[difficulty]),
+          offset: doc.data().offset
+        });        
         dispatch({ type: "FETCH_PLAYING_SONG_DATA", payload: obj });
       });
     })
@@ -45,8 +46,8 @@ export const storeRecordToDB = (doc, difficutly, data) => dispatch => {
     .collection(difficutly)
     .add(data)
     .then(() => {
-      console.log('lod一下',data);
-      
+      console.log("lod一下", data);
+
       dispatch({ type: "STORE_RECORD" });
     })
     .catch(error => {

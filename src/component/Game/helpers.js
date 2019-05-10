@@ -113,9 +113,15 @@ export const drawJudgeEffect = (trackIndex, unit, text, combo) => {
   ctx.save();
   ctx.beginPath();
   ctx.translate((cw * trackIndex) / 4 - cw / 8, 12 * unit - 12);
-  ctx.fillStyle = "#fff";
   ctx.textAlign = "center";
-  ctx.font = `${unit}px Courier New`;
+  if (text === "MISS") {
+    ctx.fillStyle = "rgba(255,255,255,0.6)";
+    ctx.font = `${unit * 0.8}px Courier New`;
+  } else {
+    ctx.fillStyle = "#fff";
+    ctx.font = `${unit}px Courier New`;
+  }
+
   ctx.fillText(text, 0, 0);
   ctx.restore();
 
@@ -132,7 +138,7 @@ export const drawJudgeEffect = (trackIndex, unit, text, combo) => {
 
   setTimeout(() => {
     ctx.clearRect(0, 0, cw, ch);
-  }, 100);
+  }, 300);
 };
 
 export const drawFinishState = (unit, currentScore) => {
@@ -176,15 +182,10 @@ export const drawFinishState = (unit, currentScore) => {
   }, 5);
 };
 
-export const rankingCounter = () => {
+export const getRankingData = () => {
   if (!localStorage.rankingData) return;
   const rankingData = JSON.parse(localStorage.rankingData);
-  const name = rankingData.name;
-  const total = rankingData.total;
-  const hit = rankingData.hit;
-  const miss = rankingData.miss;
-  const combo = rankingData.combo;
-  const score = hit * 98;
+  const { name, total, hit, miss, combo, score } = rankingData;
   const accurate = Math.round((hit / total) * 100);
   let rank;
   if (accurate >= 90) {
@@ -198,7 +199,23 @@ export const rankingCounter = () => {
   } else {
     rank = "E";
   }
-  console.log({ name, total, hit, miss, combo, score, accurate, rank });
+  // console.log({ name, total, hit, miss, combo, score, accurate, rank });
 
   return { name, total, hit, miss, combo, score, accurate, rank };
+};
+
+export const comboScoreCounter = () => {
+  if (!localStorage.rankingData) return;
+  const rankingData = JSON.parse(localStorage.rankingData);
+  const combo = rankingData.combo;
+  let score;
+  if (combo < 2) {
+    score = 100;
+  } else if (combo > 20) {
+    score = (100 * (100 + Math.pow(20, 2))) / 100;
+  } else {
+    score = (100 * (100 + Math.pow(combo, 2))) / 100;
+  }
+  console.log("combo", combo, "score", score);
+  return score;
 };

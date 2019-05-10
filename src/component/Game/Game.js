@@ -17,7 +17,7 @@ import {
   drawReadyState,
   drawComingSoon,
   drawFinishState,
-  rankingCounter
+  getRankingData
 } from "./helpers";
 import "./game.css";
 
@@ -52,6 +52,7 @@ class Game extends React.Component {
   }
 
   componentDidUpdate() {
+    
     const { game, match, location, setGameFinishState, auth } = this.props;
     const docId = match.params.id;
     const difficulty = location.search.slice(1);
@@ -59,25 +60,30 @@ class Game extends React.Component {
       drawComingSoon(this.state.unit);
     }
     if (game.inGame && game.playingSongData.audio && !game.gameFinish) {
+      console.log("ingmae 以後", game.playingSongData.offset);
+
       const rankingData = {
         name: auth.name,
         total: 0,
         hit: 0,
         miss: 0,
-        combo: 0
+        combo: 0,
+        score: 0,
       };
       localStorage.setItem("rankingData", JSON.stringify(rankingData));
       // start game
       // this.stopGame use the closure in mainGame to clearInterval
+
       this.stopGame = mainGame(
         this.state.unit,
         game.playingSongData.beatData,
         game.playingSongData.audio,
+        game.playingSongData.offset,
         difficulty
       );
       const audio = game.playingSongData.audio;
       audio.addEventListener("ended", () => {
-        const currentSocre = rankingCounter().score;
+        const currentSocre = getRankingData().score;
         this.stopGame();
         setGameFinishState(true);
         drawFinishState(this.state.unit, currentSocre);
@@ -115,7 +121,7 @@ class Game extends React.Component {
   };
 
   storeRecord = (docId, difficulty) => {
-    if (!localStorage.rankingData || !rankingCounter().name) return;
+    if (!localStorage.rankingData || !getRankingData().name) return;
     const addZero = number => {
       if (number < 10) {
         return `0${number}`;
@@ -130,9 +136,9 @@ class Game extends React.Component {
       date.getMinutes()
     )}`;
     const data = {
-      name: rankingCounter().name,
-      rank: rankingCounter().rank,
-      score: rankingCounter().score,
+      name: getRankingData().name,
+      rank: getRankingData().rank,
+      score: getRankingData().score,
       time: time
     };
     console.log("docId", docId);
@@ -149,7 +155,7 @@ class Game extends React.Component {
       width: `${unit * 18 + 1}px`
     };
     const { game, ranking } = this.props;
-    console.log(game.playingSongData === null);
+    // console.log(game.playingSongData === null);
 
     return (
       <div className="game-view">

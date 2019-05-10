@@ -1,6 +1,7 @@
 import {
   updateLocalStorage,
-  rankingCounter,
+  getRankingData,
+  comboScoreCounter,
   drawTrack,
   clearCanvas,
   drawJudgeEffect
@@ -18,7 +19,8 @@ export const player = (noteA, noteB, noteC, noteD, unit, audio) => {
     return () => {
       if (!noteArray[0]) return;
       const notePosY = noteArray[0].centerPos.y;
-      let combo = rankingCounter().combo;
+      let combo = getRankingData().combo;
+      let score = getRankingData().score;
       if (notePosY > 11 * unit && notePosY < 13 * unit) {
         hit++;
         combo++;
@@ -26,7 +28,9 @@ export const player = (noteA, noteB, noteC, noteD, unit, audio) => {
         drawJudgeEffect(trackIndex, unit, "HIT", combo);
         updateLocalStorage("hit", hit);
         updateLocalStorage("combo", combo);
-        currentSocre.textContent = rankingCounter().score;
+        score += comboScoreCounter();
+        updateLocalStorage("score", score);
+        currentSocre.textContent = getRankingData().score;
       }
     };
   };
