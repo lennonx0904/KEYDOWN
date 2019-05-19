@@ -10,7 +10,7 @@ import menu from "../../img/menu.png";
 import "./nav.css";
 
 class Nav extends React.Component {
-  componentDidMount() {    
+  componentDidMount() {
     this.props.checkAuthState();
   }
 

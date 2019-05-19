@@ -20,7 +20,6 @@ export const mainGame = (unit, beatData, audio, offset, difficulty) => {
 
   if (difficulty === "easy") {
     bpm /= 2;
-    // speed *= 0.8;
   }
   if (difficulty === "hard") {
     bpm *= 2;
@@ -100,10 +99,7 @@ export const mainGame = (unit, beatData, audio, offset, difficulty) => {
     if (getFixedTime(currentTime - lastPosition) === deltaTime) {
       lastPosition += deltaTime;
       round++;
-      total += beatData[round].filter(e => e === 1).length;
-      console.log("beatData", beatData[round], "total", total);
-
-      // console.log("round", round);
+      total += beatData[round].filter(e => e === 1).length;      
       for (let i = 0; i < 4; i++) {
         if (beatData[round][i] === 1) {
           switch (i) {

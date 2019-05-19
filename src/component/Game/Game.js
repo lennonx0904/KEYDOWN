@@ -5,6 +5,7 @@ import GameCanvas from "./GameCanvas";
 import PlayerCanvas from "./PlayerCanvas";
 import BestRecord from "./BestRecord";
 import CurrentSocre from "./CurrentSocre";
+
 import {
   setInGameState,
   fetchPlayingSongData,
@@ -52,7 +53,6 @@ class Game extends React.Component {
   }
 
   componentDidUpdate() {
-    
     const { game, match, location, setGameFinishState, auth } = this.props;
     const docId = match.params.id;
     const difficulty = location.search.slice(1);
@@ -60,20 +60,17 @@ class Game extends React.Component {
       drawComingSoon(this.state.unit);
     }
     if (game.inGame && game.playingSongData.audio && !game.gameFinish) {
-      console.log("ingmae 以後", game.playingSongData.offset);
-
       const rankingData = {
         name: auth.name,
         total: 0,
         hit: 0,
         miss: 0,
         combo: 0,
-        score: 0,
+        score: 0
       };
       localStorage.setItem("rankingData", JSON.stringify(rankingData));
       // start game
       // this.stopGame use the closure in mainGame to clearInterval
-
       this.stopGame = mainGame(
         this.state.unit,
         game.playingSongData.beatData,
@@ -141,11 +138,7 @@ class Game extends React.Component {
       score: getRankingData().score,
       time: time
     };
-    console.log("docId", docId);
-    console.log("difficulty", difficulty);
-    console.log("data", data);
-
-    // storeRecordToDB(docId, difficulty, data);
+    storeRecordToDB(docId, difficulty, data);
   };
 
   render() {
@@ -154,8 +147,7 @@ class Game extends React.Component {
       margin: `${unit * 13 + 31}px 0 0 0`,
       width: `${unit * 18 + 1}px`
     };
-    const { game, ranking } = this.props;
-    // console.log(game.playingSongData === null);
+    const { ranking } = this.props;
 
     return (
       <div className="game-view">

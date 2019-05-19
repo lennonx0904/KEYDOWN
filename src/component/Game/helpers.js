@@ -109,6 +109,7 @@ export const drawJudgeEffect = (trackIndex, unit, text, combo) => {
   const ctx = canvas.getContext("2d");
   const cw = 18 * unit;
   const ch = 13 * unit;
+  ctx.clearRect(0, 0, cw, ch);
 
   ctx.save();
   ctx.beginPath();
@@ -116,7 +117,7 @@ export const drawJudgeEffect = (trackIndex, unit, text, combo) => {
   ctx.textAlign = "center";
   if (text === "MISS") {
     ctx.fillStyle = "rgba(255,255,255,0.6)";
-    ctx.font = `${unit * 0.8}px Courier New`;
+    ctx.font = `${unit * 0.7}px Courier New`;
   } else {
     ctx.fillStyle = "#fff";
     ctx.font = `${unit}px Courier New`;
@@ -136,6 +137,8 @@ export const drawJudgeEffect = (trackIndex, unit, text, combo) => {
     ctx.restore();
   }
 
+  // clear canvas automatically in case player has no interaction
+  // that cause "MISS" effect will be removed till next round
   setTimeout(() => {
     ctx.clearRect(0, 0, cw, ch);
   }, 300);
@@ -155,7 +158,7 @@ export const drawFinishState = (unit, currentScore) => {
     } else {
       score += 98;
     }
-
+    
     ctx.clearRect(0, 0, cw, ch);
     ctx.rect(0, 0, cw, ch);
     ctx.fillStyle = "#1d1d1d";
@@ -184,8 +187,9 @@ export const drawFinishState = (unit, currentScore) => {
 
 export const getRankingData = () => {
   if (!localStorage.rankingData) return;
-  const rankingData = JSON.parse(localStorage.rankingData);
-  const { name, total, hit, miss, combo, score } = rankingData;
+  const { name, total, hit, miss, combo, score } = JSON.parse(
+    localStorage.rankingData
+  );
   const accurate = Math.round((hit / total) * 100);
   let rank;
   if (accurate >= 90) {
@@ -199,15 +203,12 @@ export const getRankingData = () => {
   } else {
     rank = "E";
   }
-  // console.log({ name, total, hit, miss, combo, score, accurate, rank });
-
   return { name, total, hit, miss, combo, score, accurate, rank };
 };
 
 export const comboScoreCounter = () => {
   if (!localStorage.rankingData) return;
-  const rankingData = JSON.parse(localStorage.rankingData);
-  const combo = rankingData.combo;
+  const combo = JSON.parse(localStorage.rankingData).combo;
   let score;
   if (combo < 2) {
     score = 100;
@@ -216,6 +217,5 @@ export const comboScoreCounter = () => {
   } else {
     score = (100 * (100 + Math.pow(combo, 2))) / 100;
   }
-  console.log("combo", combo, "score", score);
   return score;
 };
