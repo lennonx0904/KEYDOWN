@@ -104,8 +104,14 @@
   .mobile-buttons {
     display: flex;
     flex-wrap: wrap;
-    position: absolute;
+    /* position: absolute; */
     z-index: 10;
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+  }
+
+  .mobile-btn-wrap {
     width: 100%;
   }
 
@@ -116,5 +122,6 @@
     text-align: center;
     padding: 8px;
     border: 1px solid #3a3a3a;
+    height: 50px;
   }
 }

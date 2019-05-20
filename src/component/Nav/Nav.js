@@ -15,6 +15,8 @@ class Nav extends React.Component {
   }
 
   render() {
+    console.log('nav props', this.props);
+    
     const { showing, showMobileButtons, auth } = this.props;
     return (
       <>
@@ -40,6 +42,7 @@ class Nav extends React.Component {
 }
 
 const mapStateToProps = state => {
+  console.log('nav state', state);  
   return {
     auth: state.auth,
     showing: state.showing

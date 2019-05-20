@@ -30,7 +30,7 @@ class Game extends React.Component {
     this.setCanvasSize();
   }
 
-  componentDidMount() {
+  componentDidMount() {    
     const {
       match,
       location,
@@ -176,7 +176,7 @@ class Game extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = state => {  
   return {
     game: state.game,
     auth: state.auth,

@@ -12,7 +12,7 @@ class NavButtonsMobile extends React.Component {
   renderLogInAndSignUpBtn = () => {
     const { showLoginForm, showSignUpForm, showMobileButtons } = this.props;
     return (
-      <>
+      <div className="mobile-btn-wrap">
         <button
           className="mobile-btn"
           onClick={() => {
@@ -31,7 +31,7 @@ class NavButtonsMobile extends React.Component {
         >
           Sign Up
         </button>
-      </>
+      </div>
     );
   };
 
