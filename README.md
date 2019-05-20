@@ -3,11 +3,13 @@
 
 A music rhythm game which can play by keyboard or touch screen.
 
-### DEMO
+
+
+## DEMO
 https://lennonx0904.github.io/KEYDOWN/
 
 
-### Technologies
+## Technologies
 - React
 - Redux
 - Router
