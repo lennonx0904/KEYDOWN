@@ -68,14 +68,6 @@
   cursor: pointer;
 }
 
-.normal {
-  background-color: rgba(255, 0, 79, 0.6);
-}
-
-.hard {
-  background-color: rgba(255, 0, 79, 0.7);
-}
-
 .difficulty:hover {
   background-color: rgba(255, 0, 79, 1);
   transform: scale(1.1);

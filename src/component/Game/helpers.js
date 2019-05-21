@@ -152,13 +152,17 @@ export const drawFinishState = (unit, currentScore) => {
   ctx.clearRect(0, 0, cw, ch);
 
   let score = 0;
+  if (currentScore / 1000 > 1) {
+    score = currentScore - (currentScore % 1000);
+  }
+
   const drawScore = () => {
     if (currentScore === 0) {
       score = 0;
     } else {
-      score += 98;
+      score++;
     }
-    
+
     ctx.clearRect(0, 0, cw, ch);
     ctx.rect(0, 0, cw, ch);
     ctx.fillStyle = "#1d1d1d";
@@ -182,7 +186,7 @@ export const drawFinishState = (unit, currentScore) => {
     if (score >= currentScore) {
       clearInterval(drawScoreTimer);
     }
-  }, 5);
+  }, 1);
 };
 
 export const getRankingData = () => {

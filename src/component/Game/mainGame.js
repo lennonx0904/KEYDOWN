@@ -3,7 +3,6 @@ import { updateLocalStorage, drawJudgeEffect } from "./helpers";
 
 export const mainGame = (unit, beatData, audio, offset, difficulty) => {
   audio.play();
-  audio.currentTime = 200;
 
   const updateFPS = 100;
   const speed = unit / 5;
@@ -40,7 +39,7 @@ export const mainGame = (unit, beatData, audio, offset, difficulty) => {
     ctx.moveTo(p1.x, p1.y);
     ctx.lineTo(p2.x, p2.y);
     ctx.strokeStyle = color;
-    ctx.shadowBlur = 60;
+    ctx.shadowBlur = 10;
     ctx.shadowColor = shadowColor;
     ctx.lineWidth = height;
     ctx.stroke();
