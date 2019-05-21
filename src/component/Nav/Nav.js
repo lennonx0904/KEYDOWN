@@ -10,13 +10,7 @@ import menu from "../../img/menu.png";
 import "./nav.css";
 
 class Nav extends React.Component {
-  componentDidMount() {
-    this.props.checkAuthState();
-  }
-
   render() {
-    console.log('nav props', this.props);
-    
     const { showing, showMobileButtons, auth } = this.props;
     return (
       <>
@@ -42,7 +36,6 @@ class Nav extends React.Component {
 }
 
 const mapStateToProps = state => {
-  console.log('nav state', state);  
   return {
     auth: state.auth,
     showing: state.showing
