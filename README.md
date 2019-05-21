@@ -35,10 +35,8 @@ Users can sign up and login by email and password.
 
 ### Start the Game
 
-- **Keyboard Mode**  
-Use D, F, K, L to play.
-- **Touch Screen Mode** 
-Touch the buttons beneath the canvas.
+- **Keyboard Mode**   Use D, F, K, L to play.
+- **Touch Screen Mode**  Touch the buttons beneath the canvas.
 
 ![image](https://github.com/lennonx0904/KEYDOWN/blob/master/screenShot/gamePage.png?raw=true)
 
