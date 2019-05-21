@@ -17,10 +17,10 @@ https://lennonx0904.github.io/KEYDOWN/
 
 ## Features
 
-#### Member managment
+### Member managment
 Users can sign up and login by email and password.
 
-#### Home Page
+### Home Page
 - Both **registered member** and **anonymous player** can play the game.
 - Only registered members can store their record to database.
 
@@ -28,12 +28,12 @@ Users can sign up and login by email and password.
 
 
 
-#### Select Song and Difficulty
+### Select Song and Difficulty
 
 ![image](https://github.com/lennonx0904/KEYDOWN/blob/master/screenShot/selectPage.png?raw=true)
 
 
-#### Start the Game
+### Start the Game
 
 - **Keyboard Mode**  
 Use D, F, K, L to play.
@@ -43,7 +43,7 @@ Touch the buttons beneath the canvas.
 ![image](https://github.com/lennonx0904/KEYDOWN/blob/master/screenShot/gamePage.png?raw=true)
 
 
-#### Ranking Page
+### Ranking Page
 
 Your record will show on the board if it's in the top 10 list.
 
