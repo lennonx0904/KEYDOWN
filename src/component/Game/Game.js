@@ -30,7 +30,7 @@ class Game extends React.Component {
     this.setCanvasSize();
   }
 
-  componentDidMount() {    
+  componentDidMount() {
     const {
       match,
       location,
@@ -138,7 +138,7 @@ class Game extends React.Component {
       score: getRankingData().score,
       time: time
     };
-    storeRecordToDB(docId, difficulty, data);
+    this.props.storeRecordToDB(docId, difficulty, data);
   };
 
   render() {
@@ -176,7 +176,7 @@ class Game extends React.Component {
   }
 }
 
-const mapStateToProps = state => {  
+const mapStateToProps = state => {
   return {
     game: state.game,
     auth: state.auth,

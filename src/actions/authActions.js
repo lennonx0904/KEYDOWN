@@ -7,7 +7,7 @@ export const logIn = data => dispatch => {
     .auth()
     .signInWithEmailAndPassword(data.email, data.password)
     .then(() => {
-      firebase.auth().onAuthStateChanged(user => {
+      firebase.auth().onAuthStateChanged(user => {        
         dispatch({ type: "LOGIN_SUCCESS" });
       });
     })
@@ -58,7 +58,7 @@ export const signUp = data => dispatch => {
 
 export const checkAuthState = () => dispatch => {
   firebase.auth().onAuthStateChanged(user => {
-    if (user) {
+    if (user) {      
       dispatch({ type: "FETCH_USER_UID", payload: user.uid });
       db.collection("users")
         .doc(user.uid)

@@ -3,6 +3,7 @@ import { updateLocalStorage, drawJudgeEffect } from "./helpers";
 
 export const mainGame = (unit, beatData, audio, offset, difficulty) => {
   audio.play();
+  audio.currentTime = 200;
 
   const updateFPS = 100;
   const speed = unit / 5;
