@@ -7,6 +7,8 @@ https://lennonx0904.github.io/KEYDOWN/
 
 
 ## Technologies
+
+- Canvas Animation
 - React
 - Redux
 - Router
