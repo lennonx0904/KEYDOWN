@@ -20,7 +20,7 @@ self.__precacheManifest = [
     "url": "/KEYDOWN/static/css/main.e728db56.chunk.css"
   },
   {
-    "revision": "c310fdb4a83c309d791fd6e38624df8b",
+    "revision": "aa83e159265b7b5ed81ea1f86d7af295",
     "url": "/KEYDOWN/index.html"
   }
 ];
