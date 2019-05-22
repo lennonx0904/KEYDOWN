@@ -6,7 +6,7 @@ A music rhythm game which can play by keyboard or touch screen.
 https://lennonx0904.github.io/KEYDOWN/
 
 - Test User : guest@gmail.com
-- Password : 123456
+- Password : 123123
 
 ## Technologies
 
